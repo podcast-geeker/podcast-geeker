@@ -1,0 +1,33 @@
+services:
+  podcast-geeker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: podcast-geeker:v1
+    container_name: podcast-geeker
+    ports:
+      - "8502:8502"  # Web UI
+      - "5055:5055"  # REST API
+    environment:
+      # REQUIRED: Change this to your own secret string
+      # This encrypts your API keys in the database
+      - OPEN_NOTEBOOK_ENCRYPTION_KEY=my-super-secret-podcast-geeker-2026
+
+      # 连接到共享的 SurrealDB (使用独立的 namespace 实现数据隔离)
+      - SURREAL_URL=ws://shared-surrealdb:8000/rpc
+      - SURREAL_USER=root
+      - SURREAL_PASSWORD=root
+      - SURREAL_NAMESPACE=podcast_geeker
+      - SURREAL_DATABASE=open_notebook
+
+      # 连接到共享的 Ollama
+      - OLLAMA_API_BASE=http://host.docker.internal:11434
+    volumes:
+      - ./notebook_data:/app/data
+    restart: unless-stopped
+    networks:
+      - shared-services-network
+
+networks:
+  shared-services-network:
+    external: true
