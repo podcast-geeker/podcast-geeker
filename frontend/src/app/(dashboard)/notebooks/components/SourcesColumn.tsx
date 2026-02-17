@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useRef, useCallback, useEffect } from 'react'
+import { useState, useMemo, useRef, useCallback, useEffect, type UIEvent } from 'react'
 import { SourceListResponse } from '@/lib/types/api'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -23,6 +23,10 @@ import { ContextMode } from '../[id]/page'
 import { CollapsibleColumn, createCollapseButton } from '@/components/notebooks/CollapsibleColumn'
 import { useNotebookColumnsStore } from '@/lib/stores/notebook-columns-store'
 import { useTranslation } from '@/lib/hooks/use-translation'
+
+const SOURCE_CARD_ESTIMATED_HEIGHT = 170
+const VIRTUAL_LIST_OVERSCAN = 4
+const VIRTUALIZATION_THRESHOLD = 40
 
 interface SourcesColumnProps {
   sources?: SourceListResponse[]
@@ -72,10 +76,22 @@ export function SourcesColumn({
 
   // Scroll container ref for infinite scroll
   const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const [scrollTop, setScrollTop] = useState(0)
+  const [viewportHeight, setViewportHeight] = useState(0)
+
+  const virtualizationEnabled = (sources?.length ?? 0) >= VIRTUALIZATION_THRESHOLD
+
+  const updateViewportHeight = useCallback(() => {
+    const container = scrollContainerRef.current
+    if (!container) return
+    setViewportHeight(container.clientHeight)
+  }, [])
 
   // Handle scroll for infinite loading
-  const handleScroll = useCallback(() => {
-    const container = scrollContainerRef.current
+  const handleScroll = useCallback((event: UIEvent<HTMLDivElement>) => {
+    const container = event.currentTarget
+    setScrollTop(container.scrollTop)
+
     if (!container || !hasNextPage || isFetchingNextPage || !fetchNextPage) return
 
     const { scrollTop, scrollHeight, clientHeight } = container
@@ -85,14 +101,23 @@ export function SourcesColumn({
     }
   }, [hasNextPage, isFetchingNextPage, fetchNextPage])
 
-  // Attach scroll listener
+  // Keep viewport size updated for virtual list range calculation
   useEffect(() => {
     const container = scrollContainerRef.current
     if (!container) return
 
-    container.addEventListener('scroll', handleScroll)
-    return () => container.removeEventListener('scroll', handleScroll)
-  }, [handleScroll])
+    updateViewportHeight()
+
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', updateViewportHeight)
+      return () => window.removeEventListener('resize', updateViewportHeight)
+    }
+
+    const observer = new ResizeObserver(() => updateViewportHeight())
+    observer.observe(container)
+
+    return () => observer.disconnect()
+  }, [updateViewportHeight])
   
   const handleDeleteClick = (sourceId: string) => {
     setSourceToDelete(sourceId)
@@ -145,6 +170,25 @@ export function SourcesColumn({
     openModal('source', sourceId)
   }
 
+  const totalSources = sources?.length ?? 0
+  const totalVirtualHeight = totalSources * SOURCE_CARD_ESTIMATED_HEIGHT
+  const startIndex = virtualizationEnabled
+    ? Math.max(0, Math.floor(scrollTop / SOURCE_CARD_ESTIMATED_HEIGHT) - VIRTUAL_LIST_OVERSCAN)
+    : 0
+  const endIndex = virtualizationEnabled
+    ? Math.min(
+        totalSources,
+        Math.ceil((scrollTop + (viewportHeight || 1)) / SOURCE_CARD_ESTIMATED_HEIGHT) + VIRTUAL_LIST_OVERSCAN
+      )
+    : totalSources
+  const visibleSources = virtualizationEnabled
+    ? (sources?.slice(startIndex, endIndex) ?? [])
+    : (sources ?? [])
+  const topSpacerHeight = virtualizationEnabled ? startIndex * SOURCE_CARD_ESTIMATED_HEIGHT : 0
+  const bottomSpacerHeight = virtualizationEnabled
+    ? Math.max(0, totalVirtualHeight - topSpacerHeight - visibleSources.length * SOURCE_CARD_ESTIMATED_HEIGHT)
+    : 0
+
   return (
     <>
       <CollapsibleColumn
@@ -182,7 +226,7 @@ export function SourcesColumn({
             </div>
           </CardHeader>
 
-          <CardContent ref={scrollContainerRef} className="flex-1 overflow-y-auto min-h-0">
+          <CardContent ref={scrollContainerRef} className="flex-1 overflow-y-auto min-h-0" onScroll={handleScroll}>
             {isLoading ? (
               <div className="flex items-center justify-center py-8">
                 <LoadingSpinner />
@@ -194,24 +238,27 @@ export function SourcesColumn({
                 description={t.sources.createFirstSource}
               />
             ) : (
-              <div className="space-y-3">
-                {sources.map((source) => (
-                  <SourceCard
-                    key={source.id}
-                    source={source}
-                    onClick={handleSourceClick}
-                    onDelete={handleDeleteClick}
-                    onRetry={handleRetry}
-                    onRemoveFromNotebook={handleRemoveFromNotebook}
-                    onRefresh={onRefresh}
-                    showRemoveFromNotebook={true}
-                    contextMode={contextSelections?.[source.id]}
-                    onContextModeChange={onContextModeChange
-                      ? (mode) => onContextModeChange(source.id, mode)
-                      : undefined
-                    }
-                  />
+              <div className={virtualizationEnabled ? '' : 'space-y-3'}>
+                {topSpacerHeight > 0 && <div style={{ height: topSpacerHeight }} aria-hidden />}
+                {visibleSources.map((source) => (
+                  <div key={source.id} className={virtualizationEnabled ? 'mb-3' : ''}>
+                    <SourceCard
+                      source={source}
+                      onClick={handleSourceClick}
+                      onDelete={handleDeleteClick}
+                      onRetry={handleRetry}
+                      onRemoveFromNotebook={handleRemoveFromNotebook}
+                      onRefresh={onRefresh}
+                      showRemoveFromNotebook={true}
+                      contextMode={contextSelections?.[source.id]}
+                      onContextModeChange={onContextModeChange
+                        ? (mode) => onContextModeChange(source.id, mode)
+                        : undefined
+                      }
+                    />
+                  </div>
                 ))}
+                {bottomSpacerHeight > 0 && <div style={{ height: bottomSpacerHeight }} aria-hidden />}
                 {/* Loading indicator for infinite scroll */}
                 {isFetchingNextPage && (
                   <div className="flex items-center justify-center py-4">

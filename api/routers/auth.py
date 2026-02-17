@@ -1,5 +1,5 @@
 """
-Authentication router for Open Notebook API.
+Authentication router for Podcast Geeker API.
 Provides endpoints to check authentication status.
 """
 

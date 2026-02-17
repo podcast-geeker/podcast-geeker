@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="orbCyan" cx="48%" cy="36%" r="72%">
+      <stop offset="0%" stop-color="#E6FFFF"/>
+      <stop offset="35%" stop-color="#65EAFF"/>
+      <stop offset="100%" stop-color="#2F6BFF"/>
+    </radialGradient>
+    <radialGradient id="orbGreen" cx="50%" cy="35%" r="72%">
+      <stop offset="0%" stop-color="#ECFFEE"/>
+      <stop offset="36%" stop-color="#7FFF96"/>
+      <stop offset="100%" stop-color="#20A95A"/>
+    </radialGradient>
+    <radialGradient id="orbPurple" cx="48%" cy="35%" r="72%">
+      <stop offset="0%" stop-color="#F7F2FF"/>
+      <stop offset="40%" stop-color="#C9A8FF"/>
+      <stop offset="100%" stop-color="#6D4BFF"/>
+    </radialGradient>
+
+    <linearGradient id="linkA" x1="70" y1="126" x2="175" y2="74" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#5CEAFF"/>
+      <stop offset="100%" stop-color="#87FFAB"/>
+    </linearGradient>
+    <linearGradient id="linkB" x1="70" y1="126" x2="164" y2="170" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#5DF4FF"/>
+      <stop offset="100%" stop-color="#C08DFF"/>
+    </linearGradient>
+    <linearGradient id="linkC" x1="175" y1="74" x2="164" y2="170" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#8CFFB0"/>
+      <stop offset="100%" stop-color="#B790FF"/>
+    </linearGradient>
+
+    <filter id="orbGlow" x="-85%" y="-85%" width="270%" height="270%">
+      <feGaussianBlur stdDeviation="11" result="g1"/>
+      <feColorMatrix in="g1" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1.25 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="lineGlow" x="-35%" y="-35%" width="170%" height="170%">
+      <feGaussianBlur stdDeviation="3.6"/>
+    </filter>
+  </defs>
+
+  <g class="line-base" filter="url(#lineGlow)">
+    <path d="M74 124C96 96 130 83 172 74" stroke="url(#linkA)" stroke-width="10" stroke-linecap="round"/>
+    <path d="M74 126C101 143 127 157 161 170" stroke="url(#linkB)" stroke-width="10" stroke-linecap="round"/>
+    <path d="M174 78C177 112 174 136 166 166" stroke="url(#linkC)" stroke-width="9" stroke-linecap="round"/>
+  </g>
+
+  <g class="line-electric">
+    <path d="M74 124C96 96 130 83 172 74" class="electric electric-a"/>
+    <path d="M74 126C101 143 127 157 161 170" class="electric electric-b"/>
+    <path d="M174 78C177 112 174 136 166 166" class="electric electric-c"/>
+  </g>
+
+  <g class="nodes">
+    <g class="node node-left">
+      <circle cx="70" cy="124" r="39" fill="#6AFFA6" fill-opacity="0.38" filter="url(#orbGlow)"/>
+      <circle cx="70" cy="124" r="23" fill="url(#orbCyan)"/>
+      <circle cx="70" cy="124" r="23" fill="none" stroke="#C8FFFF" stroke-opacity="0.8" stroke-width="1.2"/>
+      <path d="M56 115C63 110 74 110 84 116C78 121 67 124 57 122" fill="#E6FFFF" fill-opacity="0.28"/>
+    </g>
+
+    <g class="node node-top">
+      <circle cx="176" cy="74" r="34" fill="#88FFAF" fill-opacity="0.38" filter="url(#orbGlow)"/>
+      <circle cx="176" cy="74" r="19" fill="url(#orbGreen)"/>
+      <circle cx="176" cy="74" r="19" fill="none" stroke="#E5FFEC" stroke-opacity="0.78" stroke-width="1.1"/>
+      <path d="M166 67C171 62 179 63 185 67C180 71 172 73 166 71" fill="#F1FFF2" fill-opacity="0.25"/>
+    </g>
+
+    <g class="node node-bottom">
+      <circle cx="165" cy="170" r="37" fill="#BD9BFF" fill-opacity="0.36" filter="url(#orbGlow)"/>
+      <circle cx="165" cy="170" r="21" fill="url(#orbPurple)"/>
+      <circle cx="165" cy="170" r="21" fill="none" stroke="#EFE6FF" stroke-opacity="0.76" stroke-width="1.1"/>
+      <path d="M154 162C159 157 170 157 177 163C171 168 160 170 154 168" fill="#FAF5FF" fill-opacity="0.24"/>
+    </g>
+
+    <g class="node node-sat-a">
+      <circle cx="50" cy="76" r="20" fill="#8EEFFF" fill-opacity="0.34" filter="url(#orbGlow)"/>
+      <circle cx="50" cy="76" r="11.5" fill="url(#orbCyan)"/>
+    </g>
+
+    <g class="node node-sat-b">
+      <circle cx="206" cy="205" r="19" fill="#C7B0FF" fill-opacity="0.34" filter="url(#orbGlow)"/>
+      <circle cx="206" cy="205" r="11" fill="url(#orbPurple)"/>
+    </g>
+  </g>
+
+  <style>
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.82; }
+      50% { transform: scale(1.12); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.82; }
+    }
+    @keyframes current {
+      0% { stroke-dashoffset: 0; opacity: 0.28; }
+      50% { opacity: 0.95; }
+      100% { stroke-dashoffset: -42; opacity: 0.28; }
+    }
+
+    .node {
+      transform-origin: center;
+      animation: pulse 3s infinite ease-in-out;
+    }
+    .node-top { animation-delay: 1s; }
+    .node-bottom { animation-delay: 2s; }
+    .node-sat-a { animation-delay: 0.5s; }
+    .node-sat-b { animation-delay: 1.6s; }
+
+    .electric {
+      fill: none;
+      stroke: #E8FFFF;
+      stroke-width: 2.1;
+      stroke-linecap: round;
+      stroke-dasharray: 2 11;
+      animation: current 1.3s linear infinite;
+      filter: drop-shadow(0 0 5px rgba(162, 255, 255, 0.9));
+    }
+    .electric-b { animation-duration: 1.1s; }
+    .electric-c { animation-duration: 1.5s; }
+  </style>
+</svg>

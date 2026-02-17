@@ -1,6 +1,8 @@
-# AI Context & RAG - How Open Notebook Uses Your Research
+# AI Context & RAG - How Podcast Geeker Uses Your Research
 
-Open Notebook uses different approaches to make AI models aware of your research depending on the feature. This section explains **RAG** (used in Ask) and **full-content context** (used in Chat).
+Podcast Geeker uses different approaches to make AI models aware of your research depending on the feature. This section explains **Advanced Agentic RAG** (used in Ask) and **full-content context** (used in Chat).
+
+> **What's New**: Podcast Geeker now features **Advanced Agentic RAG** capabilities including hierarchical indexing, intelligent query rewriting, self-correction mechanisms, and optional multi-modal understanding. These enhancements significantly improve retrieval accuracy and answer quality.
 
 ---
 
@@ -23,7 +25,7 @@ Open Notebook uses different approaches to make AI models aware of your research
 - Pro: Private, free
 - Con: AI doesn't know anything about your specific topic
 
-### Open Notebook's Dual Approach
+### Podcast Geeker's Dual Approach
 
 **For Chat**: Sends the entire selected content to the LLM
 - Simple and transparent: You select sources, they're sent in full
@@ -37,11 +39,377 @@ Open Notebook uses different approaches to make AI models aware of your research
 
 ---
 
+## Advanced Agentic RAG: Beyond Traditional Retrieval
+
+Podcast Geeker implements **Agentic RAG** - an advanced approach that goes beyond simple search-and-retrieve. The system acts as an intelligent agent that understands context, refines queries, and ensures high-quality results.
+
+### What Makes It "Agentic"?
+
+Traditional RAG simply searches and returns results. Agentic RAG adds intelligence:
+
+1. **Query Understanding**: Analyzes your question to understand intent
+2. **Conversation Memory**: Remembers previous questions for context
+3. **Smart Rewriting**: Reformulates unclear queries automatically
+4. **Self-Correction**: Detects poor results and retries with better queries
+5. **Hierarchical Search**: Balances precision and context through parent/child chunks
+
+### The Four Pillars of Agentic RAG
+
+#### 1. Hierarchical Indexing (Parent/Child Chunks)
+
+**The Problem with Traditional Chunking:**
+```
+Traditional: Split document into 500-word chunks
+Result: Precise search but loses context
+```
+
+**Podcast Geeker's Solution:**
+```
+Parent Chunks: Large semantic sections (2000-10000 chars)
+  └─ Child Chunks: Small precise pieces (500 chars)
+
+Search Flow:
+1. Search child chunks for precision
+2. Retrieve parent chunks for context
+3. AI sees both precision and full context
+```
+
+**Example:**
+```
+Document: "AI Safety Research Paper" (50 pages)
+↓
+Parent Chunks: 20 sections (by headings)
+↓
+Child Chunks: 150 precise pieces
+↓
+Your Question: "What's the alignment approach?"
+↓
+Search: Find relevant child chunks (precise)
+↓
+Retrieve: Get their parent sections (context)
+↓
+AI Answer: Uses precise matches + full context
+```
+
+**Benefits:**
+- Better search precision (child chunks match specific queries)
+- Complete context (parent chunks provide full picture)
+- No information loss (unlike pure small chunks)
+
+---
+
+#### 2. Query Rewriting & Analysis
+
+**The Problem:**
+Users often ask ambiguous or incomplete questions:
+- "What does it say about that?" (missing context)
+- "Compare the two approaches" (which approaches?)
+- "Tell me more" (more about what?)
+
+**Podcast Geeker's Solution:**
+
+**Step 1: Conversation Summarization**
+```
+System analyzes your recent questions and answers
+Builds context summary:
+  - Main topics discussed
+  - Entities mentioned
+  - Unresolved questions
+```
+
+**Step 2: Query Analysis**
+```python
+Analyzes your question:
+{
+  "is_clear": true/false,          # Can this be answered?
+  "questions": ["Q1", "Q2", "Q3"], # Reformulated queries
+  "clarification": "..."            # If unclear, what to ask
+}
+```
+
+**Step 3: Clarification (if needed)**
+```
+If question is unclear:
+  System: "Are you asking about [X] or [Y]?"
+  You: Clarify
+  System: Proceeds with clear query
+
+If question is clear:
+  Proceeds directly to search
+```
+
+**Example Flow:**
+```
+You: "What does the third chapter say?"
+↓
+System thinks: "Which document? Let me check conversation history"
+↓
+Context: User was discussing "AI Safety Paper.pdf"
+↓
+Rewritten: "What does chapter 3 of the AI Safety Paper say about [topic from context]?"
+↓
+Search proceeds with clear query
+```
+
+---
+
+#### 3. Self-Correction Mechanism
+
+**The Problem:**
+Sometimes the first search doesn't find good results:
+- Query used wrong keywords
+- Content uses different terminology
+- Search was too specific or too broad
+
+**Traditional RAG Response:**
+```
+Search → Poor results → Return poor answer → User frustrated
+```
+
+**Agentic RAG Response:**
+```
+Search → Evaluate results → If insufficient → Rewrite query → Search again
+```
+
+**How It Works:**
+
+**Step 1: Relevance Evaluation**
+```python
+After initial search:
+  - Check similarity scores
+  - Analyze content relevance
+  - Threshold: If max score < 0.5, results insufficient
+```
+
+**Step 2: Query Refinement**
+```
+System: "Initial search didn't find good matches.
+         Trying alternate phrasing..."
+         
+Original: "transformer architecture"
+Refined: "attention mechanism in neural networks"
+```
+
+**Step 3: Retry Search**
+```
+Execute refined query
+Evaluate new results
+If still insufficient → return best available + flag uncertainty
+```
+
+**Example:**
+```
+You: "How do models prevent hallucinations?"
+↓
+First Search: "prevent hallucinations" (poor matches, score 0.3)
+↓
+Self-Correction: Low relevance detected
+↓
+Refined: "reduce false generation accuracy verification"
+↓
+Second Search: Better matches (score 0.8)
+↓
+Answer: High-quality response with relevant context
+```
+
+**Configuration:**
+```bash
+OPEN_NOTEBOOK_SELF_CORRECTION=true     # Enable feature
+OPEN_NOTEBOOK_MIN_RELEVANCE_SCORE=0.5  # Threshold for retry
+OPEN_NOTEBOOK_MAX_RETRIES=1            # How many retries
+```
+
+---
+
+#### 4. Conversation Memory for Ask Mode
+
+**Traditional Ask Mode:**
+Each question is independent; no memory of previous questions.
+
+**Enhanced Ask Mode:**
+Maintains conversation context across questions.
+
+**How It Works:**
+
+**Step 1: Session Creation** (Optional)
+```typescript
+// Frontend provides session_id
+const response = await ask({
+  question: "What is alignment?",
+  session_id: "conversation-123"
+});
+```
+
+**Step 2: Context Building**
+```
+System loads conversation history:
+  - Previous questions
+  - Previous answers
+  - Topics discussed
+  - Entities mentioned
+
+Generates summary for current query
+```
+
+**Step 3: Enhanced Query Understanding**
+```
+Current question + Conversation summary → Better understanding
+
+Example:
+  Q1: "What is alignment in AI?"
+  A1: [Detailed answer about alignment]
+  Q2: "What are the main challenges?"
+  
+System interprets Q2 as:
+  "What are the main challenges [in AI alignment]?"
+  (inferred from conversation context)
+```
+
+**Example Conversation:**
+```
+You: "What does the paper say about transformers?"
+System: [Finds and explains transformer section]
+
+You: "How does it compare to CNNs?"
+System: [Understands "it" = transformers from context]
+        [Searches for CNN comparisons]
+        [Provides comparative analysis]
+
+You: "What are the limitations?"
+System: [Understands "limitations" = of transformers vs CNNs]
+        [Provides focused answer]
+```
+
+**Configuration:**
+```bash
+OPEN_NOTEBOOK_ASK_MEMORY=true  # Enable conversation memory
+```
+
+---
+
+## Multi-Modal Enhancement (Optional)
+
+**Traditional RAG Limitation:**
+PDFs contain images, tables, equations → Extracted as text-only → Lose semantic information
+
+**RAG-Anything Integration:**
+Optional enhancement layer for comprehensive multi-modal understanding.
+
+### What It Processes
+
+1. **Images & Figures**
+   - Vision model analyzes images
+   - Generates semantic descriptions
+   - Identifies charts, diagrams, photos
+
+2. **Tables**
+   - Extracts table structure
+   - Interprets data relationships
+   - Generates natural language summaries
+
+3. **Equations**
+   - Parses mathematical notation
+   - Converts to LaTeX and text
+   - Explains equation semantics
+
+### How It Works
+
+**Enhancement Pipeline:**
+```
+PDF Upload
+  ↓
+content-core: Extract text (existing)
+  ↓
+RAG-Anything: Analyze non-text elements (optional)
+  ├─ MinerU: Parse document structure
+  ├─ Vision Model: Describe images
+  ├─ Table Interpreter: Structure tables
+  └─ Equation Parser: Understand math
+  ↓
+Merge: Enhanced text with semantic descriptions
+  ↓
+Embed & Store: Standard RAG pipeline
+```
+
+**Example Output:**
+```markdown
+Original PDF Content:
+  "Figure 1 shows the architecture."
+  [Complex diagram image]
+
+Enhanced Content:
+  "Figure 1 shows the architecture.
+  
+  [Figure: Neural network architecture diagram showing an 
+  encoder-decoder structure with attention mechanisms. The 
+  encoder has 6 layers processing input tokens through 
+  self-attention and feed-forward networks...]"
+
+Result: AI can now discuss the diagram content!
+```
+
+### Configuration
+
+```bash
+# Enable multi-modal enhancement
+OPEN_NOTEBOOK_MULTIMODAL_ENHANCE=true
+
+# Choose parser
+OPEN_NOTEBOOK_MULTIMODAL_PARSER=mineru  # or docling
+
+# Requires Vision Model configuration in UI
+# Settings → API Keys → Add Vision-capable model
+```
+
+**Use Cases:**
+- Research papers with complex diagrams
+- Financial reports with data tables
+- Scientific documents with equations
+- Technical manuals with schematics
+
+---
+
+## Configuration Options
+
+All Agentic RAG features are configurable via environment variables:
+
+```bash
+# Phase 1: Hierarchical Indexing
+OPEN_NOTEBOOK_HIERARCHICAL_INDEX=true          # Enable Parent/Child
+OPEN_NOTEBOOK_PARENT_MIN_SIZE=2000             # Parent minimum chars
+OPEN_NOTEBOOK_PARENT_MAX_SIZE=10000            # Parent maximum chars
+OPEN_NOTEBOOK_CHILD_CHUNK_SIZE=500             # Child chunk size
+OPEN_NOTEBOOK_CHILD_CHUNK_OVERLAP=100          # Child overlap
+
+# Phase 2: Query Understanding
+OPEN_NOTEBOOK_QUERY_REWRITE=true               # Enable query rewriting
+OPEN_NOTEBOOK_MAX_SUB_QUERIES=3                # Max sub-queries
+
+# Phase 3: Self-Correction
+OPEN_NOTEBOOK_SELF_CORRECTION=true             # Enable auto-retry
+OPEN_NOTEBOOK_MIN_RELEVANCE_SCORE=0.5          # Retry threshold
+OPEN_NOTEBOOK_MAX_RETRIES=1                    # Retry limit
+
+# Phase 4: Conversation Memory
+OPEN_NOTEBOOK_ASK_MEMORY=true                  # Enable Ask memory
+
+# Phase 5: Multi-modal Enhancement
+OPEN_NOTEBOOK_MULTIMODAL_ENHANCE=true          # Enable RAG-Anything
+OPEN_NOTEBOOK_MULTIMODAL_PARSER=mineru         # Parser choice
+```
+
+**Defaults:**
+- All features are **disabled by default** for backward compatibility
+- Enable incrementally as needed
+- No performance impact when disabled
+
+---
+
 ## How RAG Works: Three Stages
 
 ### Stage 1: Content Preparation
 
-When you upload a source, Open Notebook prepares it for retrieval:
+When you upload a source, Podcast Geeker prepares it for retrieval:
 
 ```
 1. EXTRACT TEXT
@@ -50,16 +418,40 @@ When you upload a source, Open Notebook prepares it for retrieval:
    Audio → transcribed text
    Video → subtitles + transcription
 
-2. CHUNK INTO PIECES
-   Long documents → break into ~500-word chunks
-   Why? AI context has limits; smaller pieces are more precise
+2. HIERARCHICAL CHUNKING (if enabled)
+   A. Create Parent Chunks:
+      - Split by semantic boundaries (headings, sections)
+      - Size: 2000-10000 characters
+      - Maintain document structure
+   
+   B. Create Child Chunks:
+      - Within each parent, split into smaller pieces
+      - Size: ~500 characters with 100-char overlap
+      - Enable precise search
+   
+   C. Link Parent-Child relationships
+      - Each child knows its parent
+      - Enables context retrieval
 
-3. CREATE EMBEDDINGS
+   Traditional Mode (default):
+      - Fixed-size chunks (~1200 chars)
+      - No parent-child relationships
+
+3. MULTI-MODAL ENHANCEMENT (optional)
+   If enabled + PDF + Vision model configured:
+   - Analyze images with vision model
+   - Extract table structures
+   - Parse equation semantics
+   - Merge descriptions into text
+
+4. CREATE EMBEDDINGS
    Each chunk → semantic vector (numbers representing meaning)
    Why? Allows finding chunks by similarity, not just keywords
 
-4. STORE IN DATABASE
-   Chunks + embeddings + metadata → searchable storage
+5. STORE IN DATABASE
+   - Child chunks + embeddings → searchable
+   - Parent chunks → context repository
+   - Metadata: source, page, position
 ```
 
 **Example:**
@@ -68,51 +460,123 @@ Source: "AI Safety Research 2026" (50-page PDF)
 ↓
 Extracted: 50 pages of text
 ↓
-Chunked: 150 chunks (~500 words each)
+Hierarchical Chunking (if enabled):
+  - 20 Parent chunks (by sections)
+  - 150 Child chunks (within parents)
+  - Links: Child → Parent relationships
 ↓
-Embedded: Each chunk gets a vector (1536 numbers for OpenAI)
+Multi-modal (if enabled):
+  - 5 figures analyzed with vision model
+  - 3 tables structured and described
+  - 10 equations parsed to LaTeX + text
 ↓
-Stored: Ready for search
+Embedded: 
+  - Child chunks get vectors (1536 numbers for OpenAI)
+  - Ready for semantic search
+↓
+Stored: Ready for intelligent retrieval
 ```
 
 ---
 
 ### Stage 2: Query Time (What You Search For)
 
-When you ask a question, the system finds relevant content:
+When you ask a question, the system intelligently finds relevant content:
 
 ```
 1. YOU ASK A QUESTION
    "What does the paper say about alignment?"
 
-2. SYSTEM CONVERTS QUESTION TO EMBEDDING
-   Your question → vector (same way chunks are vectorized)
+2. CONVERSATION SUMMARIZATION (if Ask memory enabled)
+   - Load recent conversation history
+   - Extract context: topics, entities, unresolved questions
+   - Build summary for query understanding
 
-3. SIMILARITY SEARCH
-   Find chunks most similar to your question
-   (using vector math, not keyword matching)
+3. QUERY ANALYSIS & REWRITING (if enabled)
+   - Analyze question clarity
+   - Reformulate for better search
+   - Expand with conversation context
+   - Detect if clarification needed
+   
+   Example transformations:
+   "What about the third approach?" 
+   → "What does the AI Safety paper say about the third 
+      alignment approach mentioned in section 3.2?"
 
-4. RETURN TOP RESULTS
-   Usually top 5-10 most similar chunks
+4. CLARIFICATION GATE (if question unclear)
+   - System asks: "Are you referring to [X] or [Y]?"
+   - You provide clarification
+   - System proceeds with clear query
 
-5. YOU GET BACK
-   ✓ The relevant chunks
-   ✓ Where they came from (sources + page numbers)
-   ✓ Relevance scores
+5. HIERARCHICAL SEARCH (if enabled)
+   A. Search Child Chunks:
+      - Convert question to embedding vector
+      - Find top-N most similar child chunks
+      - Score: semantic similarity (0-1)
+   
+   B. Evaluate Relevance:
+      - Check if results are sufficient (score > threshold)
+      - If insufficient → trigger self-correction
+   
+   C. Retrieve Parent Context:
+      - For relevant child chunks
+      - Get their parent chunks
+      - Provides full context around matches
+   
+   Traditional Search (default):
+   - Single-level chunk search
+   - No parent retrieval
+
+6. SELF-CORRECTION (if enabled and results poor)
+   - Rewrite query with alternate phrasing
+   - Retry search with new query
+   - Compare results quality
+   - Use best available
+
+7. RETURN RESULTS
+   ✓ Relevant child chunks (precision)
+   ✓ Parent chunks (context)
+   ✓ Source information (citations)
+   ✓ Relevance scores (confidence)
 ```
 
-**Example:**
+**Example Flow:**
 ```
-Q: "What does the paper say about alignment?"
+Q: "What does it say about alignment?"
 ↓
-Q vector: [0.23, -0.51, 0.88, ..., 0.12]
+Conversation Summary: User discussing "AI Safety paper"
 ↓
-Search: Compare to all chunk vectors
+Query Rewrite: "What does the AI Safety paper say about 
+                alignment approaches and challenges?"
 ↓
-Results:
+Search Child Chunks:
   - Chunk 47 (alignment section): similarity 0.94
   - Chunk 63 (safety approaches): similarity 0.88
   - Chunk 12 (related work): similarity 0.71
+↓
+Evaluate: Good results (top score 0.94 > 0.5 threshold)
+↓
+Retrieve Parents:
+  - Parent of Chunk 47: Full "Alignment Methods" section
+  - Parent of Chunk 63: Full "Safety Framework" section
+↓
+Result: Precise matches + full contextual sections
+```
+
+**With Self-Correction:**
+```
+Q: "How do you prevent model errors?"
+↓
+First Search: "prevent model errors" → poor matches (max score 0.3)
+↓
+Self-Correction Triggered: Results insufficient
+↓
+Query Refinement: "reduce neural network hallucination 
+                   false generation accuracy verification"
+↓
+Second Search: Better matches (score 0.8)
+↓
+Result: High-quality answer with relevant sources
 ```
 
 ---
@@ -147,7 +611,7 @@ SYSTEM ADDS CITATIONS:
 
 ## Two Search Modes: Exact vs. Semantic
 
-Open Notebook provides two different search strategies for different goals.
+Podcast Geeker provides two different search strategies for different goals.
 
 ### 1. Text Search (Keyword Matching)
 
@@ -197,7 +661,7 @@ Why? The vectors are semantically similar to your concept.
 
 ## Context Management: Your Control Panel
 
-Here's where Open Notebook is different: **You decide what the AI sees.**
+Here's where Podcast Geeker is different: **You decide what the AI sees.**
 
 ### The Three Levels
 
@@ -314,42 +778,61 @@ AI:
 ```
 YOU:
   Ask one complex question
+  (Optional: provide session_id for conversation memory)
 
 SYSTEM:
-  1. Analyzes your question
-  2. Searches across ALL your sources automatically
-  3. Finds relevant chunks using vector similarity
-  4. Retrieves only the most relevant pieces
-  5. Sends ONLY those chunks to the LLM
-  6. Synthesizes into comprehensive answer
+  1. Summarize conversation (if session_id provided)
+  2. Analyze and rewrite query (if enabled)
+  3. Check clarity (if enabled)
+     - Clear → proceed
+     - Unclear → ask clarification
+  4. Search child chunks using vector similarity
+  5. Evaluate relevance (if enabled)
+     - Sufficient → proceed
+     - Insufficient → rewrite and retry
+  6. Retrieve parent chunks for context (if enabled)
+  7. Synthesize comprehensive answer
+  8. Add citations with context
 
 AI:
-  - Sees ONLY the retrieved chunks (not full sources)
-  - Answers based on what was found to be relevant
-  - One-shot answer (not conversational)
+  - Sees retrieved chunks + parent context
+  - Answers based on best available evidence
+  - Maintains conversation context (if enabled)
+  - Can reference previous questions
 ```
+
+**Enhanced Features (when enabled):**
+- **Query Understanding**: Rewrites ambiguous questions
+- **Conversation Memory**: Remembers previous questions
+- **Self-Correction**: Retries with better queries if needed
+- **Hierarchical Context**: Balances precision and completeness
+- **Multi-modal**: Understands images, tables, equations in PDFs
 
 **Use this when**:
 - You have many sources and don't know which are relevant
 - You want the AI to search automatically
 - You need a comprehensive answer to a complex question
 - You want to minimize tokens sent to LLM
+- You want ongoing conversation support (with session_id)
 
 **Advantages:**
-- Automatic search (you don't pick sources)
+- Automatic intelligent search
 - Works across many sources at once
-- Cost-effective (sends only relevant chunks)
+- Cost-effective (sends only relevant chunks + context)
+- Self-improving (corrects poor initial searches)
+- Context-aware (remembers conversation)
+- Multi-modal understanding (optional)
 
 **Limitations:**
-- Not conversational (single question/answer)
-- AI only sees retrieved chunks (might miss context)
-- Search quality depends on how well question matches content
+- Can be conversational with session_id (new feature!)
+- AI sees retrieved chunks (but with parent context for completeness)
+- Search quality depends on query understanding (improved with rewriting)
 
 ---
 
 ## What This Means: Privacy by Design
 
-Open Notebook's RAG approach gives you something you don't get with ChatGPT or Claude directly:
+Podcast Geeker's RAG approach gives you something you don't get with ChatGPT or Claude directly:
 
 **You control the boundary between:**
 - What stays private (on your system)
@@ -425,7 +908,7 @@ This is why semantic search finds conceptually similar content even when words a
 
 ## Summary
 
-Open Notebook gives you **two ways** to work with AI:
+Podcast Geeker gives you **two ways** to work with AI:
 
 ### Chat (Full-Content)
 - Sends entire selected sources to LLM
@@ -434,11 +917,14 @@ Open Notebook gives you **two ways** to work with AI:
 - Transparent: you know exactly what AI sees
 - Best for: focused analysis, close reading
 
-### Ask (RAG)
-- Searches and retrieves relevant chunks automatically
+### Ask (Advanced Agentic RAG)
+- Intelligently searches and retrieves relevant content
 - Automatic: AI finds what's relevant
-- One-shot: single comprehensive answer
-- Efficient: sends only relevant pieces
+- Conversational: supports session memory (optional)
+- Self-improving: corrects poor searches automatically
+- Context-aware: hierarchical parent/child chunking
+- Multi-modal: understands images, tables, equations (optional)
+- Efficient: sends only relevant pieces + context
 - Best for: broad questions across many sources
 
 **Both approaches:**
@@ -447,4 +933,30 @@ Open Notebook gives you **two ways** to work with AI:
 3. Create audit trails (citations show what was used)
 4. Support multiple AI providers
 
-**Coming Soon**: The community is working on adding RAG capabilities to Chat as well, giving you the best of both worlds.
+**New Agentic RAG Capabilities:**
+- 🧠 **Hierarchical Indexing**: Parent/Child chunks for precision + context
+- 🔄 **Query Understanding**: Automatic rewriting and clarification
+- ✨ **Self-Correction**: Retry with refined queries when needed
+- 💭 **Conversation Memory**: Maintain context across questions in Ask mode
+- 🖼️ **Multi-modal Enhancement**: Understand images, tables, and equations
+
+**Configuration:**
+All advanced features are opt-in via environment variables. Enable what you need:
+```bash
+OPEN_NOTEBOOK_HIERARCHICAL_INDEX=true    # Better context
+OPEN_NOTEBOOK_QUERY_REWRITE=true         # Smarter queries
+OPEN_NOTEBOOK_SELF_CORRECTION=true       # Auto-retry
+OPEN_NOTEBOOK_ASK_MEMORY=true            # Conversation memory
+OPEN_NOTEBOOK_MULTIMODAL_ENHANCE=true    # Multi-modal PDFs
+```
+
+---
+
+## Acknowledgments
+
+The Advanced Agentic RAG capabilities in Podcast Geeker are inspired by and adapted from:
+
+- **[agentic-rag-for-dummies](https://github.com/GiovanniPasq/agentic-rag-for-dummies)** (MIT License) - Hierarchical indexing, query rewriting, and self-correction strategies
+- **[RAG-Anything](https://github.com/HKUDS/RAG-Anything)** (MIT License) - Multi-modal content understanding for PDFs
+
+We've integrated these approaches into Podcast Geeker's LangGraph + SurrealDB architecture while maintaining full backward compatibility.

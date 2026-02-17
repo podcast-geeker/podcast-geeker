@@ -9,12 +9,23 @@ from open_notebook.database.repository import ensure_record_id
 from open_notebook.domain.notebook import Source
 from open_notebook.domain.transformation import Transformation
 
-try:
-    from open_notebook.graphs.source import source_graph
-    from open_notebook.graphs.transformation import graph as transform_graph
-except ImportError as e:
-    logger.error(f"Failed to import graphs: {e}")
-    raise ValueError("graphs not available")
+
+def _load_source_graph():
+    try:
+        from open_notebook.graphs.source import source_graph
+    except ImportError as e:
+        logger.error(f"Failed to import source graph: {e}")
+        raise ValueError("source graph not available") from e
+    return source_graph
+
+
+def _load_transform_graph():
+    try:
+        from open_notebook.graphs.transformation import graph as transform_graph
+    except ImportError as e:
+        logger.error(f"Failed to import transformation graph: {e}")
+        raise ValueError("transformation graph not available") from e
+    return transform_graph
 
 
 def full_model_dump(model):
@@ -66,6 +77,7 @@ async def process_source_command(
     start_time = time.time()
 
     try:
+        source_graph = _load_source_graph()
         logger.info(f"Starting source processing for source: {input_data.source_id}")
         logger.info(f"Notebook IDs: {input_data.notebook_ids}")
         logger.info(f"Transformations: {input_data.transformations}")
@@ -210,6 +222,7 @@ async def run_transformation_command(
     start_time = time.time()
 
     try:
+        transform_graph = _load_transform_graph()
         logger.info(
             f"Running transformation {input_data.transformation_id} "
             f"on source {input_data.source_id}"

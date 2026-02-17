@@ -1,6 +1,6 @@
 # Interface Overview - Finding Your Way Around
 
-Open Notebook uses a clean three-panel layout. This guide shows you where everything is.
+Podcast Geeker uses a clean three-panel layout. This guide shows you where everything is.
 
 ---
 

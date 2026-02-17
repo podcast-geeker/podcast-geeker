@@ -1,60 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Gradient Definitions -->
   <defs>
-    <linearGradient id="nodeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#bd34fe;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#41d1ff;stop-opacity:1" />
+    <radialGradient id="sphereA" cx="50%" cy="38%" r="68%">
+      <stop offset="0%" stop-color="#9CFDFF" />
+      <stop offset="42%" stop-color="#56B9FF" />
+      <stop offset="100%" stop-color="#3C65FF" />
+    </radialGradient>
+    <radialGradient id="sphereB" cx="48%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#B4FFBE" />
+      <stop offset="45%" stop-color="#6AF37F" />
+      <stop offset="100%" stop-color="#27A95F" />
+    </radialGradient>
+    <radialGradient id="sphereC" cx="48%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#E0D3FF" />
+      <stop offset="48%" stop-color="#AB8BFF" />
+      <stop offset="100%" stop-color="#6E59D7" />
+    </radialGradient>
+    <linearGradient id="linkBlueGreen" x1="70" y1="120" x2="176" y2="70" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#56D9FF" stop-opacity="0.82" />
+      <stop offset="100%" stop-color="#83FF9D" stop-opacity="0.82" />
     </linearGradient>
-    <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#bd34fe;stop-opacity:0.3" />
-      <stop offset="100%" style="stop-color:#41d1ff;stop-opacity:0.3" />
+    <linearGradient id="linkBluePurple" x1="70" y1="120" x2="165" y2="170" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6BF0FF" stop-opacity="0.78" />
+      <stop offset="100%" stop-color="#C18EFF" stop-opacity="0.78" />
     </linearGradient>
+    <linearGradient id="linkPurpleGreen" x1="176" y1="70" x2="165" y2="170" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#89FFA4" stop-opacity="0.7" />
+      <stop offset="100%" stop-color="#B38CFF" stop-opacity="0.7" />
+    </linearGradient>
+    <filter id="nodeGlow" x="-70%" y="-70%" width="250%" height="250%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="linkGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.2" />
+    </filter>
   </defs>
 
-  <!-- Connection Lines -->
-  <g class="connections">
-    <path d="M120 80L80 120" stroke="url(#lineGradient)" stroke-width="2"/>
-    <path d="M120 80L160 120" stroke="url(#lineGradient)" stroke-width="2"/>
-    <path d="M80 120L120 160" stroke="url(#lineGradient)" stroke-width="2"/>
-    <path d="M160 120L120 160" stroke="url(#lineGradient)" stroke-width="2"/>
-    <path d="M80 120L160 120" stroke="url(#lineGradient)" stroke-width="2"/>
+  <g class="connections" filter="url(#linkGlow)">
+    <path d="M74 122C95 95 130 82 172 72" stroke="url(#linkBlueGreen)" stroke-width="9" stroke-linecap="round" />
+    <path d="M74 124C102 142 126 155 162 168" stroke="url(#linkBluePurple)" stroke-width="9" stroke-linecap="round" />
+    <path d="M174 76C177 112 174 135 166 165" stroke="url(#linkPurpleGreen)" stroke-width="8" stroke-linecap="round" />
+    <path d="M70 124C62 110 56 94 52 78" stroke="url(#linkBlueGreen)" stroke-width="4.5" stroke-linecap="round" />
+    <path d="M165 170C184 176 196 188 204 204" stroke="url(#linkBluePurple)" stroke-width="4.5" stroke-linecap="round" />
   </g>
 
-  <!-- Nodes -->
   <g class="nodes">
-    <!-- Central Node -->
-    <circle cx="120" cy="80" r="20" fill="url(#nodeGradient)"/>
-    <circle cx="120" cy="80" r="24" stroke="url(#nodeGradient)" stroke-width="1" fill="none"/>
-    
-    <!-- Left Node -->
-    <circle cx="80" cy="120" r="16" fill="url(#nodeGradient)"/>
-    <circle cx="80" cy="120" r="20" stroke="url(#nodeGradient)" stroke-width="1" fill="none"/>
-    
-    <!-- Right Node -->
-    <circle cx="160" cy="120" r="16" fill="url(#nodeGradient)"/>
-    <circle cx="160" cy="120" r="20" stroke="url(#nodeGradient)" stroke-width="1" fill="none"/>
-    
-    <!-- Bottom Node -->
-    <circle cx="120" cy="160" r="18" fill="url(#nodeGradient)"/>
-    <circle cx="120" cy="160" r="22" stroke="url(#nodeGradient)" stroke-width="1" fill="none"/>
+    <g class="node node-left" transform="translate(0 0)">
+      <circle cx="70" cy="124" r="34" fill="#74FE8B" fill-opacity="0.32" filter="url(#nodeGlow)" />
+      <circle cx="70" cy="124" r="22" fill="url(#sphereA)" />
+      <circle cx="70" cy="124" r="22" fill="none" stroke="#A6FFFF" stroke-opacity="0.5" stroke-width="1.1" />
+      <path d="M57 116C63 111 74 111 83 116C78 121 68 124 58 122" fill="#C8FFFF" fill-opacity="0.25" />
+    </g>
+
+    <g class="node node-top" transform="translate(0 0)">
+      <circle cx="176" cy="72" r="30" fill="#80FFA9" fill-opacity="0.34" filter="url(#nodeGlow)" />
+      <circle cx="176" cy="72" r="18.5" fill="url(#sphereB)" />
+      <circle cx="176" cy="72" r="18.5" fill="none" stroke="#D7FFD5" stroke-opacity="0.5" stroke-width="1" />
+      <path d="M166 66C171 61 179 62 185 66C180 70 172 72 166 70" fill="#E7FFE8" fill-opacity="0.24" />
+    </g>
+
+    <g class="node node-bottom" transform="translate(0 0)">
+      <circle cx="165" cy="170" r="32" fill="#B797FF" fill-opacity="0.32" filter="url(#nodeGlow)" />
+      <circle cx="165" cy="170" r="20.5" fill="url(#sphereC)" />
+      <circle cx="165" cy="170" r="20.5" fill="none" stroke="#E9DDFF" stroke-opacity="0.45" stroke-width="1" />
+      <path d="M154 163C159 158 170 158 177 163C171 168 160 170 154 168" fill="#F2EAFF" fill-opacity="0.22" />
+    </g>
+
+    <g class="node node-sat-a" transform="translate(0 0)">
+      <circle cx="51" cy="75" r="18" fill="#6DE9FF" fill-opacity="0.28" filter="url(#nodeGlow)" />
+      <circle cx="51" cy="75" r="11.5" fill="url(#sphereA)" />
+      <circle cx="51" cy="75" r="11.5" fill="none" stroke="#C7F9FF" stroke-opacity="0.38" stroke-width="0.9" />
+    </g>
+
+    <g class="node node-sat-b" transform="translate(0 0)">
+      <circle cx="206" cy="206" r="18" fill="#B7A4FF" fill-opacity="0.28" filter="url(#nodeGlow)" />
+      <circle cx="206" cy="206" r="10.5" fill="url(#sphereC)" />
+      <circle cx="206" cy="206" r="10.5" fill="none" stroke="#E9DDFF" stroke-opacity="0.35" stroke-width="0.9" />
+    </g>
   </g>
 
-  <!-- Pulse Animation -->
   <style>
     @keyframes pulse {
       0% { transform: scale(1); opacity: 0.8; }
       50% { transform: scale(1.1); opacity: 1; }
       100% { transform: scale(1); opacity: 0.8; }
     }
-    .nodes circle {
+    .node {
+      transform-origin: center;
       animation: pulse 3s infinite ease-in-out;
     }
-    .nodes circle:nth-child(2n) {
+    .node-top {
       animation-delay: 1s;
     }
-    .nodes circle:nth-child(3n) {
+    .node-bottom {
       animation-delay: 2s;
+    }
+    .node-sat-a {
+      animation-delay: 0.6s;
+    }
+    .node-sat-b {
+      animation-delay: 1.6s;
     }
   </style>
 </svg>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
@@ -42,6 +42,7 @@ import {
   Wrench,
   Command,
 } from 'lucide-react'
+import { useTheme } from 'next-themes'
 
 const getNavigation = (t: TranslationKeys) => [
   {
@@ -78,7 +79,8 @@ type CreateTarget = 'source' | 'notebook' | 'podcast'
 
 export function AppSidebar() {
   const { t } = useTranslation()
-  const navigation = getNavigation(t)
+  const { resolvedTheme } = useTheme()
+  const navigation = useMemo(() => getNavigation(t), [t])
   const pathname = usePathname()
   const { logout } = useAuth()
   const { isCollapsed, toggleCollapse } = useSidebarStore()
@@ -86,6 +88,7 @@ export function AppSidebar() {
 
   const [createMenuOpen, setCreateMenuOpen] = useState(false)
   const [isMac, setIsMac] = useState(true) // Default to Mac for SSR
+  const logoSrc = '/logo-neon-ultra-soft.svg'
 
   // Detect platform for keyboard shortcut display
   useEffect(() => {
@@ -108,23 +111,23 @@ export function AppSidebar() {
     <TooltipProvider delayDuration={0}>
       <div
         className={cn(
-          'app-sidebar flex h-full flex-col bg-sidebar border-sidebar-border border-r transition-all duration-300',
-          isCollapsed ? 'w-16' : 'w-64'
+          'app-sidebar sidebar-neon-theme flex h-full flex-col bg-sidebar border-sidebar-border border-r transition-all duration-300',
+          isCollapsed ? 'w-16' : 'w-72'
         )}
       >
         <div
           className={cn(
-            'flex h-16 items-center group',
-            isCollapsed ? 'justify-center px-2' : 'justify-between px-4'
+            'relative flex group border-b border-sidebar-border/60',
+            isCollapsed ? 'h-16 items-center justify-center px-2' : 'h-28 items-center justify-center px-4 py-3'
           )}
         >
           {isCollapsed ? (
             <div className="relative flex items-center justify-center w-full">
               <Image
-                src="/logo.svg"
-                alt="Open Notebook"
-                width={32}
-                height={32}
+                src={logoSrc}
+                alt="Podcast Geeker"
+                width={42}
+                height={42}
                 className="transition-opacity group-hover:opacity-0"
               />
               <Button
@@ -138,9 +141,9 @@ export function AppSidebar() {
             </div>
           ) : (
             <>
-              <div className="flex items-center gap-2">
-                <Image src="/logo.svg" alt={t.common.appName} width={32} height={32} />
-                <span className="text-base font-medium text-sidebar-foreground">
+              <div className="flex flex-col items-center justify-center gap-1.5 text-center">
+                <Image src={logoSrc} alt={t.common.appName} width={68} height={68} />
+                <span className="text-base font-semibold leading-tight text-sidebar-foreground">
                   {t.common.appName}
                 </span>
               </div>
@@ -148,7 +151,7 @@ export function AppSidebar() {
                 variant="ghost"
                 size="sm"
                 onClick={toggleCollapse}
-                className="text-sidebar-foreground hover:bg-sidebar-accent"
+                className="absolute right-2 top-2 text-sidebar-foreground hover:bg-sidebar-accent"
                 data-testid="sidebar-toggle"
               >
                 <ChevronLeft className="h-4 w-4" />
@@ -272,7 +275,7 @@ export function AppSidebar() {
                     return (
                       <Tooltip key={item.name}>
                         <TooltipTrigger asChild>
-                          <Link href={item.href}>
+                          <Link href={item.href} prefetch>
                             {button}
                           </Link>
                         </TooltipTrigger>
@@ -282,7 +285,7 @@ export function AppSidebar() {
                   }
 
                   return (
-                    <Link key={item.name} href={item.href}>
+                    <Link key={item.name} href={item.href} prefetch>
                       {button}
                     </Link>
                   )

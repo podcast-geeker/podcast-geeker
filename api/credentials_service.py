@@ -517,7 +517,8 @@ async def discover_with_config(provider: str, config: dict) -> List[dict]:
     if provider == "ollama":
         ollama_url = base_url or "http://localhost:11434"
         try:
-            async with httpx.AsyncClient() as client:
+            # Avoid system proxy settings for local/self-hosted Ollama discovery.
+            async with httpx.AsyncClient(trust_env=False) as client:
                 response = await client.get(f"{ollama_url}/api/tags", timeout=10.0)
                 response.raise_for_status()
                 data = response.json()

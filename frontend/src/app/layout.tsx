@@ -8,12 +8,21 @@ import { ErrorBoundary } from "@/components/common/ErrorBoundary";
 import { ConnectionGuard } from "@/components/common/ConnectionGuard";
 import { themeScript } from "@/lib/theme-script";
 import { I18nProvider } from "@/components/providers/I18nProvider";
+import { CharacterCursor } from "@/components/cursor/character-cursor";
 
 const inter = Inter({ subsets: ["latin"] });
+const enableCharacterCursor = process.env.NEXT_PUBLIC_ENABLE_CHARACTER_CURSOR === "true";
 
 export const metadata: Metadata = {
-  title: "Open Notebook",
+  title: "Podcast Geeker",
   description: "Privacy-focused research and knowledge management",
+  icons: {
+    icon: [
+      { url: "/logo-neon-ultra-soft.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/logo-neon-ultra-soft.svg",
+    apple: "/logo-neon-ultra-soft.svg",
+  },
 };
 
 export default function RootLayout({
@@ -27,6 +36,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className={inter.className}>
+        {enableCharacterCursor && <CharacterCursor />}
         <ErrorBoundary>
           <ThemeProvider>
             <QueryProvider>

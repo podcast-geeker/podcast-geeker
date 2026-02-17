@@ -39,6 +39,7 @@ from open_notebook.utils.encryption import get_secret_from_env
 
 # Import commands to register them in the API process
 try:
+    import commands  # noqa: F401
     logger.info("Commands imported in API process")
 except Exception as e:
     logger.error(f"Failed to import commands in API process: {e}")
@@ -97,8 +98,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="Open Notebook API",
-    description="API for Open Notebook - Research Assistant",
+    title="Podcast Geeker API",
+    description="API for Podcast Geeker - Research Assistant",
     lifespan=lifespan,
 )
 
@@ -181,7 +182,7 @@ app.include_router(credentials.router, prefix="/api", tags=["credentials"])
 
 @app.get("/")
 async def root():
-    return {"message": "Open Notebook API is running"}
+    return {"message": "Podcast Geeker API is running"}
 
 
 @app.get("/health")

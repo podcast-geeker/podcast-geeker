@@ -1,16 +1,16 @@
 # Model Context Protocol (MCP) Integration
 
-Open Notebook can be seamlessly integrated into your AI workflows using the **Model Context Protocol (MCP)**, enabling direct access to your notebooks, sources, and chat functionality from AI assistants like Claude Desktop and VS Code extensions.
+Podcast Geeker can be seamlessly integrated into your AI workflows using the **Model Context Protocol (MCP)**, enabling direct access to your notebooks, sources, and chat functionality from AI assistants like Claude Desktop and VS Code extensions.
 
 ## What is MCP?
 
-The [Model Context Protocol](https://modelcontextprotocol.io) is an open standard that allows AI applications to securely connect to external data sources and tools. With the Open Notebook MCP server, you can:
+The [Model Context Protocol](https://modelcontextprotocol.io) is an open standard that allows AI applications to securely connect to external data sources and tools. With the Podcast Geeker MCP server, you can:
 
 - 📚 **Access your notebooks** directly from Claude Desktop or VS Code
 - 🔍 **Search your research content** without leaving your AI assistant
 - 💬 **Create and manage chat sessions** with your research as context
 - 📝 **Generate notes** and insights on-the-fly
-- 🤖 **Automate workflows** using the full Open Notebook API
+- 🤖 **Automate workflows** using the full Podcast Geeker API
 
 ## Quick Setup
 
@@ -81,12 +81,12 @@ Add to your VS Code settings or `.vscode/mcp.json`:
 
 ## Configuration
 
-- **OPEN_NOTEBOOK_URL**: URL to your Open Notebook API (default: `http://localhost:5055`)
+- **OPEN_NOTEBOOK_URL**: URL to your Podcast Geeker API (default: `http://localhost:5055`)
 - **OPEN_NOTEBOOK_PASSWORD**: Optional - only needed if you've enabled password protection
 
 ### For Remote Servers
 
-If your Open Notebook instance is running on a remote server, update the URL accordingly:
+If your Podcast Geeker instance is running on a remote server, update the URL accordingly:
 
 ```json
 "OPEN_NOTEBOOK_URL": "http://192.168.1.100:5055"
@@ -110,11 +110,11 @@ Once connected, you can ask Claude or your AI assistant to:
 - _"Add this PDF to my research notebook"_
 - _"Show me all notes in [notebook name]"_
 
-The MCP server provides full access to Open Notebook's capabilities, allowing you to manage your research seamlessly from within your AI assistant.
+The MCP server provides full access to Podcast Geeker's capabilities, allowing you to manage your research seamlessly from within your AI assistant.
 
 ## Available Tools
 
-The Open Notebook MCP server exposes these capabilities:
+The Podcast Geeker MCP server exposes these capabilities:
 
 ### Notebooks
 
@@ -167,7 +167,7 @@ The Open Notebook MCP server exposes these capabilities:
 
 ## MCP Server Repository
 
-The Open Notebook MCP server is developed and maintained by the Epochal team:
+The Podcast Geeker MCP server is developed and maintained by the Epochal team:
 
 **🔗 GitHub**: [Epochal-dev/open-notebook-mcp](https://github.com/Epochal-dev/open-notebook-mcp)
 
@@ -175,7 +175,7 @@ Contributions, issues, and feature requests are welcome!
 
 ## Finding the Server
 
-The Open Notebook MCP server is published to the official MCP Registry:
+The Podcast Geeker MCP server is published to the official MCP Registry:
 
 - **Registry**: Search for "open-notebook" at [registry.modelcontextprotocol.io](https://registry.modelcontextprotocol.io)
 - **PyPI**: [pypi.org/project/open-notebook-mcp](https://pypi.org/project/open-notebook-mcp)
@@ -192,7 +192,7 @@ The Open Notebook MCP server is published to the official MCP Registry:
 
 ## Using with Other MCP Clients
 
-The Open Notebook MCP server follows the standard MCP protocol and can be used with any MCP-compatible client. Check your client's documentation for configuration details.
+The Podcast Geeker MCP server follows the standard MCP protocol and can be used with any MCP-compatible client. Check your client's documentation for configuration details.
 
 ## Learn More
 

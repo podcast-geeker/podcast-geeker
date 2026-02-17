@@ -1,6 +1,6 @@
 # Local Development Setup
 
-This guide walks you through setting up Open Notebook for local development. Follow these steps to get the full stack running on your machine.
+This guide walks you through setting up Podcast Geeker for local development. Follow these steps to get the full stack running on your machine.
 
 ## Prerequisites
 
@@ -17,11 +17,11 @@ Before you start, ensure you have the following installed:
 
 ```bash
 # Clone the repository
-git clone https://github.com/lfnovo/open-notebook.git
+git clone https://github.com/podcast-geeker/podcast-geeker.git
 cd open-notebook
 
 # Add upstream remote for keeping your fork updated
-git remote add upstream https://github.com/lfnovo/open-notebook.git
+git remote add upstream https://github.com/podcast-geeker/podcast-geeker.git
 ```
 
 ## Step 2: Install Python Dependencies

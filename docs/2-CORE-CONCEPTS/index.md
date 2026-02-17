@@ -1,25 +1,29 @@
 # Core Concepts - Understand the Mental Model
 
-Before diving into how to use Open Notebook, it's important to understand **how it thinks**. These core concepts explain the "why" behind the design.
+Before diving into how to use Podcast Geeker, it's important to understand **how it thinks**. These core concepts explain the "why" behind the design.
 
 ## The Five Mental Models
 
 ### 1. [Notebooks, Sources, and Notes](notebooks-sources-notes.md)
-How Open Notebook organizes your research. Understand the three-tier container structure and how information flows from raw materials to finished insights.
+How Podcast Geeker organizes your research. Understand the three-tier container structure and how information flows from raw materials to finished insights.
 
 **Key idea**: A notebook is a scoped research container. Sources are inputs (PDFs, URLs, etc.). Notes are outputs (your insights, AI-generated summaries, captured responses).
 
 ---
 
 ### 2. [AI Context & RAG](ai-context-rag.md)
-How Open Notebook makes AI aware of your research - two different approaches.
+How Podcast Geeker makes AI aware of your research with Advanced Agentic RAG capabilities.
 
-**Key idea**: **Chat** sends entire selected sources to the LLM (full context, conversational). **Ask** uses RAG (retrieval-augmented generation) to automatically search and retrieve only relevant chunks. Different tools for different needs.
+**Key idea**: **Chat** sends entire selected sources to the LLM (full context, conversational). **Ask** uses advanced Agentic RAG with hierarchical indexing, query understanding, self-correction, and optional multi-modal support to automatically search and retrieve relevant content. Different tools for different needs.
+
+**New**: Podcast Geeker now features state-of-the-art RAG enhancements including parent/child chunking, intelligent query rewriting, automatic result correction, and conversation memory.
+
+**📖 Advanced Topics**: [Agentic RAG Enhancement Technical Overview](agentic-rag-enhancement.md) - Deep dive into the technical implementation
 
 ---
 
 ### 3. [Chat vs. Transformations](chat-vs-transformations.md)
-Why Open Notebook has different interaction modes and when to use each one.
+Why Podcast Geeker has different interaction modes and when to use each one.
 
 **Key idea**: Chat is conversational exploration (you control context). Transformations are insight extractions. They reduced content to smaller bits of concentrated/dense information, which is much more suitable for an AI to use. 
 
@@ -33,7 +37,7 @@ Your control panel for privacy and cost. Decide what data actually reaches AI.
 ---
 
 ### 5. [Podcasts Explained](podcasts-explained.md)
-Why Open Notebook can turn research into audio and why this matters.
+Why Podcast Geeker can turn research into audio and why this matters.
 
 **Key idea**: Podcasts transform your research into a different consumption format. Instead of reading, someone can listen and absorb your insights passively.
 
@@ -41,7 +45,7 @@ Why Open Notebook can turn research into audio and why this matters.
 
 ## Read This Section If:
 
-- **You're new to Open Notebook** — Start here to understand how the system works conceptually before learning the features
+- **You're new to Podcast Geeker** — Start here to understand how the system works conceptually before learning the features
 - **You're confused about Chat vs Ask** — Section 2 explains the difference (full-content vs RAG)
 - **You're wondering when to use Chat vs Transformations** — Section 3 clarifies the differences
 - **You want to understand privacy controls** — Section 4 shows you what you can control
@@ -51,7 +55,7 @@ Why Open Notebook can turn research into audio and why this matters.
 
 ## The Big Picture
 
-Open Notebook is built on a simple insight: **Your research deserves to stay yours**.
+Podcast Geeker is built on a simple insight: **Your research deserves to stay yours**.
 
 That means:
 - **Privacy by default** — Your data doesn't leave your infrastructure unless you explicitly choose

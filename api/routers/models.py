@@ -276,6 +276,7 @@ async def test_model(model_id: str):
         raise HTTPException(status_code=404, detail="Model not found")
 
     try:
+        await provision_provider_keys(model.provider)
         success, message = await test_individual_model(model)
         return ModelTestResponse(success=success, message=message)
     except Exception as e:

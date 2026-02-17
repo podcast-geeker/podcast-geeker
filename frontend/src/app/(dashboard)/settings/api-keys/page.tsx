@@ -116,7 +116,7 @@ const PROVIDER_DOCS: Record<string, string> = {
   elevenlabs: 'https://elevenlabs.io/app/settings/api-keys',
   azure: 'https://portal.azure.com/#view/Microsoft_Azure_ProjectOxford/CognitiveServicesHub/~/OpenAI',
   vertex: 'https://cloud.google.com/vertex-ai/docs/start/cloud-environment',
-  openai_compatible: 'https://github.com/lfnovo/open-notebook/blob/main/docs/5-CONFIGURATION/openai-compatible.md',
+  openai_compatible: 'https://github.com/podcast-geeker/podcast-geeker/blob/main/docs/5-CONFIGURATION/openai-compatible.md',
 }
 
 const TYPE_ICONS: Record<ModelType, React.ReactNode> = {
@@ -1161,32 +1161,34 @@ function DefaultModelSelectors({
                   {config.label}
                   {config.required && <span className="text-destructive ml-0.5">*</span>}
                 </Label>
-                <div className="flex gap-1">
-                  <Select
-                    value={currentValue || ""}
-                    onValueChange={(v) => handleChange(config.key, v)}
-                  >
-                    <SelectTrigger
-                      id={config.id}
-                      className={`h-8 text-xs ${config.required && !isValid && available.length > 0 ? 'border-destructive' : ''}`}
+                <div className="flex min-w-0 gap-1">
+                  <div className="min-w-0 flex-1">
+                    <Select
+                      value={currentValue || ""}
+                      onValueChange={(v) => handleChange(config.key, v)}
                     >
-                      <SelectValue placeholder={
-                        config.required && !isValid && available.length > 0
-                          ? t.models.requiredModelPlaceholder
-                          : t.models.selectModelPlaceholder
-                      } />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {available.sort((a, b) => a.name.localeCompare(b.name)).map(model => (
-                        <SelectItem key={model.id} value={model.id}>
-                          <div className="flex items-center justify-between w-full">
-                            <span>{model.name}</span>
-                            <span className="text-xs text-muted-foreground ml-2">{model.provider}</span>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                      <SelectTrigger
+                        id={config.id}
+                        className={`h-8 w-full min-w-0 text-xs [&>span]:truncate ${config.required && !isValid && available.length > 0 ? 'border-destructive' : ''}`}
+                      >
+                        <SelectValue placeholder={
+                          config.required && !isValid && available.length > 0
+                            ? t.models.requiredModelPlaceholder
+                            : t.models.selectModelPlaceholder
+                        } />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {available.sort((a, b) => a.name.localeCompare(b.name)).map(model => (
+                          <SelectItem key={model.id} value={model.id}>
+                            <div className="flex items-center justify-between w-full">
+                              <span>{model.name}</span>
+                              <span className="text-xs text-muted-foreground ml-2">{model.provider}</span>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                   {!config.required && currentValue && (
                     <Button variant="ghost" size="icon" onClick={() => handleChange(config.key, "")} className="h-8 w-8 shrink-0">
                       <X className="h-3 w-3" />
@@ -1213,32 +1215,34 @@ function DefaultModelSelectors({
                       {config.label}
                       {config.required && <span className="text-destructive ml-0.5">*</span>}
                     </Label>
-                    <div className="flex gap-1">
-                      <Select
-                        value={currentValue || ""}
-                        onValueChange={(v) => handleChange(config.key, v)}
-                      >
-                        <SelectTrigger
-                          id={config.id}
-                          className={`h-8 text-xs ${config.required && !isValid && available.length > 0 ? 'border-destructive' : ''}`}
+                    <div className="flex min-w-0 gap-1">
+                      <div className="min-w-0 flex-1">
+                        <Select
+                          value={currentValue || ""}
+                          onValueChange={(v) => handleChange(config.key, v)}
                         >
-                          <SelectValue placeholder={
-                            config.required && !isValid && available.length > 0
-                              ? t.models.requiredModelPlaceholder
-                              : t.models.selectModelPlaceholder
-                          } />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {available.sort((a, b) => a.name.localeCompare(b.name)).map(model => (
-                            <SelectItem key={model.id} value={model.id}>
-                              <div className="flex items-center justify-between w-full">
-                                <span>{model.name}</span>
-                                <span className="text-xs text-muted-foreground ml-2">{model.provider}</span>
-                              </div>
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                          <SelectTrigger
+                            id={config.id}
+                            className={`h-8 w-full min-w-0 text-xs [&>span]:truncate ${config.required && !isValid && available.length > 0 ? 'border-destructive' : ''}`}
+                          >
+                            <SelectValue placeholder={
+                              config.required && !isValid && available.length > 0
+                                ? t.models.requiredModelPlaceholder
+                                : t.models.selectModelPlaceholder
+                            } />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {available.sort((a, b) => a.name.localeCompare(b.name)).map(model => (
+                              <SelectItem key={model.id} value={model.id}>
+                                <div className="flex items-center justify-between w-full">
+                                  <span>{model.name}</span>
+                                  <span className="text-xs text-muted-foreground ml-2">{model.provider}</span>
+                                </div>
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
                       {!config.required && currentValue && (
                         <Button variant="ghost" size="icon" onClick={() => handleChange(config.key, "")} className="h-8 w-8 shrink-0">
                           <X className="h-3 w-3" />
@@ -1380,7 +1384,7 @@ export default function ApiKeysPage() {
           {/* Help link */}
           <div className="border-t pt-4">
             <a
-              href="https://github.com/lfnovo/open-notebook/blob/main/docs/5-CONFIGURATION/ai-providers.md"
+              href="https://github.com/podcast-geeker/podcast-geeker/blob/main/docs/5-CONFIGURATION/ai-providers.md"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-primary hover:underline"

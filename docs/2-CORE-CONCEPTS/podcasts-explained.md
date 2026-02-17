@@ -1,6 +1,6 @@
 # Podcasts Explained - Research as Audio Dialogue
 
-Podcasts are Open Notebook's highest-level transformation: converting your research into audio dialogue for a different consumption pattern.
+Podcasts are Podcast Geeker's highest-level transformation: converting your research into audio dialogue for a different consumption pattern.
 
 ---
 
@@ -40,7 +40,7 @@ After (Podcast):
 
 ---
 
-## What Makes It Special: Open Notebook vs. Competitors
+## What Makes It Special: Podcast Geeker vs. Competitors
 
 ### Google Notebook LM Podcasts
 - **Fixed format**: 2 hosts, always conversational
@@ -48,7 +48,7 @@ After (Podcast):
 - **One TTS voice per speaker**: Can't customize voices
 - **Only uses cloud services**: No local options
 
-### Open Notebook Podcasts
+### Podcast Geeker Podcasts
 - **Customizable format**: 1-4 speakers, you design them
 - **Rich speaker profiles**: Create personas with backstories and expertise
 - **Multiple TTS options**:
@@ -200,7 +200,7 @@ Can generate podcasts entirely offline with local text-to-speech.
 Traditional: Academic paper → PDF
 Problem: Hard to consume, linear reading required
 
-Open Notebook:
+Podcast Geeker:
 Research materials → Podcast (expert explaining methodology)
                   → Podcast (debate format: different interpretations)
                   → Different consumption for different audiences
@@ -384,7 +384,7 @@ A 30-minute podcast costs:
 | **Engagement** | Academic | Conversational |
 | **Accessibility** | Text-based | Audio-based |
 
-**In Open Notebook specifically:**
+**In Podcast Geeker specifically:**
 - **Full customization** — you create speakers and format
 - **Privacy options** — local TTS for sensitive content
 - **Cost control** — choose TTS provider based on budget

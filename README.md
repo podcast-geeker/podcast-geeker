@@ -11,17 +11,17 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/lfnovo/open-notebook">
-    <img src="docs/assets/hero.svg" alt="Logo">
+  <a href="https://github.com/podcast-geeker/podcast-geeker">
+    <img src="frontend/public/logo-neon-ultra-soft.svg" alt="Logo">
   </a>
 
-  <h3 align="center">Open Notebook</h3>
+  <h3 align="center">Podcast Geeker</h3>
 
   <p align="center">
-    An open source, privacy-focused alternative to Google's Notebook LM!
-    <br /><strong>Join our <a href="https://discord.gg/37XJPXfz2w">Discord server</a> for help, to share workflow ideas, and suggest features!</strong>
+    An open source, privacy-focused Podcast Geeker!
+    <br /><strong></strong>
     <br />
-    <a href="https://www.open-notebook.ai"><strong>Checkout our website »</strong></a>
+    <a href="https://github.com/podcast-geeker/podcast-geeker"></a>
     <br />
     <br />
     <a href="docs/0-START-HERE/index.md">📚 Get Started</a>
@@ -34,58 +34,36 @@
   </p>
 </div>
 
-<p align="center">
-<a href="https://trendshift.io/repositories/14536" target="_blank"><img src="https://trendshift.io/api/badge/repositories/14536" alt="lfnovo%2Fopen-notebook | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-</p>
 
-<div align="center">
-  <!-- Keep these links. Translations will automatically update with the README. -->
-  <a href="https://zdoc.app/de/lfnovo/open-notebook">Deutsch</a> | 
-  <a href="https://zdoc.app/es/lfnovo/open-notebook">Español</a> | 
-  <a href="https://zdoc.app/fr/lfnovo/open-notebook">français</a> | 
-  <a href="https://zdoc.app/ja/lfnovo/open-notebook">日本語</a> | 
-  <a href="https://zdoc.app/ko/lfnovo/open-notebook">한국어</a> | 
-  <a href="https://zdoc.app/pt/lfnovo/open-notebook">Português</a> | 
-  <a href="https://zdoc.app/ru/lfnovo/open-notebook">Русский</a> | 
-  <a href="https://zdoc.app/zh/lfnovo/open-notebook">中文</a>
-</div>
+
 
 ## A private, multi-model, 100% local, full-featured alternative to Notebook LM
+## Enhanced with Advanced Agentic RAG Capabilities
 
-![New Notebook](docs/assets/asset_list.png)
 
 In a world dominated by Artificial Intelligence, having the ability to think 🧠 and acquire new knowledge 💡, is a skill that should not be a privilege for a few, nor restricted to a single provider.
 
-**Open Notebook empowers you to:**
+**Podcast Geeker empowers you to:**
 - 🔒 **Control your data** - Keep your research private and secure
 - 🤖 **Choose your AI models** - Support for 16+ providers including OpenAI, Anthropic, Ollama, LM Studio, and more
 - 📚 **Organize multi-modal content** - PDFs, videos, audio, web pages, and more
 - 🎙️ **Generate professional podcasts** - Advanced multi-speaker podcast generation
-- 🔍 **Search intelligently** - Full-text and vector search across all your content
-- 💬 **Chat with context** - AI conversations powered by your research
+- 🔍 **Search intelligently** - Advanced Agentic RAG with hierarchical indexing, query rewriting, and self-correction
+- 💬 **Chat with context** - AI conversations powered by your research with conversation memory
+- 🧠 **Smarter retrieval** - Parent/Child chunking, query analysis, and automatic relevance evaluation
 - 🌐 **Multi-language UI** - English, Portuguese, Chinese (Simplified & Traditional), Japanese, and Russian support
 
-Learn more about our project at [https://www.open-notebook.ai](https://www.open-notebook.ai)
+
 
 ---
 
-## 🆚 Open Notebook vs Google Notebook LM
 
-| Feature | Open Notebook | Google Notebook LM | Advantage |
-|---------|---------------|--------------------|-----------|
-| **Privacy & Control** | Self-hosted, your data | Google cloud only | Complete data sovereignty |
-| **AI Provider Choice** | 16+ providers (OpenAI, Anthropic, Ollama, LM Studio, etc.) | Google models only | Flexibility and cost optimization |
-| **Podcast Speakers** | 1-4 speakers with custom profiles | 2 speakers only | Extreme flexibility |
-| **Content Transformations** | Custom and built-in | Limited options | Unlimited processing power |
-| **API Access** | Full REST API | No API | Complete automation |
-| **Deployment** | Docker, cloud, or local | Google hosted only | Deploy anywhere |
-| **Citations** | Basic references (will improve) | Comprehensive with sources | Research integrity |
-| **Customization** | Open source, fully customizable | Closed system | Unlimited extensibility |
-| **Cost** | Pay only for AI usage | Free tier + Monthly subscription | Transparent and controllable |
 
-**Why Choose Open Notebook?**
+**Why Choose Podcast Geeker?**
 - 🔒 **Privacy First**: Your sensitive research stays completely private
 - 💰 **Cost Control**: Choose cheaper AI providers or run locally with Ollama
+- 🧠 **Smarter Search**: Advanced Agentic RAG with hierarchical indexing and query understanding
+- 🔍 **Better Accuracy**: Self-correction mechanisms ensure relevant results
 - 🎙️ **Better Podcasts**: Full script control and multi-speaker flexibility vs limited 2-speaker deep-dive format
 - 🔧 **Unlimited Customization**: Modify, extend, and integrate as needed
 - 🌐 **No Vendor Lock-in**: Switch providers, deploy anywhere, own your data
@@ -123,7 +101,7 @@ services:
     restart: always
 
   open_notebook:
-    image: lfnovo/open_notebook:v1-latest
+    image: podcast-geeker:v1:v1-latest
     ports:
       - "8502:8502"
       - "5055:5055"
@@ -182,36 +160,11 @@ Done! You're ready to create your first notebook.
 - **🤖 AI Installation Assistant**: [CustomGPT to help you install](https://chatgpt.com/g/g-68776e2765b48191bd1bae3f30212631-open-notebook-installation-assistant)
 - **🆘 Troubleshooting**: [5-minute troubleshooting guide](docs/6-TROUBLESHOOTING/quick-fixes.md)
 - **💬 Community Support**: [Discord Server](https://discord.gg/37XJPXfz2w)
-- **🐛 Report Issues**: [GitHub Issues](https://github.com/lfnovo/open-notebook/issues)
+- **🐛 Report Issues**: [GitHub Issues](https://github.com/podcast-geeker/podcast-geeker/issues)
 
 ---
 
-## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=lfnovo/open-notebook&type=date&legend=top-left)](https://www.star-history.com/#lfnovo/open-notebook&type=date&legend=top-left)
-
-
-## Provider Support Matrix
-
-Thanks to the [Esperanto](https://github.com/lfnovo/esperanto) library, we support this providers out of the box!
-
-| Provider     | LLM Support | Embedding Support | Speech-to-Text | Text-to-Speech |
-|--------------|-------------|------------------|----------------|----------------|
-| OpenAI       | ✅          | ✅               | ✅             | ✅             |
-| Anthropic    | ✅          | ❌               | ❌             | ❌             |
-| Groq         | ✅          | ❌               | ✅             | ❌             |
-| Google (GenAI) | ✅          | ✅               | ❌             | ✅             |
-| Vertex AI    | ✅          | ✅               | ❌             | ✅             |
-| Ollama       | ✅          | ✅               | ❌             | ❌             |
-| Perplexity   | ✅          | ❌               | ❌             | ❌             |
-| ElevenLabs   | ❌          | ❌               | ✅             | ✅             |
-| Azure OpenAI | ✅          | ✅               | ❌             | ❌             |
-| Mistral      | ✅          | ✅               | ❌             | ❌             |
-| DeepSeek     | ✅          | ❌               | ❌             | ❌             |
-| Voyage       | ❌          | ✅               | ❌             | ❌             |
-| xAI          | ✅          | ❌               | ❌             | ❌             |
-| OpenRouter   | ✅          | ❌               | ❌             | ❌             |
-| OpenAI Compatible* | ✅          | ❌               | ❌             | ❌             |
 
 *Supports LM Studio and any OpenAI-compatible endpoint
 
@@ -223,27 +176,31 @@ Thanks to the [Esperanto](https://github.com/lfnovo/esperanto) library, we suppo
 - **📚 Universal Content Support**: PDFs, videos, audio, web pages, Office docs, and more
 - **🤖 Multi-Model AI Support**: 16+ providers including OpenAI, Anthropic, Ollama, Google, LM Studio, and more
 - **🎙️ Professional Podcast Generation**: Advanced multi-speaker podcasts with Episode Profiles
-- **🔍 Intelligent Search**: Full-text and vector search across all your content
-- **💬 Context-Aware Chat**: AI conversations powered by your research materials
+- **🔍 Advanced Agentic RAG**: Intelligent search with hierarchical indexing, query rewriting, and self-correction
+- **💬 Context-Aware Chat**: AI conversations powered by your research materials with conversation memory
 - **📝 AI-Assisted Notes**: Generate insights or write notes manually
 
-### Advanced Features
+### Advanced RAG Features
+- **🧠 Hierarchical Indexing**: Parent/Child chunking for better context and precision
+- **🔄 Query Understanding**: Automatic query rewriting and clarification for ambiguous questions
+- **✨ Self-Correction**: Automatic retry with refined queries when initial results are insufficient
+- **💭 Conversation Memory**: Ask mode maintains context across multiple questions
+- **🖼️ Multi-modal Enhancement**: Optional RAG-Anything integration for images, tables, and equations (PDF)
+
+### Additional Features
 - **⚡ Reasoning Model Support**: Full support for thinking models like DeepSeek-R1 and Qwen3
 - **🔧 Content Transformations**: Powerful customizable actions to summarize and extract insights
 - **🌐 Comprehensive REST API**: Full programmatic access for custom integrations [![API Docs](https://img.shields.io/badge/API-Documentation-blue?style=flat-square)](http://localhost:5055/docs)
 - **🔐 Optional Password Protection**: Secure public deployments with authentication
 - **📊 Fine-Grained Context Control**: Choose exactly what to share with AI models
-- **📎 Citations**: Get answers with proper source citations
+- **📎 Citations**: Get answers with proper source citations and context
 
-
-## Podcast Feature
-
-[![Check out our podcast sample](https://img.youtube.com/vi/D-760MlGwaI/0.jpg)](https://www.youtube.com/watch?v=D-760MlGwaI)
+)
 
 ## 📚 Documentation
 
 ### Getting Started
-- **[📖 Introduction](docs/0-START-HERE/index.md)** - Learn what Open Notebook offers
+- **[📖 Introduction](docs/0-START-HERE/index.md)** - Learn what Podcast Geeker offers
 - **[⚡ Quick Start](docs/0-START-HERE/quick-start.md)** - Get up and running in 5 minutes
 - **[🔧 Installation](docs/1-INSTALLATION/index.md)** - Comprehensive setup guide
 - **[🎯 Your First Notebook](docs/0-START-HERE/first-notebook.md)** - Step-by-step tutorial
@@ -269,58 +226,69 @@ Thanks to the [Esperanto](https://github.com/lfnovo/esperanto) library, we suppo
 
 ## 🗺️ Roadmap
 
-### Upcoming Features
-- **Live Front-End Updates**: Real-time UI updates for smoother experience
-- **Async Processing**: Faster UI through asynchronous content processing
-- **Cross-Notebook Sources**: Reuse research materials across projects
-- **Bookmark Integration**: Connect with your favorite bookmarking apps
-
 ### Recently Completed ✅
+- **Advanced Agentic RAG**: Hierarchical indexing, query rewriting, self-correction, conversation memory
+- **Multi-Modal Support**: Optional RAG-Anything integration for images, tables, and equations
+- **Intelligent Query Processing**: Automatic clarification and reformulation of ambiguous queries
 - **Next.js Frontend**: Modern React-based frontend with improved performance
 - **Comprehensive REST API**: Full programmatic access to all functionality
 - **Multi-Model Support**: 16+ AI providers including OpenAI, Anthropic, Ollama, LM Studio
 - **Advanced Podcast Generator**: Professional multi-speaker podcasts with Episode Profiles
 - **Content Transformations**: Powerful customizable actions for content processing
-- **Enhanced Citations**: Improved layout and finer control for source citations
+- **Enhanced Citations**: Improved layout and finer control for source citations with parent/child context
 - **Multiple Chat Sessions**: Manage different conversations within notebooks
 
-See the [open issues](https://github.com/lfnovo/open-notebook/issues) for a full list of proposed features and known issues.
+### Upcoming Features
+- **RAG Evaluation Framework**: Comprehensive benchmarking for retrieval quality
+- **Hybrid Search**: Combine vector search with BM25 keyword matching
+- **Cross-Encoder Reranking**: Improve result ranking with neural rerankers
+- **Graph-Based RAG**: Leverage SurrealDB's graph capabilities for relationship-aware retrieval
+- **Live Front-End Updates**: Real-time UI updates for smoother experience
+- **Async Processing**: Faster UI through asynchronous content processing
+- **Cross-Notebook Sources**: Reuse research materials across projects
+- **Bookmark Integration**: Connect with your favorite bookmarking apps
+
+See the [open issues](https://github.com/podcast-geeker/podcast-geeker/issues) for a full list of proposed features and known issues.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-## 📖 Need Help?
-- **🤖 AI Installation Assistant**: We have a [CustomGPT built to help you install Open Notebook](https://chatgpt.com/g/g-68776e2765b48191bd1bae3f30212631-open-notebook-installation-assistant) - it will guide you through each step!
-- **New to Open Notebook?** Start with our [Getting Started Guide](docs/0-START-HERE/index.md)
-- **Need installation help?** Check our [Installation Guide](docs/1-INSTALLATION/index.md)
-- **Want to see it in action?** Try our [Quick Start Tutorial](docs/0-START-HERE/quick-start.md)
 
-## 🤝 Community & Contributing
-
-### Join the Community
-- 💬 **[Discord Server](https://discord.gg/37XJPXfz2w)** - Get help, share ideas, and connect with other users
-- 🐛 **[GitHub Issues](https://github.com/lfnovo/open-notebook/issues)** - Report bugs and request features
-- ⭐ **Star this repo** - Show your support and help others discover Open Notebook
-
-### Contributing
-We welcome contributions! We're especially looking for help with:
-- **Frontend Development**: Help improve our modern Next.js/React UI
-- **Testing & Bug Fixes**: Make Open Notebook more robust
-- **Feature Development**: Build the coolest research tool together
-- **Documentation**: Improve guides and tutorials
-
-**Current Tech Stack**: Python, FastAPI, Next.js, React, SurrealDB
-**Future Roadmap**: Real-time updates, enhanced async processing
-
-See our [Contributing Guide](CONTRIBUTING.md) for detailed information on how to get started.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 ## 📄 License
 
-Open Notebook is MIT licensed. See the [LICENSE](LICENSE) file for details.
+Podcast Geeker is MIT licensed. See the [LICENSE](LICENSE) file for details.
 
+---
+
+## 🙏 Acknowledgments
+
+Podcast Geeker is built upon and inspired by excellent open-source projects. See our complete [ACKNOWLEDGMENTS.md](ACKNOWLEDGMENTS.md) for detailed attributions.
+
+### Core Project
+This project is a fork and enhancement of **[Open Notebook](https://github.com/lfnovo/open-notebook)** by [@lfnovo](https://github.com/lfnovo). We're grateful for the solid foundation and architecture that made these enhancements possible.
+
+### RAG Enhancement Technologies
+Our advanced RAG capabilities are inspired by and adapted from:
+
+- **[agentic-rag-for-dummies](https://github.com/GiovanniPasq/agentic-rag-for-dummies)** (MIT License)  
+  Provides the foundation for hierarchical indexing, query rewriting, and self-correction mechanisms. We've adapted these Agentic RAG strategies to work with our LangGraph + SurrealDB architecture.
+
+- **[RAG-Anything](https://github.com/HKUDS/RAG-Anything)** (MIT License)  
+  Enables multi-modal content understanding for PDFs, including images, tables, and equations. Integrated as an optional enhancement layer for advanced document processing.
+
+### AI Infrastructure
+- **[Esperanto](https://github.com/lfnovo/esperanto)** - Multi-provider AI abstraction layer supporting 16+ AI providers
+- **[LangChain](https://github.com/langchain-ai/langchain)** & **[LangGraph](https://github.com/langchain-ai/langgraph)** - Workflow orchestration and state management
+- **[SurrealDB](https://surrealdb.com/)** - Graph database with built-in vector search
+
+All third-party licenses are preserved and respected. See [ACKNOWLEDGMENTS.md](ACKNOWLEDGMENTS.md) for complete details and individual project repositories for their full license terms.
+
+### Academic Context
+This project is part of **CDS547 - Large Language Models** course at the **University of British Columbia** (Winter Term 2, 2024/2025), exploring state-of-the-art RAG techniques in a real-world application.
+
+---
 
 **Community Support**:
 - 💬 [Discord Server](https://discord.gg/37XJPXfz2w) - Get help, share ideas, and connect with users

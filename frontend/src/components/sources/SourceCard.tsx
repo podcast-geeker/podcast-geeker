@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { SourceListResponse } from '@/lib/types/api'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
@@ -121,6 +121,9 @@ export function SourceCard({
 }: SourceCardProps) {
   const { t } = useTranslation()
   const statusConfigMap = getStatusConfig(t)
+  const cardRef = useRef<HTMLDivElement | null>(null)
+  const [isPageVisible, setIsPageVisible] = useState(true)
+  const [isInViewport, setIsInViewport] = useState(true)
   
   // Only fetch status for sources that might have async processing
   const sourceWithStatus = source as SourceListResponse & { command_id?: string; status?: string }
@@ -134,10 +137,47 @@ export function SourceCard({
     sourceWithStatus.status === 'running' ||
     wasProcessing // Keep polling if we were processing to catch the completion
 
+  const shouldPollStatus = shouldFetchStatus && isPageVisible && isInViewport
+
   const { data: statusData, isLoading: statusLoading } = useSourceStatus(
     source.id,
-    shouldFetchStatus
+    shouldPollStatus
   )
+
+  useEffect(() => {
+    const updateVisibility = () => {
+      setIsPageVisible(!document.hidden)
+    }
+
+    updateVisibility()
+    document.addEventListener('visibilitychange', updateVisibility)
+    return () => {
+      document.removeEventListener('visibilitychange', updateVisibility)
+    }
+  }, [])
+
+  useEffect(() => {
+    const node = cardRef.current
+    if (!node || typeof IntersectionObserver === 'undefined') {
+      setIsInViewport(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0]
+        setIsInViewport(entry?.isIntersecting ?? false)
+      },
+      {
+        root: null,
+        rootMargin: '240px 0px',
+        threshold: 0.01,
+      }
+    )
+
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
 
   // Determine current status
   // If source has a command_id but no status, treat as "new" (just created)
@@ -203,14 +243,15 @@ export function SourceCard({
   const isCompleted: boolean = currentStatus === 'completed'
 
   return (
-    <Card
-      className={cn(
-        'transition-all duration-200 hover:shadow-md group relative cursor-pointer border border-border/60 dark:border-border/40',
-        className
-      )}
-      onClick={handleCardClick}
-    >
-      <CardContent className="px-3 py-1">
+    <div ref={cardRef}>
+      <Card
+        className={cn(
+          'transition-all duration-200 hover:shadow-md group relative cursor-pointer border border-border/60 dark:border-border/40',
+          className
+        )}
+        onClick={handleCardClick}
+      >
+        <CardContent className="px-3 py-1">
         {/* Header with status indicator */}
         <div className="flex items-start justify-between gap-3 mb-1">
           <div className="flex-1 min-w-0">
@@ -388,7 +429,8 @@ export function SourceCard({
             </div>
           </div>
         )}
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   )
 }

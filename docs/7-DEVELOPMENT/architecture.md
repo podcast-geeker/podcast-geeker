@@ -1,8 +1,8 @@
-# Open Notebook Architecture
+# Podcast Geeker Architecture
 
 ## High-Level Overview
 
-Open Notebook follows a three-tier architecture with clear separation of concerns:
+Podcast Geeker follows a three-tier architecture with clear separation of concerns:
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -39,7 +39,7 @@ Open Notebook follows a three-tier architecture with clear separation of concern
 
 ## Detailed Architecture
 
-Open Notebook is built on a **three-tier, async-first architecture** designed for scalability, modularity, and multi-provider AI flexibility. The system separates concerns across frontend, API, and database layers, with LangGraph powering intelligent workflows and Esperanto enabling seamless integration with 8+ AI providers.
+Podcast Geeker is built on a **three-tier, async-first architecture** designed for scalability, modularity, and multi-provider AI flexibility. The system separates concerns across frontend, API, and database layers, with LangGraph powering intelligent workflows and Esperanto enabling seamless integration with 8+ AI providers.
 
 **Core Philosophy**:
 - Privacy-first: Users control their data and AI provider choice
@@ -47,6 +47,13 @@ Open Notebook is built on a **three-tier, async-first architecture** designed fo
 - Domain-Driven Design: Clear separation between domain models, repositories, and orchestrators
 - Multi-provider flexibility: Swap AI providers without changing application code
 - Self-hosted capable: All components deployable in isolated environments
+- **Agentic RAG**: Intelligent retrieval with query understanding, self-correction, and hierarchical indexing
+
+**Recent Enhancements**:
+- **Advanced Agentic RAG**: Hierarchical parent/child chunking, query rewriting, self-correction mechanisms
+- **Conversation Memory**: Ask mode maintains context across questions
+- **Multi-modal Support**: Optional RAG-Anything integration for images, tables, and equations in PDFs
+- **Intelligent Query Processing**: Automatic clarification and reformulation of ambiguous queries
 
 ---
 
@@ -164,13 +171,18 @@ Response ← Pydantic serialization ← Service ← Result
 |-------|---------|-----------|
 | `notebook` | Research project container | id, name, description, archived, created, updated |
 | `source` | Content item (PDF, URL, text) | id, title, full_text, topics, asset, created, updated |
-| `source_embedding` | Vector embeddings for semantic search | id, source, embedding, chunk_text, chunk_index |
+| `source_embedding` | Vector embeddings for semantic search | id, source, embedding, chunk_text, chunk_index, parent_chunk |
+| `source_parent_chunk` | Parent chunks for hierarchical indexing | id, source, content, metadata, embedding |
 | `note` | User-created research notes | id, title, content, note_type (human/ai), created, updated |
 | `chat_session` | Conversation session | id, notebook_id, title, messages (JSON), created, updated |
 | `transformation` | Custom transformation rules | id, name, description, prompt, created, updated |
 | `source_insight` | Transformation output | id, source_id, insight_type, content, created, updated |
 | `reference` | Relationship: source → notebook | out (source), in (notebook) |
 | `artifact` | Relationship: note → notebook | out (note), in (notebook) |
+
+**New Agentic RAG Tables**:
+- `source_parent_chunk`: Stores large semantic sections (2000-10000 chars) for hierarchical indexing
+- `source_embedding`: Extended with `parent_chunk` field to link child chunks to parents
 
 **Relationship Graph**:
 ```
@@ -269,41 +281,82 @@ ChatSession
 
 ## LangGraph Workflows
 
-LangGraph is a state machine library that orchestrates multi-step AI workflows. Open Notebook uses five core workflows:
+LangGraph is a state machine library that orchestrates multi-step AI workflows. Podcast Geeker uses five core workflows:
 
 ### 1. **Source Processing Workflow** (`open_notebook/graphs/source.py`)
 
-**Purpose**: Ingest content (PDF, URL, text) and prepare for search/insights.
+**Purpose**: Ingest content (PDF, URL, text) and prepare for search/insights with optional multi-modal enhancement.
 
-**Flow**:
+**Enhanced Flow:**
 ```
 Input (file/URL/text)
   ↓
 Extract Content (content-core library)
   ↓
+Multi-modal Enhancement (optional)
+  - If PDF + Vision model configured
+  - Analyze images with vision model
+  - Extract table structures
+  - Parse equation semantics
+  - Merge descriptions into text
+  ↓
 Clean & tokenize text
   ↓
+Hierarchical Chunking (if enabled)
+  A. Create Parent Chunks
+     - Split by semantic boundaries (headings)
+     - Size: 2000-10000 characters
+     - Maintain document structure
+  
+  B. Create Child Chunks
+     - Within each parent
+     - Size: ~500 chars with overlap
+     - Link to parent via parent_id
+  
+  C. Traditional Chunking (default)
+     - Fixed-size chunks (~1200 chars)
+  ↓
 Generate Embeddings (Esperanto)
+  - Embed child chunks (or traditional chunks)
+  - Store parent chunks for context retrieval
   ↓
 Create SourceEmbedding records (chunked + indexed)
+  - Child chunks with parent_chunk field
   ↓
 Extract Topics (LLM summarization)
   ↓
 Save to SurrealDB
+  - source_embedding (child chunks)
+  - source_parent_chunk (parent sections)
   ↓
-Output (Source record with embeddings)
+Output (Source record with hierarchical embeddings)
 ```
 
-**State Dict**:
+**State Dict:**
 ```python
 {
   "content_state": {"file_path" | "url" | "content": str},
   "source_id": str,
   "full_text": str,
+  "enhanced_text": Optional[str],        # NEW: with multi-modal descriptions
+  "parent_chunks": List[ParentChunk],    # NEW: semantic sections
+  "child_chunks": List[ChildChunk],      # NEW: precise pieces
   "embeddings": List[Dict],
   "topics": List[str],
   "notebook_ids": List[str],
 }
+```
+
+**New Features:**
+- **Multi-modal Enhancement**: Optional RAG-Anything integration for PDFs
+- **Hierarchical Chunking**: Parent/child structure for better search
+- **Backward Compatible**: Traditional chunking still default
+
+**Configuration:**
+```python
+OPEN_NOTEBOOK_MULTIMODAL_ENHANCE=true      # Enable RAG-Anything
+OPEN_NOTEBOOK_HIERARCHICAL_INDEX=true      # Enable parent/child
+OPEN_NOTEBOOK_MULTIMODAL_PARSER=mineru     # Parser choice
 ```
 
 **Invoked By**: Sources API (`POST /sources`)
@@ -356,34 +409,80 @@ Output (complete message)
 
 ### 3. **Ask Workflow** (`open_notebook/graphs/ask.py`)
 
-**Purpose**: Answer user questions by searching sources and synthesizing responses.
+**Purpose**: Answer user questions by searching sources and synthesizing responses with advanced Agentic RAG capabilities.
 
-**Flow**:
+**Enhanced Flow:**
 ```
-User Question
+User Question (+ optional session_id)
+  ↓
+Conversation Summarization (if session exists)
+  - Load recent message history
+  - Extract topics, entities, context
+  - Build conversation summary
+  ↓
+Query Analysis & Rewriting (if enabled)
+  - Analyze question clarity
+  - Reformulate with conversation context
+  - Detect ambiguity
+  ↓
+Clarification Gate (if unclear)
+  - Return clarification request to user
+  - Wait for user response
+  - Proceed when clear
   ↓
 Plan Search Strategy (LLM generates searches)
   ↓
-Execute Searches (vector + text search)
+Hierarchical Search (if enabled)
+  - Search Child Chunks (precise matching)
+  - Evaluate Relevance
+  - Retrieve Parent Chunks (context)
+Traditional Search (default):
+  - Single-level chunk search
+  ↓
+Self-Correction (if enabled and results poor)
+  - Evaluate result quality
+  - Rewrite query if insufficient
+  - Retry search with refined query
   ↓
 Score & Rank Results
   ↓
-Provide Answers (LLM synthesizes from results)
+Provide Answers (LLM synthesizes from results + context)
   ↓
 Stream Responses
   ↓
-Output (final answer)
+Output (final answer with citations)
 ```
 
-**State Dict**:
+**State Dict:**
 ```python
 {
   "question": str,
+  "session_id": Optional[str],           # NEW: for conversation memory
+  "conversation_summary": Optional[str],  # NEW: context from history
+  "query_analysis": QueryAnalysis,        # NEW: clarity + rewrites
   "strategy": SearchStrategy,
   "answers": List[str],
   "final_answer": str,
   "sources_used": List[Source],
+  "parent_contexts": List[ParentChunk],  # NEW: hierarchical context
+  "retry_count": int,                     # NEW: self-correction tracking
 }
+```
+
+**New Agentic Features:**
+- **Conversation Memory**: Maintains context across questions via session_id
+- **Query Rewriting**: Reformulates ambiguous queries with conversation context
+- **Clarification**: Asks user for clarification when question is unclear
+- **Hierarchical Search**: Child chunks for precision, parent chunks for context
+- **Self-Correction**: Automatic retry with refined queries when results are poor
+
+**Configuration:**
+```python
+# All features opt-in via environment variables
+OPEN_NOTEBOOK_QUERY_REWRITE=true         # Enable query analysis
+OPEN_NOTEBOOK_HIERARCHICAL_INDEX=true    # Enable parent/child chunks
+OPEN_NOTEBOOK_SELF_CORRECTION=true       # Enable auto-retry
+OPEN_NOTEBOOK_ASK_MEMORY=true            # Enable conversation memory
 ```
 
 **Streaming**: Uses `astream()` to emit updates in real-time (strategy → answers → final answer)
@@ -888,4 +987,30 @@ Async job submission (source processing, podcast generation) prevents request ti
 
 ## Summary
 
-Open Notebook's architecture provides a solid foundation for privacy-focused, AI-powered research. The separation of concerns (frontend/API/database), async-first design, and multi-provider flexibility enable rapid development and easy deployment. LangGraph workflows orchestrate complex AI tasks, while Esperanto abstracts provider details. The result is a scalable, maintainable system that puts users in control of their data and AI provider choice.
+Podcast Geeker's architecture provides a solid foundation for privacy-focused, AI-powered research. The separation of concerns (frontend/API/database), async-first design, and multi-provider flexibility enable rapid development and easy deployment. LangGraph workflows orchestrate complex AI tasks, while Esperanto abstracts provider details. The result is a scalable, maintainable system that puts users in control of their data and AI provider choice.
+
+**Advanced Agentic RAG enhancements** bring intelligent query understanding, hierarchical indexing, and self-correction mechanisms that significantly improve retrieval accuracy and user experience, while maintaining full backward compatibility.
+
+---
+
+## Acknowledgments
+
+### Core Project Foundation
+Podcast Geeker is built upon **[Open Notebook](https://github.com/lfnovo/open-notebook)** by [@lfnovo](https://github.com/lfnovo). We're grateful for the solid three-tier architecture, LangGraph workflow design, and multi-provider AI integration that provided the foundation for these enhancements.
+
+### Advanced RAG Technologies
+The Agentic RAG capabilities are inspired by and adapted from:
+
+- **[agentic-rag-for-dummies](https://github.com/GiovanniPasq/agentic-rag-for-dummies)** (MIT License)  
+  Provides strategies for hierarchical indexing, query rewriting, self-correction, and conversation memory. We've integrated these patterns into our LangGraph + SurrealDB architecture.
+
+- **[RAG-Anything](https://github.com/HKUDS/RAG-Anything)** (MIT License)  
+  Enables multi-modal document understanding through MinerU parsing and vision model integration. Implemented as an optional enhancement layer.
+
+### Technology Stack
+- **[Esperanto](https://github.com/lfnovo/esperanto)** - Multi-provider AI abstraction
+- **[LangChain](https://github.com/langchain-ai/langchain)** & **[LangGraph](https://github.com/langchain-ai/langgraph)** - Workflow orchestration
+- **[SurrealDB](https://surrealdb.com/)** - Graph database with vector search
+- **[Next.js](https://nextjs.org/)** & **[React](https://react.dev/)** - Modern frontend framework
+
+All third-party licenses are preserved and respected.

@@ -18,8 +18,9 @@ describe('useTranslation Hook', () => {
     vi.clearAllMocks()
     ;(useI18nTranslation as unknown as { mockReturnValue: (v: unknown) => void }).mockReturnValue({
       t: (key: string) => {
-        if (key === 'common') return { appName: 'Open Notebook' }
-        if (key === 'common.appName') return 'Open Notebook'
+        if (key === 'common') return { appName: 'Podcast Geeker', name: 'Name' }
+        if (key === 'common.appName') return 'Podcast Geeker'
+        if (key === 'common.name') return 'Name'
         return key
       },
       i18n: {
@@ -33,7 +34,9 @@ describe('useTranslation Hook', () => {
     const { result } = renderHook(() => useTranslation())
     expect(result.current.language).toBe('en-US')
     // Test the proxy behavior t.common.appName -> t("common.appName")
-    expect(result.current.t.common.appName).toBe('Open Notebook')
+    expect(result.current.t.common.appName).toBe('Podcast Geeker')
+    // Regression: t.common.name must return translation, not Function.prototype.name (proxyTarget)
+    expect(result.current.t.common.name).toBe('Name')
   })
 
   it('should allow changing language via i18n.changeLanguage', () => {

@@ -1,9 +1,18 @@
-.PHONY: run frontend check ruff database lint api start-all stop-all status clean-cache worker worker-start worker-stop worker-restart
+.PHONY: run frontend check ruff database lint api start-all stop-all status clean-cache worker worker-start worker-stop worker-restart warmup
 .PHONY: docker-buildx-prepare docker-buildx-clean docker-buildx-reset
 .PHONY: docker-push docker-push-latest docker-release docker-build-local tag export-docs
 
 # Get version from pyproject.toml
 VERSION := $(shell grep -m1 version pyproject.toml | cut -d'"' -f2)
+UV_RUN := uv run --no-sync --env-file .env
+STARTUP_TIMEOUT ?= 120
+STARTUP_POLL_INTERVAL ?= 1
+API_HEALTH_URL ?= http://127.0.0.1:5055/health
+FRONTEND_DEV_FLAGS ?= --webpack --disable-source-maps
+WARMUP_URL_BASE ?= http://127.0.0.1:3000
+WARMUP_ROUTES ?= / /sources /notebooks /search /podcasts /transformations /settings /settings/api-keys /advanced
+WARMUP_WAIT_TIMEOUT ?= 90
+AUTO_WARMUP ?= 0
 
 # Image names for both registries
 DOCKERHUB_IMAGE := lfnovo/open_notebook
@@ -13,14 +22,20 @@ GHCR_IMAGE := ghcr.io/lfnovo/open-notebook
 PLATFORMS := linux/amd64,linux/arm64
 
 database:
-	docker compose up -d surrealdb
+	docker compose -f examples/docker-compose-dev.yml up -d surrealdb
 
 run:
 	@echo "⚠️  Warning: Starting frontend only. For full functionality, use 'make start-all'"
-	cd frontend && npm run dev
+	@if [ "$(AUTO_WARMUP)" = "1" ]; then \
+		( $(MAKE) -s warmup >/dev/null 2>&1 || true ) & \
+	fi
+	cd frontend && npm run dev -- $(FRONTEND_DEV_FLAGS)
 
 frontend:
-	cd frontend && npm run dev
+	@if [ "$(AUTO_WARMUP)" = "1" ]; then \
+		( $(MAKE) -s warmup >/dev/null 2>&1 || true ) & \
+	fi
+	cd frontend && npm run dev -- $(FRONTEND_DEV_FLAGS)
 
 lint:
 	uv run python -m mypy .
@@ -134,7 +149,7 @@ full:
 
 
 api:
-	uv run --env-file .env run_api.py
+	$(UV_RUN) run_api.py
 
 .PHONY: worker worker-start worker-stop worker-restart
 
@@ -142,7 +157,7 @@ worker: worker-start
 
 worker-start:
 	@echo "Starting surreal-commands worker..."
-	uv run --env-file .env surreal-commands-worker --import-modules commands
+	$(UV_RUN) surreal-commands-worker --import-modules commands
 
 worker-stop:
 	@echo "Stopping surreal-commands worker..."
@@ -154,25 +169,63 @@ worker-restart: worker-stop
 
 # === Service Management ===
 start-all:
-	@echo "🚀 Starting Open Notebook (Database + API + Worker + Frontend)..."
+	@echo "🚀 Starting Podcast Geeker (Database + API + Worker + Frontend)..."
+	@echo "🧽 Cleaning stale local processes..."
+	@pkill -f "run_api.py" >/dev/null 2>&1 || true
+	@pkill -f "uvicorn api.main:app" >/dev/null 2>&1 || true
+	@pkill -f "surreal-commands-worker" >/dev/null 2>&1 || true
+	@pkill -f "next dev" >/dev/null 2>&1 || true
 	@echo "📊 Starting SurrealDB..."
-	@docker compose -f docker-compose.dev.yml up -d surrealdb
-	@sleep 3
+	@docker compose -f examples/docker-compose-dev.yml up -d surrealdb
+	@echo "⏳ Waiting for SurrealDB on :8000..."
+	@timeout=$(STARTUP_TIMEOUT); \
+	while ! nc -z 127.0.0.1 8000 >/dev/null 2>&1; do \
+		if [ $$timeout -le 0 ]; then \
+			echo "❌ SurrealDB did not become ready within $(STARTUP_TIMEOUT)s"; \
+			exit 1; \
+		fi; \
+		sleep $(STARTUP_POLL_INTERVAL); \
+		timeout=$$((timeout-$(STARTUP_POLL_INTERVAL))); \
+	done
+	@echo "✅ SurrealDB is ready"
 	@echo "🔧 Starting API backend..."
-	@uv run run_api.py &
-	@sleep 3
+	@API_RELOAD=$${API_RELOAD:-false} $(UV_RUN) run_api.py &
+	@echo "⏳ Waiting for API health endpoint..."
+	@timeout=$(STARTUP_TIMEOUT); \
+	while ! curl -fsS $(API_HEALTH_URL) >/dev/null 2>&1; do \
+		if [ $$timeout -le 0 ]; then \
+			echo "❌ API did not become ready within $(STARTUP_TIMEOUT)s ($(API_HEALTH_URL))"; \
+			exit 1; \
+		fi; \
+		sleep $(STARTUP_POLL_INTERVAL); \
+		timeout=$$((timeout-$(STARTUP_POLL_INTERVAL))); \
+	done
+	@echo "✅ API is ready"
 	@echo "⚙️ Starting background worker..."
-	@uv run --env-file .env surreal-commands-worker --import-modules commands &
-	@sleep 2
+	@$(UV_RUN) surreal-commands-worker --import-modules commands &
+	@echo "⏳ Waiting for worker process..."
+	@timeout=$(STARTUP_TIMEOUT); \
+	while ! pgrep -f "surreal-commands-worker" >/dev/null; do \
+		if [ $$timeout -le 0 ]; then \
+			echo "❌ Worker did not become ready within $(STARTUP_TIMEOUT)s"; \
+			exit 1; \
+		fi; \
+		sleep $(STARTUP_POLL_INTERVAL); \
+		timeout=$$((timeout-$(STARTUP_POLL_INTERVAL))); \
+	done
+	@echo "✅ Worker is running"
 	@echo "🌐 Starting Next.js frontend..."
 	@echo "✅ All services started!"
 	@echo "📱 Frontend: http://localhost:3000"
 	@echo "🔗 API: http://localhost:5055"
 	@echo "📚 API Docs: http://localhost:5055/docs"
-	cd frontend && npm run dev
+	@if [ "$(AUTO_WARMUP)" = "1" ]; then \
+		( $(MAKE) -s warmup >/dev/null 2>&1 || true ) & \
+	fi
+	cd frontend && npm run dev -- $(FRONTEND_DEV_FLAGS)
 
 stop-all:
-	@echo "🛑 Stopping all Open Notebook services..."
+	@echo "🛑 Stopping all Podcast Geeker services..."
 	@pkill -f "next dev" || true
 	@pkill -f "surreal-commands-worker" || true
 	@pkill -f "run_api.py" || true
@@ -181,7 +234,7 @@ stop-all:
 	@echo "✅ All services stopped!"
 
 status:
-	@echo "📊 Open Notebook Service Status:"
+	@echo "📊 Podcast Geeker Service Status:"
 	@echo "Database (SurrealDB):"
 	@docker compose ps surrealdb 2>/dev/null || echo "  ❌ Not running"
 	@echo "API Backend:"
@@ -190,6 +243,26 @@ status:
 	@pgrep -f "surreal-commands-worker" >/dev/null && echo "  ✅ Running" || echo "  ❌ Not running"
 	@echo "Next.js Frontend:"
 	@pgrep -f "next dev" >/dev/null && echo "  ✅ Running" || echo "  ❌ Not running"
+
+warmup:
+	@echo "🔥 Warming up frontend routes on $(WARMUP_URL_BASE)..."
+	@timeout=$(WARMUP_WAIT_TIMEOUT); \
+	while ! curl -fsS -o /dev/null "$(WARMUP_URL_BASE)/"; do \
+		if [ $$timeout -le 0 ]; then \
+			echo "❌ Frontend is not reachable at $(WARMUP_URL_BASE)"; \
+			exit 1; \
+		fi; \
+		sleep 1; \
+		timeout=$$((timeout-1)); \
+	done
+	@for route in $(WARMUP_ROUTES); do \
+		echo "  → $$route"; \
+		curl -fsS -o /dev/null "$(WARMUP_URL_BASE)$$route" || { \
+			echo "❌ Warmup failed for $$route (is frontend running?)"; \
+			exit 1; \
+		}; \
+	done
+	@echo "✅ Warmup complete"
 
 # === Documentation Export ===
 export-docs:

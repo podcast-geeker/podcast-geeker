@@ -97,7 +97,9 @@ async def _test_azure_connection(
 async def _test_ollama_connection(base_url: str) -> Tuple[bool, str]:
     """Test Ollama server connectivity."""
     try:
-        async with httpx.AsyncClient(timeout=10.0) as client:
+        # Do not inherit system proxy settings for local Ollama checks.
+        # Some environments route localhost/127.0.0.1 through a proxy, causing false 502 failures.
+        async with httpx.AsyncClient(timeout=10.0, trust_env=False) as client:
             # Try /api/tags endpoint (standard Ollama)
             response = await client.get(f"{base_url}/api/tags")
 
@@ -301,6 +303,7 @@ async def test_provider_connection(
 
 # Default voices for TTS testing per provider
 # ElevenLabs excluded: uses voice_id (not name), looked up dynamically
+# Kokoro/Speaches: uses af_bella, af_sarah, am_adam, etc. (not OpenAI's alloy)
 DEFAULT_TEST_VOICES = {
     "openai": "alloy",
     "azure": "alloy",
@@ -308,6 +311,9 @@ DEFAULT_TEST_VOICES = {
     "vertex": "Kore",
     "openai_compatible": "alloy",
 }
+
+# Models that require Kokoro-style voices (e.g. Speaches)
+KOKORO_VOICE = "af_bella"
 
 
 def _generate_test_wav() -> io.BytesIO:
@@ -398,20 +404,25 @@ async def test_individual_model(model) -> Tuple[bool, str]:
             return True, "Embedding successful"
 
         elif model.type == "text_to_speech":
-            # For ElevenLabs, look up first available voice (API uses voice_id, not name)
-            voice = DEFAULT_TEST_VOICES.get(model.provider)
-            if not voice and hasattr(esp_model, "available_voices"):
-                try:
-                    voices = esp_model.available_voices
-                    if voices:
-                        voice = next(iter(voices.keys()))
-                except Exception:
-                    pass
-            if not voice:
-                voice = "alloy"  # fallback
+            # Kokoro/Speaches uses af_bella, af_sarah, etc. - not OpenAI's alloy
+            model_name_lower = (model.name or "").lower()
+            if "kokoro" in model_name_lower or "speaches" in model_name_lower:
+                voice = KOKORO_VOICE
+            else:
+                # For ElevenLabs, look up first available voice (API uses voice_id, not name)
+                voice = DEFAULT_TEST_VOICES.get(model.provider)
+                if not voice and hasattr(esp_model, "available_voices"):
+                    try:
+                        voices = esp_model.available_voices
+                        if voices:
+                            voice = next(iter(voices.keys()))
+                    except Exception:
+                        pass
+                if not voice:
+                    voice = "alloy"  # fallback
 
             result = await esp_model.agenerate_speech(
-                text="Hello from Open Notebook", voice=voice
+                text="Hello from Podcast Geeker", voice=voice
             )
             if result and hasattr(result, "content"):
                 size = len(result.content)

@@ -32,6 +32,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+import { PodcastContextGraph } from '@/components/podcasts/PodcastContextGraph'
 
 type SourceMode = 'off' | 'insights' | 'full'
 
@@ -861,7 +862,10 @@ export function GeneratePodcastDialog({ open, onOpenChange }: GeneratePodcastDia
         resetState()
       }
     }}>
-      <DialogContent className="w-[80vw] max-w-[1080px] max-h-[90vh] overflow-hidden">
+      <DialogContent
+        className="w-[80vw] max-w-[1080px] max-h-[90vh] overflow-hidden"
+        onInteractOutside={(event) => event.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>{t.podcasts.generateEpisode}</DialogTitle>
           <DialogDescription>
@@ -889,6 +893,18 @@ export function GeneratePodcastDialog({ open, onOpenChange }: GeneratePodcastDia
           />
 
           <div className="space-y-6">
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                {t.podcasts.content}
+              </h3>
+              <PodcastContextGraph
+                notebooks={notebooks}
+                selections={selections}
+                sourcesByNotebook={sourcesByNotebook}
+                notesByNotebook={notesByNotebook}
+              />
+            </div>
+
             <div className="space-y-3">
               <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
                 {t.podcasts.episodeSettings}

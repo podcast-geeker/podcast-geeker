@@ -1,4 +1,6 @@
+import os
 from typing import Any, ClassVar, Dict, Optional, Union
+from urllib.parse import urlparse
 
 from esperanto import (
     AIFactory,
@@ -14,6 +16,33 @@ from open_notebook.domain.base import ObjectModel, RecordModel
 
 ModelType = Union[LanguageModel, EmbeddingModel, SpeechToTextModel, TextToSpeechModel]
 OLLAMA_DEFAULT_NUM_CTX = 4096
+
+
+def _ensure_no_proxy_for_local_ollama(base_url: Optional[str]) -> None:
+    """
+    Ensure localhost-style Ollama URLs bypass system HTTP proxies.
+
+    Some environments inject transparent/system proxies that can turn local
+    Ollama requests into 502 responses. We only bypass proxy for local hosts.
+    """
+    if not base_url:
+        return
+
+    host = urlparse(base_url).hostname
+    if host not in {"localhost", "127.0.0.1"}:
+        return
+
+    for key in ("NO_PROXY", "no_proxy"):
+        current = os.environ.get(key, "")
+        entries = [e.strip() for e in current.split(",") if e.strip()]
+        changed = False
+        for required in ("localhost", "127.0.0.1"):
+            if required not in entries:
+                entries.append(required)
+                changed = True
+        if changed:
+            os.environ[key] = ",".join(entries)
+            logger.debug(f"Updated {key} to bypass proxy for local Ollama")
 
 
 class Model(ObjectModel):
@@ -147,6 +176,13 @@ class ModelManager:
         # Keep Ollama context window bounded on low-memory machines.
         if model.provider == "ollama" and model.type == "language":
             config.setdefault("num_ctx", OLLAMA_DEFAULT_NUM_CTX)
+            _ensure_no_proxy_for_local_ollama(
+                config.get("base_url") or os.environ.get("OLLAMA_API_BASE")
+            )
+        elif model.provider == "ollama":
+            _ensure_no_proxy_for_local_ollama(
+                config.get("base_url") or os.environ.get("OLLAMA_API_BASE")
+            )
 
         # Normalize provider name: DB stores underscores but Esperanto expects hyphens
         provider = model.provider.replace("_", "-")

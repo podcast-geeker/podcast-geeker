@@ -3,7 +3,7 @@
 # This is the complete privacy-focused setup with NO external APIs needed:
 # - Ollama: Local LLM and embeddings (mistral, llama, nomic-embed, etc.)
 # - Speaches: Local TTS (text-to-speech) and STT (speech-to-text)
-# - Open Notebook: Your research assistant
+# - Podcast Geeker: Your research assistant
 # - SurrealDB: Local database
 #
 # Perfect for:
@@ -21,9 +21,9 @@
 #   5. Configure providers in UI
 #
 # Full documentation:
-# - Ollama setup: https://github.com/lfnovo/open-notebook/blob/main/examples/README.md
-# - TTS setup: https://github.com/lfnovo/open-notebook/blob/main/docs/5-CONFIGURATION/local-tts.md
-# - STT setup: https://github.com/lfnovo/open-notebook/blob/main/docs/5-CONFIGURATION/local-stt.md
+# - Ollama setup: https://github.com/podcast-geeker/podcast-geeker/blob/main/examples/README.md
+# - TTS setup: https://github.com/podcast-geeker/podcast-geeker/blob/main/docs/5-CONFIGURATION/local-tts.md
+# - STT setup: https://github.com/podcast-geeker/podcast-geeker/blob/main/docs/5-CONFIGURATION/local-stt.md
 
 services:
   surrealdb:

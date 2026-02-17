@@ -8,8 +8,18 @@ from surreal_commands import CommandInput, CommandOutput, command, submit_comman
 from open_notebook.ai.models import model_manager
 from open_notebook.database.repository import ensure_record_id, repo_insert, repo_query
 from open_notebook.domain.notebook import Note, Source, SourceInsight
-from open_notebook.utils.chunking import ContentType, chunk_text, detect_content_type
-from open_notebook.utils.embedding import generate_embedding, generate_embeddings
+
+
+def _load_chunking_utils():
+    from open_notebook.utils.chunking import ContentType, chunk_text, detect_content_type
+
+    return ContentType, chunk_text, detect_content_type
+
+
+def _load_embedding_utils():
+    from open_notebook.utils.embedding import generate_embedding, generate_embeddings
+
+    return generate_embedding, generate_embeddings
 
 
 def full_model_dump(model):
@@ -149,6 +159,8 @@ async def embed_note_command(input_data: EmbedNoteInput) -> EmbedNoteOutput:
     start_time = time.time()
 
     try:
+        ContentType, _, _ = _load_chunking_utils()
+        generate_embedding, _ = _load_embedding_utils()
         logger.info(f"Starting embedding for note: {input_data.note_id}")
 
         # 1. Load note
@@ -241,6 +253,8 @@ async def embed_insight_command(input_data: EmbedInsightInput) -> EmbedInsightOu
     start_time = time.time()
 
     try:
+        ContentType, _, _ = _load_chunking_utils()
+        generate_embedding, _ = _load_embedding_utils()
         logger.info(f"Starting embedding for insight: {input_data.insight_id}")
 
         # 1. Load insight
@@ -338,6 +352,8 @@ async def embed_source_command(input_data: EmbedSourceInput) -> EmbedSourceOutpu
     start_time = time.time()
 
     try:
+        _, chunk_text, detect_content_type = _load_chunking_utils()
+        _, generate_embeddings = _load_embedding_utils()
         logger.info(f"Starting embedding for source: {input_data.source_id}")
 
         # 1. Load source

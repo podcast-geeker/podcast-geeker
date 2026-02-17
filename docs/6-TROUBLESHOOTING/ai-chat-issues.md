@@ -33,7 +33,7 @@ ollama list
 # NAME                   SIZE      MODIFIED
 # gemma3:12b            8.1 GB    2 months ago
 
-# The model name in Open Notebook must be EXACTLY "gemma3:12b"
+# The model name in Podcast Geeker must be EXACTLY "gemma3:12b"
 # NOT "gemma3" or "gemma3-12b"
 ```
 
@@ -55,7 +55,7 @@ ollama list
 # and you have access to the model
 ```
 
-> **Tip:** This error often occurs when you delete a model from Ollama but forget to update the default models in Open Notebook. Always re-configure defaults after removing models.
+> **Tip:** This error often occurs when you delete a model from Ollama but forget to update the default models in Podcast Geeker. Always re-configure defaults after removing models.
 
 ---
 
