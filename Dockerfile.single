@@ -5,12 +5,14 @@ WORKDIR /app/frontend
 # Copy dependency files first to leverage cache
 COPY frontend/package.json frontend/package-lock.json ./
 ARG NPM_REGISTRY=https://registry.npmjs.org/
+ARG NEXT_PUBLIC_ENABLE_CHARACTER_CURSOR=true
 RUN npm config set registry ${NPM_REGISTRY}
 RUN npm ci
 
 # Copy the rest of the frontend source
 COPY frontend/ ./
 # Build the frontend
+ENV NEXT_PUBLIC_ENABLE_CHARACTER_CURSOR=${NEXT_PUBLIC_ENABLE_CHARACTER_CURSOR}
 RUN npm run build
 
 # Stage 2: Backend Builder

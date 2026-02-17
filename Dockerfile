@@ -38,10 +38,12 @@ COPY . /app
 # Install frontend dependencies and build
 WORKDIR /app/frontend
 ARG NPM_REGISTRY=https://registry.npmjs.org/
+ARG NEXT_PUBLIC_ENABLE_CHARACTER_CURSOR=true
 COPY frontend/package.json frontend/package-lock.json ./
 RUN npm config set registry ${NPM_REGISTRY}
 RUN npm ci
 COPY frontend/ ./
+ENV NEXT_PUBLIC_ENABLE_CHARACTER_CURSOR=${NEXT_PUBLIC_ENABLE_CHARACTER_CURSOR}
 RUN npm run build -- --webpack
 
 # Return to app root

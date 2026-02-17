@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_ENABLE_CHARACTER_CURSOR: "true"
     image: podcast-geeker:v1
     container_name: podcast-geeker
     ports:

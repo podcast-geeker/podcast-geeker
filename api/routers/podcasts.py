@@ -12,6 +12,7 @@ from api.podcast_service import (
     PodcastGenerationResponse,
     PodcastService,
 )
+from open_notebook.config import DATA_FOLDER
 
 router = APIRouter()
 
@@ -31,10 +32,38 @@ class PodcastEpisodeResponse(BaseModel):
 
 
 def _resolve_audio_path(audio_file: str) -> Path:
+    data_root = Path(DATA_FOLDER).resolve()
+
     if audio_file.startswith("file://"):
         parsed = urlparse(audio_file)
-        return Path(unquote(parsed.path))
-    return Path(audio_file)
+        resolved_path = Path(unquote(parsed.path))
+    else:
+        resolved_path = Path(audio_file)
+
+    # Happy path: stored file path is already valid.
+    if resolved_path.exists():
+        return resolved_path
+
+    parts = resolved_path.parts
+    lower_parts = [part.lower() for part in parts]
+
+    # Compatibility for migrated databases:
+    # old records may contain absolute paths from another machine, e.g.
+    # /Users/.../podcast-geeker/data/podcasts/episodes/<name>/audio/<file>.mp3
+    if "data" in lower_parts:
+        data_index = lower_parts.index("data")
+        remapped_path = data_root.joinpath(*parts[data_index + 1 :])
+        if remapped_path.exists():
+            return remapped_path
+
+    # Secondary fallback if "data" segment is missing but podcast suffix exists.
+    if "podcasts" in lower_parts:
+        podcasts_index = lower_parts.index("podcasts")
+        remapped_path = data_root.joinpath(*parts[podcasts_index:])
+        if remapped_path.exists():
+            return remapped_path
+
+    return resolved_path
 
 
 @router.post("/podcasts/generate", response_model=PodcastGenerationResponse)
