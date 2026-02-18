@@ -286,7 +286,7 @@ Our advanced RAG capabilities are inspired by and adapted from:
 All third-party licenses are preserved and respected. See [ACKNOWLEDGMENTS.md](ACKNOWLEDGMENTS.md) for complete details and individual project repositories for their full license terms.
 
 ### Academic Context
-This project is part of **CDS547 - Large Language Models** course at the **University of British Columbia** (Winter Term 2, 2024/2025), exploring state-of-the-art RAG techniques in a real-world application.
+This project is part of **CDS547 - Large Language Models** course at the **Lingnan University** (Winter Term 2, 2024/2025), exploring state-of-the-art RAG techniques in a real-world application.
 
 ---
 

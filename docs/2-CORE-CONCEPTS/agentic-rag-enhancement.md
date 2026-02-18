@@ -1,6 +1,6 @@
 # Agentic RAG Enhancement - Technical Overview
 
-> **Project Context**: This document describes the Advanced Agentic RAG enhancements integrated into Podcast Geeker as part of the CDS547 LLM course project at the University of British Columbia.
+> **Project Context**: This document describes the Advanced Agentic RAG enhancements integrated into Podcast Geeker as part of the CDS547 LLM course project at the Lingnan University.
 
 ---
 
@@ -605,7 +605,7 @@ This project integrates strategies and techniques from:
 
 ### Academic Context
 - **Course**: CDS547 - Large Language Models (LLM)
-- **Institution**: University of British Columbia
+- **Institution**: Lingnan University
 - **Term**: 2024 Winter Term 2
 - **Project Type**: Course Enhancement Project
 
