@@ -871,7 +871,7 @@ export const itIT = {
     title: "Configura la tua IA con le tue chiavi API",
     description: "Salva le chiavi API in modo sicuro nel database per abilitare i provider IA in Podcast Geeker.",
     encryptionRequired: "Chiave di crittografia non configurata",
-    encryptionRequiredDescription: "Imposta la variabile d'ambiente OPEN_NOTEBOOK_ENCRYPTION_KEY su una stringa segreta qualsiasi per abilitare il salvataggio delle chiavi API nel database.",
+    encryptionRequiredDescription: "Imposta la variabile d'ambiente PODCAST_GEEKER_ENCRYPTION_KEY su una stringa segreta qualsiasi per abilitare il salvataggio delle chiavi API nel database.",
     configured: "Configurato",
     notConfigured: "Non configurato",
     migrationAvailable: "Variabili d'ambiente rilevate",
@@ -908,7 +908,7 @@ export const itIT = {
   },
   setupBanner: {
     encryptionRequired: "Chiave di crittografia non configurata",
-    encryptionRequiredDescription: "Imposta la variabile d'ambiente OPEN_NOTEBOOK_ENCRYPTION_KEY per abilitare l'archiviazione sicura delle credenziali.",
+    encryptionRequiredDescription: "Imposta la variabile d'ambiente PODCAST_GEEKER_ENCRYPTION_KEY per abilitare l'archiviazione sicura delle credenziali.",
     migrationAvailable: "Migrazione chiavi API disponibile",
     migrationDescription: "{count} provider hanno chiavi API impostate tramite variabili d'ambiente. Migrale nel database per una gestione più semplice.",
     goToSettings: "Vai alle Impostazioni",

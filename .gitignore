@@ -116,6 +116,9 @@ desktop.ini
 # Log files
 *.log
 
+# scripts
+scripts/
+
 # Database files
 *.db
 *.sqlite3

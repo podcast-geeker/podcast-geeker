@@ -871,7 +871,7 @@ export const jaJP = {
     title: "独自のAPIキーでAIを設定",
     description: "APIキーをデータベースに安全に保存し、Podcast GeekerでAIプロバイダーを有効にします。",
     encryptionRequired: "暗号化キーが設定されていません",
-    encryptionRequiredDescription: "OPEN_NOTEBOOK_ENCRYPTION_KEY 環境変数に任意の秘密文字列を設定して、データベースへのAPIキーの保存を有効にしてください。",
+    encryptionRequiredDescription: "PODCAST_GEEKER_ENCRYPTION_KEY 環境変数に任意の秘密文字列を設定して、データベースへのAPIキーの保存を有効にしてください。",
     configured: "設定済み",
     notConfigured: "未設定",
     migrationAvailable: "環境変数を検出",
@@ -908,7 +908,7 @@ export const jaJP = {
   },
   setupBanner: {
     encryptionRequired: "暗号化キーが設定されていません",
-    encryptionRequiredDescription: "OPEN_NOTEBOOK_ENCRYPTION_KEY 環境変数を設定して、安全な認証情報の保存を有効にしてください。",
+    encryptionRequiredDescription: "PODCAST_GEEKER_ENCRYPTION_KEY 環境変数を設定して、安全な認証情報の保存を有効にしてください。",
     migrationAvailable: "APIキーの移行が可能です",
     migrationDescription: "{count} 個のプロバイダーのAPIキーが環境変数で設定されています。管理を容易にするためにデータベースに移行してください。",
     goToSettings: "設定へ移動",

@@ -28,7 +28,7 @@ ENV UV_HTTP_TIMEOUT=120
 
 # Copy dependency files first
 COPY pyproject.toml uv.lock ./
-COPY open_notebook/__init__.py ./open_notebook/__init__.py
+COPY podcast_geeker/__init__.py ./podcast_geeker/__init__.py
 # Install dependencies
 RUN uv sync --frozen --no-dev
 

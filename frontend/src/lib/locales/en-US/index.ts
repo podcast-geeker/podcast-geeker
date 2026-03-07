@@ -871,7 +871,7 @@ export const enUS = {
     title: "Configure your AI with your own API keys",
     description: "Store API keys securely in the database to enable AI providers in Podcast Geeker.",
     encryptionRequired: "Encryption key not configured",
-    encryptionRequiredDescription: "Set the OPEN_NOTEBOOK_ENCRYPTION_KEY environment variable to any secret string to enable storing API keys in the database.",
+    encryptionRequiredDescription: "Set the PODCAST_GEEKER_ENCRYPTION_KEY environment variable to any secret string to enable storing API keys in the database.",
     configured: "Configured",
     notConfigured: "Not configured",
     migrationAvailable: "Environment Variables Detected",
@@ -908,7 +908,7 @@ export const enUS = {
   },
   setupBanner: {
     encryptionRequired: "Encryption key not configured",
-    encryptionRequiredDescription: "Set the OPEN_NOTEBOOK_ENCRYPTION_KEY environment variable to enable secure credential storage.",
+    encryptionRequiredDescription: "Set the PODCAST_GEEKER_ENCRYPTION_KEY environment variable to enable secure credential storage.",
     migrationAvailable: "API key migration available",
     migrationDescription: "{count} provider(s) have API keys set via environment variables. Migrate them to the database for easier management.",
     goToSettings: "Go to Settings",

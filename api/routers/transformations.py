@@ -12,10 +12,10 @@ from api.models import (
     TransformationResponse,
     TransformationUpdate,
 )
-from open_notebook.ai.models import Model
-from open_notebook.domain.transformation import DefaultPrompts, Transformation
-from open_notebook.exceptions import InvalidInputError
-from open_notebook.graphs.transformation import graph as transformation_graph
+from podcast_geeker.ai.models import Model
+from podcast_geeker.domain.transformation import DefaultPrompts, Transformation
+from podcast_geeker.exceptions import InvalidInputError
+from podcast_geeker.graphs.transformation import graph as transformation_graph
 
 router = APIRouter()
 

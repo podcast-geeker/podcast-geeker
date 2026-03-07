@@ -871,7 +871,7 @@ export const zhTW = {
     title: "使用您自己的 API 金鑰設定 AI",
     description: "將 API 金鑰安全地儲存在資料庫中，以在 Podcast Geeker 中啟用 AI 服務商。",
     encryptionRequired: "未設定加密金鑰",
-    encryptionRequiredDescription: "請將 OPEN_NOTEBOOK_ENCRYPTION_KEY 環境變數設定為任意密鑰字串，以啟用將 API 金鑰儲存至資料庫。",
+    encryptionRequiredDescription: "請將 PODCAST_GEEKER_ENCRYPTION_KEY 環境變數設定為任意密鑰字串，以啟用將 API 金鑰儲存至資料庫。",
     configured: "已設定",
     notConfigured: "未設定",
     migrationAvailable: "偵測到環境變數",
@@ -908,7 +908,7 @@ export const zhTW = {
   },
   setupBanner: {
     encryptionRequired: "未設定加密金鑰",
-    encryptionRequiredDescription: "請設定 OPEN_NOTEBOOK_ENCRYPTION_KEY 環境變數以啟用安全憑據儲存。",
+    encryptionRequiredDescription: "請設定 PODCAST_GEEKER_ENCRYPTION_KEY 環境變數以啟用安全憑據儲存。",
     migrationAvailable: "API 金鑰遷移可用",
     migrationDescription: "{count} 個供應商的 API 金鑰透過環境變數設定。將它們遷移到資料庫以便於管理。",
     goToSettings: "前往設定",

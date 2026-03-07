@@ -3,7 +3,7 @@ import asyncio
 from fastapi import APIRouter, Request
 from loguru import logger
 
-from open_notebook.database.repository import repo_query
+from podcast_geeker.database.repository import repo_query
 
 router = APIRouter()
 

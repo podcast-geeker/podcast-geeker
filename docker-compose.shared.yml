@@ -1,0 +1,56 @@
+# Shared-DB mode: reuse an existing shared SurrealDB service.
+# Start with: docker compose -f docker-compose.shared.yml up -d --build
+#
+# If no external shared-surrealdb exists, start fallback DB with:
+# docker compose -f docker-compose.shared.yml --profile with-surrealdb up -d --build
+
+services:
+  shared-surrealdb:
+    image: surrealdb/surrealdb:v2
+    container_name: shared-surrealdb
+    user: root
+    profiles:
+      - with-surrealdb
+    command: start --user root --pass root --bind 0.0.0.0:8000 file:/data/surreal.db
+    environment:
+      - SURREAL_EXPERIMENTAL_GRAPHQL=true
+    volumes:
+      - shared_surrealdb_data:/data
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    networks:
+      - shared-services-network
+
+  podcast-geeker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_ENABLE_CHARACTER_CURSOR: "true"
+    image: podcast-geeker:v1
+    container_name: podcast-geeker
+    ports:
+      - "8502:8502"  # Web UI
+      - "5055:5055"  # REST API
+    environment:
+      # REQUIRED: Change this to your own secret string
+      - PODCAST_GEEKER_ENCRYPTION_KEY=my-super-secret-podcast-geeker-2026
+      - SURREAL_URL=ws://shared-surrealdb:8000/rpc
+      - SURREAL_USER=root
+      - SURREAL_PASSWORD=root
+      - SURREAL_NAMESPACE=podcast_geeker
+      - SURREAL_DATABASE=podcast_geeker
+      - OLLAMA_API_BASE=http://host.docker.internal:11434
+    volumes:
+      - ./notebook_data:/app/data
+    restart: unless-stopped
+    networks:
+      - shared-services-network
+
+networks:
+  shared-services-network:
+    external: true
+
+volumes:
+  shared_surrealdb_data:

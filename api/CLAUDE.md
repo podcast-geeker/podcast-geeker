@@ -78,10 +78,10 @@ FastAPI application serving three architectural layers: routes (HTTP endpoints),
 
 - `fastapi`: FastAPI app, routers, HTTPException
 - `pydantic`: Validation models with Field, field_validator
-- `open_notebook.graphs`: chat, ask, source_chat, source, transformation graphs
-- `open_notebook.database`: SurrealDB repository functions (repo_query, repo_create, repo_upsert)
-- `open_notebook.domain`: Notebook, Source, Note, SourceInsight models
-- `open_notebook.ai.provision`: provision_langchain_model() factory
+- `podcast_geeker.graphs`: chat, ask, source_chat, source, transformation graphs
+- `podcast_geeker.database`: SurrealDB repository functions (repo_query, repo_create, repo_upsert)
+- `podcast_geeker.domain`: Notebook, Source, Note, SourceInsight models
+- `podcast_geeker.ai.provision`: provision_langchain_model() factory
 - `ai_prompter`: Prompter for template rendering
 - `content_core`: extract_content() for file/URL processing
 - `esperanto`: AI provider client library (LLM, embeddings, TTS)
@@ -149,16 +149,16 @@ The Credential Management system enables users to configure AI provider credenti
 - NEVER returns actual API key values (only metadata)
 - URL validation (SSRF protection) on all URL fields via `_validate_url()`
 - Allows private IPs and localhost for self-hosted services (Ollama, LM Studio)
-- Requires `OPEN_NOTEBOOK_ENCRYPTION_KEY` to be set for storing credentials
+- Requires `PODCAST_GEEKER_ENCRYPTION_KEY` to be set for storing credentials
 
-### Domain Model: `Credential` (`open_notebook/domain/credential.py`)
+### Domain Model: `Credential` (`podcast_geeker/domain/credential.py`)
 
 Individual credential records replacing the old `ProviderConfig` singleton. Each credential stores:
 - Provider name, display name, modalities
 - Encrypted API key (via Fernet)
 - Provider-specific config (base_url, endpoint, api_version, etc.)
 
-### Integration with Key Provider (`open_notebook/ai/key_provider.py`)
+### Integration with Key Provider (`podcast_geeker/ai/key_provider.py`)
 
 The `key_provider` module provisions DB-stored credentials into environment variables for Esperanto compatibility:
 
@@ -179,10 +179,10 @@ No changes to authentication. The `credentials` router uses the same `PasswordAu
 
 **Auth Flow** (unchanged from `api/auth.py`):
 - `PasswordAuthMiddleware`: Global middleware checking `Authorization: Bearer {password}` header
-- Default password: `open-notebook-change-me` (set `OPEN_NOTEBOOK_PASSWORD` in production)
-- Docker secrets support via `OPEN_NOTEBOOK_PASSWORD_FILE`
+- Default password: `podcast-geeker-change-me` (set `PODCAST_GEEKER_PASSWORD` in production)
+- Docker secrets support via `PODCAST_GEEKER_PASSWORD_FILE`
 
-### Connection Testing (`open_notebook/ai/connection_tester.py`)
+### Connection Testing (`podcast_geeker/ai/connection_tester.py`)
 
 The `/credentials/{credential_id}/test` endpoint uses minimal API calls to verify credentials:
 - Loads Credential via `Credential.get(config_id)`, uses `credential.to_esperanto_config()`

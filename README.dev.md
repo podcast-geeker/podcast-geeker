@@ -6,8 +6,8 @@ This guide is for developers working on Podcast Geeker. For end-user documentati
 
 ```bash
 # 1. Clone and setup
-git clone https://github.com/lfnovo/open-notebook.git
-cd open-notebook
+git clone https://github.com/podcast-geeker/podcast-geeker.git
+cd podcast-geeker
 
 # 2. Copy environment files
 cp .env.example .env
@@ -135,13 +135,13 @@ make docker-build-local
 ```
 
 This creates two tags:
-- `lfnovo/open_notebook:<version>` (from pyproject.toml)
-- `lfnovo/open_notebook:local`
+- `podcast-geeker/podcast-geeker:<version>` (from pyproject.toml)
+- `podcast-geeker/podcast-geeker:local`
 
 ### Run Locally
 
 ```bash
-docker run -p 5055:5055 -p 3000:3000 lfnovo/open_notebook:local
+docker run -p 5055:5055 -p 3000:3000 podcast-geeker/podcast-geeker:local
 ```
 
 ### When to Use
@@ -355,10 +355,10 @@ make docker-build-local
 ## Project Structure
 
 ```
-open-notebook/
+podcast-geeker/
 ├── api/                    # FastAPI backend
 ├── frontend/               # Next.js React frontend
-├── open_notebook/          # Python core library
+├── podcast_geeker/          # Python core library
 │   ├── domain/            # Domain models
 │   ├── graphs/            # LangGraph workflows
 │   ├── ai/                # AI provider integration
@@ -372,7 +372,7 @@ open-notebook/
 See component-specific CLAUDE.md files for detailed architecture:
 - [frontend/CLAUDE.md](frontend/CLAUDE.md)
 - [api/CLAUDE.md](api/CLAUDE.md)
-- [open_notebook/CLAUDE.md](open_notebook/CLAUDE.md)
+- [podcast_geeker/CLAUDE.md](podcast_geeker/CLAUDE.md)
 
 ---
 
@@ -385,7 +385,7 @@ See component-specific CLAUDE.md files for detailed architecture:
 SURREAL_URL=ws://localhost:8000
 SURREAL_USER=root
 SURREAL_PASS=root
-SURREAL_DB=open_notebook
+SURREAL_DB=podcast_geeker
 SURREAL_NS=production
 
 # AI Provider (at least one required)
@@ -438,9 +438,9 @@ make clean-cache
 
 ## Resources
 
-- **Documentation:** https://open-notebook.ai
+- **Documentation:** https://podcast-geeker.ai
 - **Discord:** https://discord.gg/37XJPXfz2w
-- **Issues:** https://github.com/lfnovo/open-notebook/issues
+- **Issues:** https://github.com/podcast-geeker/podcast-geeker/issues
 - **Contributing:** [CONTRIBUTING.md](CONTRIBUTING.md)
 - **Maintainer Guide:** [MAINTAINER_GUIDE.md](MAINTAINER_GUIDE.md)
 

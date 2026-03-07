@@ -12,7 +12,7 @@ from api.podcast_service import (
     PodcastGenerationResponse,
     PodcastService,
 )
-from open_notebook.config import DATA_FOLDER
+from podcast_geeker.config import DATA_FOLDER
 
 router = APIRouter()
 

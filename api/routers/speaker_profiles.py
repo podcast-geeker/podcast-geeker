@@ -4,7 +4,7 @@ from fastapi import APIRouter, HTTPException
 from loguru import logger
 from pydantic import BaseModel, Field
 
-from open_notebook.podcasts.models import SpeakerProfile
+from podcast_geeker.podcasts.models import SpeakerProfile
 
 router = APIRouter()
 

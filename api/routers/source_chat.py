@@ -14,14 +14,14 @@ from langchain_core.runnables import RunnableConfig
 from loguru import logger
 from pydantic import BaseModel, Field
 
-from open_notebook.ai.models import Model
-from open_notebook.database.repository import ensure_record_id, repo_query
-from open_notebook.domain.notebook import ChatSession, Source
-from open_notebook.exceptions import (
+from podcast_geeker.ai.models import Model
+from podcast_geeker.database.repository import ensure_record_id, repo_query
+from podcast_geeker.domain.notebook import ChatSession, Source
+from podcast_geeker.exceptions import (
     NotFoundError,
 )
-from open_notebook.graphs.source_chat import source_chat_graph as source_chat_graph
-from open_notebook.utils.graph_utils import get_session_message_count
+from podcast_geeker.graphs.source_chat import source_chat_graph as source_chat_graph
+from podcast_geeker.utils.graph_utils import get_session_message_count
 
 router = APIRouter()
 SOURCE_CHAT_INVOKE_TIMEOUT_SECONDS = 45

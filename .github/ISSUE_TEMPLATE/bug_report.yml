@@ -42,7 +42,7 @@ body:
         Please provide any error messages, logs, or screenshots that might help us understand the issue.
 
         **How to get logs:**
-        - Docker: `docker compose logs -f open_notebook`
+        - Docker: `docker compose logs -f podcast_geeker`
         - Check browser console (F12 → Console tab)
       placeholder: |
         Paste logs here or drag and drop screenshots.

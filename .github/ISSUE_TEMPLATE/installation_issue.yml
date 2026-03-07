@@ -10,7 +10,7 @@ body:
 
         **Please try these resources first:**
 
-        1. 🤖 **[Installation Assistant ChatGPT](https://chatgpt.com/g/g-68776e2765b48191bd1bae3f30212631-open-notebook-installation-assistant)** - Our AI assistant can help you troubleshoot most installation issues instantly!
+        1. 🤖 **[Installation Assistant ChatGPT](https://chatgpt.com/g/g-68776e2765b48191bd1bae3f30212631-podcast-geeker-installation-assistant)** - Our AI assistant can help you troubleshoot most installation issues instantly!
 
         2. 📚 **[Installation Guide](https://github.com/podcast-geeker/podcast-geeker/blob/main/docs/getting-started/installation.md)** - Comprehensive setup instructions
         
@@ -55,9 +55,9 @@ body:
         Please provide relevant logs. **This is very important for diagnosing issues!**
 
         **How to get logs:**
-        - Docker single container: `docker logs open-notebook`
+        - Docker single container: `docker logs podcast-geeker`
         - Docker Compose: `docker compose logs -f`
-        - Specific service: `docker compose logs -f open_notebook`
+        - Specific service: `docker compose logs -f podcast_geeker`
       placeholder: |
         Paste your logs here. Include the full error message and stack trace if available.
       render: shell
@@ -74,8 +74,8 @@ body:
         **⚠️ IMPORTANT: Redact any sensitive information (API keys, passwords, etc.)**
       placeholder: |
         services:
-          open_notebook:
-            image: lfnovo/open_notebook:v1-latest-single
+          podcast_geeker:
+            image: podcast-geeker/podcast-geeker:v1-latest-single
             ports:
               - "8502:8502"
               - "5055:5055"
@@ -138,7 +138,7 @@ body:
       label: Pre-submission Checklist
       description: Please confirm you've tried these steps
       options:
-        - label: I tried the [Installation Assistant ChatGPT](https://chatgpt.com/g/g-68776e2765b48191bd1bae3f30212631-open-notebook-installation-assistant)
+        - label: I tried the [Installation Assistant ChatGPT](https://chatgpt.com/g/g-68776e2765b48191bd1bae3f30212631-podcast-geeker-installation-assistant)
           required: false
         - label: I read the relevant documentation ([Installation Guide](https://github.com/podcast-geeker/podcast-geeker/blob/main/docs/getting-started/installation.md) or [Ollama Guide](https://github.com/podcast-geeker/podcast-geeker/blob/main/docs/features/ollama.md))
           required: false

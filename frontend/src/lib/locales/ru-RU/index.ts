@@ -871,7 +871,7 @@ export const ruRU = {
     title: "Настройте ИИ с помощью собственных API-ключей",
     description: "Храните API-ключи в базе данных для безопасного подключения провайдеров ИИ в Podcast Geeker.",
     encryptionRequired: "Ключ шифрования не настроен",
-    encryptionRequiredDescription: "Установите переменную окружения OPEN_NOTEBOOK_ENCRYPTION_KEY в любую секретную строку для хранения API-ключей в базе данных.",
+    encryptionRequiredDescription: "Установите переменную окружения PODCAST_GEEKER_ENCRYPTION_KEY в любую секретную строку для хранения API-ключей в базе данных.",
     configured: "Настроено",
     notConfigured: "Не настроено",
     migrationAvailable: "Обнаружены переменные окружения",
@@ -908,7 +908,7 @@ export const ruRU = {
   },
   setupBanner: {
     encryptionRequired: "Ключ шифрования не настроен",
-    encryptionRequiredDescription: "Установите переменную окружения OPEN_NOTEBOOK_ENCRYPTION_KEY для безопасного хранения учётных данных.",
+    encryptionRequiredDescription: "Установите переменную окружения PODCAST_GEEKER_ENCRYPTION_KEY для безопасного хранения учётных данных.",
     migrationAvailable: "Доступна миграция API-ключей",
     migrationDescription: "{count} провайдер(ов) имеют API-ключи, заданные через переменные окружения. Перенесите их в базу данных для удобного управления.",
     goToSettings: "Перейти к настройкам",

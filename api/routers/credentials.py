@@ -48,7 +48,7 @@ from api.models import (
     RegisterModelsResponse,
     UpdateCredentialRequest,
 )
-from open_notebook.domain.credential import Credential
+from podcast_geeker.domain.credential import Credential
 
 router = APIRouter(prefix="/credentials", tags=["credentials"])
 

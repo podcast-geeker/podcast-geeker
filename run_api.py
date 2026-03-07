@@ -29,7 +29,7 @@ if __name__ == "__main__":
             str(path)
             for path in (
                 current_dir / "api",
-                current_dir / "open_notebook",
+                current_dir / "podcast_geeker",
                 current_dir / "commands",
                 current_dir / "run_api.py",
             )

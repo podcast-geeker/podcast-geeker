@@ -17,7 +17,7 @@ class ChatService:
         self.base_url = os.getenv("API_BASE_URL", "http://127.0.0.1:5055")
         # Add authentication header if password is set
         self.headers = {}
-        password = os.getenv("OPEN_NOTEBOOK_PASSWORD")
+        password = os.getenv("PODCAST_GEEKER_PASSWORD")
         if password:
             self.headers["Authorization"] = f"Bearer {password}"
 

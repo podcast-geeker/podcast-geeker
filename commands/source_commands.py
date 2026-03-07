@@ -5,14 +5,14 @@ from loguru import logger
 from pydantic import BaseModel
 from surreal_commands import CommandInput, CommandOutput, command
 
-from open_notebook.database.repository import ensure_record_id
-from open_notebook.domain.notebook import Source
-from open_notebook.domain.transformation import Transformation
+from podcast_geeker.database.repository import ensure_record_id
+from podcast_geeker.domain.notebook import Source
+from podcast_geeker.domain.transformation import Transformation
 
 
 def _load_source_graph():
     try:
-        from open_notebook.graphs.source import source_graph
+        from podcast_geeker.graphs.source import source_graph
     except ImportError as e:
         logger.error(f"Failed to import source graph: {e}")
         raise ValueError("source graph not available") from e
@@ -21,7 +21,7 @@ def _load_source_graph():
 
 def _load_transform_graph():
     try:
-        from open_notebook.graphs.transformation import graph as transform_graph
+        from podcast_geeker.graphs.transformation import graph as transform_graph
     except ImportError as e:
         logger.error(f"Failed to import transformation graph: {e}")
         raise ValueError("transformation graph not available") from e
@@ -58,7 +58,7 @@ class SourceProcessingOutput(CommandOutput):
 
 @command(
     "process_source",
-    app="open_notebook",
+    app="podcast_geeker",
     retry={
         "max_attempts": 15,  # Handle deep queues (workaround for SurrealDB v2 transaction conflicts)
         "wait_strategy": "exponential_jitter",
@@ -190,7 +190,7 @@ class RunTransformationOutput(CommandOutput):
 
 @command(
     "run_transformation",
-    app="open_notebook",
+    app="podcast_geeker",
     retry={
         "max_attempts": 5,
         "wait_strategy": "exponential_jitter",

@@ -41,7 +41,7 @@ class APIClient:
 
         # Add authentication header if password is set
         self.headers = {}
-        password = os.getenv("OPEN_NOTEBOOK_PASSWORD")
+        password = os.getenv("PODCAST_GEEKER_PASSWORD")
         if password:
             self.headers["Authorization"] = f"Bearer {password}"
 

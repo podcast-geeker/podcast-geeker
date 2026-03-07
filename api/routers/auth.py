@@ -5,7 +5,7 @@ Provides endpoints to check authentication status.
 
 from fastapi import APIRouter
 
-from open_notebook.utils.encryption import get_secret_from_env
+from podcast_geeker.utils.encryption import get_secret_from_env
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -15,9 +15,9 @@ async def get_auth_status():
     """
     Check if authentication is enabled.
     Returns whether a password is required to access the API.
-    Supports Docker secrets via OPEN_NOTEBOOK_PASSWORD_FILE.
+    Supports Docker secrets via PODCAST_GEEKER_PASSWORD_FILE.
     """
-    auth_enabled = bool(get_secret_from_env("OPEN_NOTEBOOK_PASSWORD"))
+    auth_enabled = bool(get_secret_from_env("PODCAST_GEEKER_PASSWORD"))
 
     return {
         "auth_enabled": auth_enabled,

@@ -59,7 +59,7 @@ User documentation is at @docs/
 - **Build Tool**: Webpack (via Next.js)
 - **i18n compatible**: All front-end changes must also consider the translation keys
 
-### API Backend (`api/` + `open_notebook/`)
+### API Backend (`api/` + `podcast_geeker/`)
 - **Framework**: FastAPI 0.104+
 - **Language**: Python 3.11+
 - **Workflows**: LangGraph state machines
@@ -176,7 +176,7 @@ User documentation is at @docs/
 5. Test via http://localhost:5055/docs
 
 ### Add a New LangGraph Workflow
-1. Create `open_notebook/graphs/workflow_name.py`
+1. Create `podcast_geeker/graphs/workflow_name.py`
 2. Define StateDict and node functions
 3. Build graph with `.add_node()` / `.add_edge()`
 4. Invoke in service: `graph.ainvoke({"input": ...}, config={"..."})`

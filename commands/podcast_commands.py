@@ -8,10 +8,10 @@ from loguru import logger
 from pydantic import BaseModel
 from surreal_commands import CommandInput, CommandOutput, command
 
-from open_notebook.ai.key_provider import provision_provider_keys
-from open_notebook.config import DATA_FOLDER
-from open_notebook.database.repository import ensure_record_id, repo_query
-from open_notebook.podcasts.models import EpisodeProfile, PodcastEpisode, SpeakerProfile
+from podcast_geeker.ai.key_provider import provision_provider_keys
+from podcast_geeker.config import DATA_FOLDER
+from podcast_geeker.database.repository import ensure_record_id, repo_query
+from podcast_geeker.podcasts.models import EpisodeProfile, PodcastEpisode, SpeakerProfile
 
 
 def _load_podcast_creator():
@@ -128,7 +128,7 @@ class PodcastGenerationOutput(CommandOutput):
     error_message: Optional[str] = None
 
 
-@command("generate_podcast", app="open_notebook")
+@command("generate_podcast", app="podcast_geeker")
 async def generate_podcast_command(
     input_data: PodcastGenerationInput,
 ) -> PodcastGenerationOutput:

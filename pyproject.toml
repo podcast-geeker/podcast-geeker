@@ -1,9 +1,9 @@
 [project]
-name = "open-notebook"
+name = "Podcast-Geeker"
 version = "1.0.0"
 description = "An open source implementation of a research assistant, inspired by Google Notebook LM"
 authors = [
-    {name = "Luis Novo", email = "lfnovo@gmail.com"}
+    {name = "Podcast Geeker", email = "podcast-geeker@gmail.com"}
 ]
 readme = "README.md"
 classifiers = [
@@ -43,7 +43,7 @@ dependencies = [
 ]
 
 [tool.setuptools]
-package-dir = {"open_notebook" = "open_notebook"}
+package-dir = {"podcast_geeker" = "podcast_geeker"}
 
 
 [project.optional-dependencies]

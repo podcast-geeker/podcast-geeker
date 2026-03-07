@@ -5,8 +5,8 @@ from loguru import logger
 from pydantic import BaseModel
 from surreal_commands import get_command_status, submit_command
 
-from open_notebook.domain.notebook import Notebook
-from open_notebook.podcasts.models import EpisodeProfile, PodcastEpisode, SpeakerProfile
+from podcast_geeker.domain.notebook import Notebook
+from podcast_geeker.podcasts.models import EpisodeProfile, PodcastEpisode, SpeakerProfile
 
 
 class PodcastGenerationRequest(BaseModel):
@@ -93,7 +93,7 @@ class PodcastService:
                 raise ValueError("Podcast commands not available")
 
             # Submit command to surreal-commands
-            job_id = submit_command("open_notebook", "generate_podcast", command_args)
+            job_id = submit_command("podcast_geeker", "generate_podcast", command_args)
 
             # Convert RecordID to string if needed
             if not job_id:

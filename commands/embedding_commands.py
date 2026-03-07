@@ -5,19 +5,19 @@ from loguru import logger
 from pydantic import BaseModel
 from surreal_commands import CommandInput, CommandOutput, command, submit_command
 
-from open_notebook.ai.models import model_manager
-from open_notebook.database.repository import ensure_record_id, repo_insert, repo_query
-from open_notebook.domain.notebook import Note, Source, SourceInsight
+from podcast_geeker.ai.models import model_manager
+from podcast_geeker.database.repository import ensure_record_id, repo_insert, repo_query
+from podcast_geeker.domain.notebook import Note, Source, SourceInsight
 
 
 def _load_chunking_utils():
-    from open_notebook.utils.chunking import ContentType, chunk_text, detect_content_type
+    from podcast_geeker.utils.chunking import ContentType, chunk_text, detect_content_type
 
     return ContentType, chunk_text, detect_content_type
 
 
 def _load_embedding_utils():
-    from open_notebook.utils.embedding import generate_embedding, generate_embeddings
+    from podcast_geeker.utils.embedding import generate_embedding, generate_embeddings
 
     return generate_embedding, generate_embeddings
 
@@ -129,7 +129,7 @@ class EmbedSourceOutput(CommandOutput):
 
 @command(
     "embed_note",
-    app="open_notebook",
+    app="podcast_geeker",
     retry={
         "max_attempts": 5,
         "wait_strategy": "exponential_jitter",
@@ -223,7 +223,7 @@ async def embed_note_command(input_data: EmbedNoteInput) -> EmbedNoteOutput:
 
 @command(
     "embed_insight",
-    app="open_notebook",
+    app="podcast_geeker",
     retry={
         "max_attempts": 5,
         "wait_strategy": "exponential_jitter",
@@ -319,7 +319,7 @@ async def embed_insight_command(input_data: EmbedInsightInput) -> EmbedInsightOu
 
 @command(
     "embed_source",
-    app="open_notebook",
+    app="podcast_geeker",
     retry={
         "max_attempts": 5,
         "wait_strategy": "exponential_jitter",
@@ -457,7 +457,7 @@ async def embed_source_command(input_data: EmbedSourceInput) -> EmbedSourceOutpu
 
 @command(
     "create_insight",
-    app="open_notebook",
+    app="podcast_geeker",
     retry={
         "max_attempts": 5,
         "wait_strategy": "exponential_jitter",
@@ -520,7 +520,7 @@ async def create_insight_command(
 
         # 2. Submit embedding command (fire-and-forget)
         submit_command(
-            "open_notebook",
+            "podcast_geeker",
             "embed_insight",
             {"insight_id": insight_id},
         )
@@ -634,7 +634,7 @@ async def collect_items_for_rebuild(
     return items
 
 
-@command("rebuild_embeddings", app="open_notebook", retry=None)
+@command("rebuild_embeddings", app="podcast_geeker", retry=None)
 async def rebuild_embeddings_command(
     input_data: RebuildEmbeddingsInput,
 ) -> RebuildEmbeddingsOutput:
@@ -707,7 +707,7 @@ async def rebuild_embeddings_command(
         for idx, source_id in enumerate(items["sources"], 1):
             try:
                 submit_command(
-                    "open_notebook",
+                    "podcast_geeker",
                     "embed_source",
                     {"source_id": source_id},
                 )
@@ -727,7 +727,7 @@ async def rebuild_embeddings_command(
         for idx, note_id in enumerate(items["notes"], 1):
             try:
                 submit_command(
-                    "open_notebook",
+                    "podcast_geeker",
                     "embed_note",
                     {"note_id": note_id},
                 )
@@ -747,7 +747,7 @@ async def rebuild_embeddings_command(
         for idx, insight_id in enumerate(items["insights"], 1):
             try:
                 submit_command(
-                    "open_notebook",
+                    "podcast_geeker",
                     "embed_insight",
                     {"insight_id": insight_id},
                 )

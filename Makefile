@@ -15,8 +15,8 @@ WARMUP_WAIT_TIMEOUT ?= 90
 AUTO_WARMUP ?= 0
 
 # Image names for both registries
-DOCKERHUB_IMAGE := lfnovo/open_notebook
-GHCR_IMAGE := ghcr.io/lfnovo/open-notebook
+DOCKERHUB_IMAGE := podcast-geeker/podcast-geeker
+GHCR_IMAGE := ghcr.io/podcast-geeker/podcast-geeker
 
 # Build platforms
 PLATFORMS := linux/amd64,linux/arm64

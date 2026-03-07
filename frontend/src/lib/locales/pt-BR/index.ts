@@ -871,7 +871,7 @@ export const ptBR = {
     title: "Configure sua IA com suas próprias chaves de API",
     description: "Armazene chaves de API com segurança no banco de dados para habilitar provedores de IA no Podcast Geeker.",
     encryptionRequired: "Chave de criptografia não configurada",
-    encryptionRequiredDescription: "Configure a variável de ambiente OPEN_NOTEBOOK_ENCRYPTION_KEY com qualquer string secreta para armazenar chaves de API no banco de dados.",
+    encryptionRequiredDescription: "Configure a variável de ambiente PODCAST_GEEKER_ENCRYPTION_KEY com qualquer string secreta para armazenar chaves de API no banco de dados.",
     configured: "Configurado",
     notConfigured: "Não configurado",
     migrationAvailable: "Variáveis de Ambiente Detectadas",
@@ -908,7 +908,7 @@ export const ptBR = {
   },
   setupBanner: {
     encryptionRequired: "Chave de criptografia não configurada",
-    encryptionRequiredDescription: "Configure a variável de ambiente OPEN_NOTEBOOK_ENCRYPTION_KEY para habilitar o armazenamento seguro de credenciais.",
+    encryptionRequiredDescription: "Configure a variável de ambiente PODCAST_GEEKER_ENCRYPTION_KEY para habilitar o armazenamento seguro de credenciais.",
     migrationAvailable: "Migração de chaves de API disponível",
     migrationDescription: "{count} provedor(es) possuem chaves de API definidas por variáveis de ambiente. Migre-as para o banco de dados para facilitar o gerenciamento.",
     goToSettings: "Ir para Configurações",

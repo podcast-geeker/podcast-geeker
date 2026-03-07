@@ -871,7 +871,7 @@ export const frFR = {
     title: "Configurez votre IA avec vos propres clés API",
     description: "Stockez les clés API de manière sécurisée dans la base de données pour activer les fournisseurs d'IA dans Podcast Geeker.",
     encryptionRequired: "Clé de chiffrement non configurée",
-    encryptionRequiredDescription: "Définissez la variable d'environnement OPEN_NOTEBOOK_ENCRYPTION_KEY avec une chaîne secrète pour activer le stockage des clés API dans la base de données.",
+    encryptionRequiredDescription: "Définissez la variable d'environnement PODCAST_GEEKER_ENCRYPTION_KEY avec une chaîne secrète pour activer le stockage des clés API dans la base de données.",
     configured: "Configuré",
     notConfigured: "Non configuré",
     migrationAvailable: "Variables d'environnement détectées",
@@ -908,7 +908,7 @@ export const frFR = {
   },
   setupBanner: {
     encryptionRequired: "Clé de chiffrement non configurée",
-    encryptionRequiredDescription: "Définissez la variable d'environnement OPEN_NOTEBOOK_ENCRYPTION_KEY pour activer le stockage sécurisé des identifiants.",
+    encryptionRequiredDescription: "Définissez la variable d'environnement PODCAST_GEEKER_ENCRYPTION_KEY pour activer le stockage sécurisé des identifiants.",
     migrationAvailable: "Migration des clés API disponible",
     migrationDescription: "{count} fournisseur(s) ont des clés API définies via des variables d'environnement. Migrez-les vers la base de données pour une gestion plus facile.",
     goToSettings: "Aller aux paramètres",

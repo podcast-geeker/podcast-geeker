@@ -6,10 +6,10 @@ from fastapi.responses import StreamingResponse
 from loguru import logger
 
 from api.models import AskRequest, AskResponse, SearchRequest, SearchResponse
-from open_notebook.ai.models import Model, model_manager
-from open_notebook.domain.notebook import text_search, vector_search
-from open_notebook.exceptions import DatabaseOperationError, InvalidInputError
-from open_notebook.graphs.ask import graph as ask_graph
+from podcast_geeker.ai.models import Model, model_manager
+from podcast_geeker.domain.notebook import text_search, vector_search
+from podcast_geeker.exceptions import DatabaseOperationError, InvalidInputError
+from podcast_geeker.graphs.ask import graph as ask_graph
 
 router = APIRouter()
 

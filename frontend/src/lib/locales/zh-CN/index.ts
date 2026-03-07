@@ -871,7 +871,7 @@ export const zhCN = {
     title: "使用您自己的 API 密钥配置 AI",
     description: "将 API 密钥安全地存储在数据库中，以在 Podcast Geeker 中启用 AI 服务商。",
     encryptionRequired: "未配置加密密钥",
-    encryptionRequiredDescription: "请将 OPEN_NOTEBOOK_ENCRYPTION_KEY 环境变量设置为任意密钥字符串，以启用将 API 密钥存储到数据库。",
+    encryptionRequiredDescription: "请将 PODCAST_GEEKER_ENCRYPTION_KEY 环境变量设置为任意密钥字符串，以启用将 API 密钥存储到数据库。",
     configured: "已配置",
     notConfigured: "未配置",
     migrationAvailable: "检测到环境变量",
@@ -908,7 +908,7 @@ export const zhCN = {
   },
   setupBanner: {
     encryptionRequired: "未配置加密密钥",
-    encryptionRequiredDescription: "请设置 OPEN_NOTEBOOK_ENCRYPTION_KEY 环境变量以启用安全凭据存储。",
+    encryptionRequiredDescription: "请设置 PODCAST_GEEKER_ENCRYPTION_KEY 环境变量以启用安全凭据存储。",
     migrationAvailable: "API 密钥迁移可用",
     migrationDescription: "{count} 个服务商的 API 密钥通过环境变量设置。将它们迁移到数据库以便于管理。",
     goToSettings: "前往设置",

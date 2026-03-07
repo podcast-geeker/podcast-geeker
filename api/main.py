@@ -34,8 +34,8 @@ from api.routers import (
     transformations,
 )
 from api.routers import commands as commands_router
-from open_notebook.database.async_migrate import AsyncMigrationManager
-from open_notebook.utils.encryption import get_secret_from_env
+from podcast_geeker.database.async_migrate import AsyncMigrationManager
+from podcast_geeker.utils.encryption import get_secret_from_env
 
 # Import commands to register them in the API process
 try:
@@ -57,11 +57,11 @@ async def lifespan(app: FastAPI):
     logger.info("Starting API initialization...")
 
     # Security check: Encryption key
-    if not get_secret_from_env("OPEN_NOTEBOOK_ENCRYPTION_KEY"):
+    if not get_secret_from_env("PODCAST_GEEKER_ENCRYPTION_KEY"):
         logger.warning(
-            "OPEN_NOTEBOOK_ENCRYPTION_KEY not set. "
+            "PODCAST_GEEKER_ENCRYPTION_KEY not set. "
             "API key encryption will fail until this is configured. "
-            "Set OPEN_NOTEBOOK_ENCRYPTION_KEY to any secret string."
+            "Set PODCAST_GEEKER_ENCRYPTION_KEY to any secret string."
         )
 
     # Run database migrations

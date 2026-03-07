@@ -82,7 +82,7 @@ In a world dominated by Artificial Intelligence, having the ability to think �
 
 **Option A:** Download directly
 ```bash
-curl -o docker-compose.yml https://raw.githubusercontent.com/lfnovo/open-notebook/main/docker-compose.yml
+curl -o docker-compose.yml https://raw.githubusercontent.com/podcast-geeker/podcast-geeker/main/docker-compose.yml
 ```
 
 **Option B:** Create the file manually
@@ -100,13 +100,13 @@ services:
       - ./surreal_data:/mydata
     restart: always
 
-  open_notebook:
-    image: podcast-geeker:v1:v1-latest
+  podcast_geeker:
+    image: podcast-geeker/podcast-geeker:v1-latest
     ports:
       - "8502:8502"
       - "5055:5055"
     environment:
-      - OPEN_NOTEBOOK_ENCRYPTION_KEY=change-me-to-a-secret-string
+      - PODCAST_GEEKER_ENCRYPTION_KEY=change-me-to-a-secret-string
       - SURREAL_URL=ws://surrealdb:8000/rpc
       - SURREAL_USER=root
       - SURREAL_PASSWORD=root
@@ -120,7 +120,7 @@ services:
 ### Step 2: Set Your Encryption Key
 Edit `docker-compose.yml` and change this line:
 ```yaml
-- OPEN_NOTEBOOK_ENCRYPTION_KEY=change-me-to-a-secret-string
+- PODCAST_GEEKER_ENCRYPTION_KEY=change-me-to-a-secret-string
 ```
 to any secret value (e.g., `my-super-secret-key-123`)
 
@@ -157,7 +157,7 @@ Done! You're ready to create your first notebook.
 
 ### 📖 Need Help?
 
-- **🤖 AI Installation Assistant**: [CustomGPT to help you install](https://chatgpt.com/g/g-68776e2765b48191bd1bae3f30212631-open-notebook-installation-assistant)
+- **🤖 AI Installation Assistant**: [CustomGPT to help you install](https://chatgpt.com/g/g-68776e2765b48191bd1bae3f30212631-podcast-geeker-installation-assistant)
 - **🆘 Troubleshooting**: [5-minute troubleshooting guide](docs/6-TROUBLESHOOTING/quick-fixes.md)
 - **💬 Community Support**: [Discord Server](https://discord.gg/37XJPXfz2w)
 - **🐛 Report Issues**: [GitHub Issues](https://github.com/podcast-geeker/podcast-geeker/issues)
@@ -267,7 +267,7 @@ Podcast Geeker is MIT licensed. See the [LICENSE](LICENSE) file for details.
 Podcast Geeker is built upon and inspired by excellent open-source projects. See our complete [ACKNOWLEDGMENTS.md](ACKNOWLEDGMENTS.md) for detailed attributions.
 
 ### Core Project
-This project is a fork and enhancement of **[Open Notebook](https://github.com/lfnovo/open-notebook)** by [@lfnovo](https://github.com/lfnovo). We're grateful for the solid foundation and architecture that made these enhancements possible.
+This project is a fork and enhancement of **[Open Notebook](https://github.com/podcast-geeker/podcast-geeker)** by [@podcast-geeker](https://github.com/podcast-geeker). We're grateful for the solid foundation and architecture that made these enhancements possible.
 
 ### RAG Enhancement Technologies
 Our advanced RAG capabilities are inspired by and adapted from:
@@ -279,7 +279,7 @@ Our advanced RAG capabilities are inspired by and adapted from:
   Enables multi-modal content understanding for PDFs, including images, tables, and equations. Integrated as an optional enhancement layer for advanced document processing.
 
 ### AI Infrastructure
-- **[Esperanto](https://github.com/lfnovo/esperanto)** - Multi-provider AI abstraction layer supporting 16+ AI providers
+- **[Esperanto](https://github.com/podcast-geeker/esperanto)** - Multi-provider AI abstraction layer supporting 16+ AI providers
 - **[LangChain](https://github.com/langchain-ai/langchain)** & **[LangGraph](https://github.com/langchain-ai/langgraph)** - Workflow orchestration and state management
 - **[SurrealDB](https://surrealdb.com/)** - Graph database with built-in vector search
 
@@ -292,26 +292,26 @@ This project is part of **CDS547 - Large Language Models** course at the **Lingn
 
 **Community Support**:
 - 💬 [Discord Server](https://discord.gg/37XJPXfz2w) - Get help, share ideas, and connect with users
-- 🐛 [GitHub Issues](https://github.com/lfnovo/open-notebook/issues) - Report bugs and request features
-- 🌐 [Website](https://www.open-notebook.ai) - Learn more about the project
+- 🐛 [GitHub Issues](https://github.com/podcast-geeker/podcast-geeker/issues) - Report bugs and request features
+- 🌐 [Website](https://www.podcast-geeker.ai) - Learn more about the project
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/lfnovo/open-notebook.svg?style=for-the-badge
-[contributors-url]: https://github.com/lfnovo/open-notebook/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/lfnovo/open-notebook.svg?style=for-the-badge
-[forks-url]: https://github.com/lfnovo/open-notebook/network/members
-[stars-shield]: https://img.shields.io/github/stars/lfnovo/open-notebook.svg?style=for-the-badge
-[stars-url]: https://github.com/lfnovo/open-notebook/stargazers
-[issues-shield]: https://img.shields.io/github/issues/lfnovo/open-notebook.svg?style=for-the-badge
-[issues-url]: https://github.com/lfnovo/open-notebook/issues
-[license-shield]: https://img.shields.io/github/license/lfnovo/open-notebook.svg?style=for-the-badge
-[license-url]: https://github.com/lfnovo/open-notebook/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/podcast-geeker/podcast-geeker.svg?style=for-the-badge
+[contributors-url]: https://github.com/podcast-geeker/podcast-geeker/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/podcast-geeker/podcast-geeker.svg?style=for-the-badge
+[forks-url]: https://github.com/podcast-geeker/podcast-geeker/network/members
+[stars-shield]: https://img.shields.io/github/stars/podcast-geeker/podcast-geeker.svg?style=for-the-badge
+[stars-url]: https://github.com/podcast-geeker/podcast-geeker/stargazers
+[issues-shield]: https://img.shields.io/github/issues/podcast-geeker/podcast-geeker.svg?style=for-the-badge
+[issues-url]: https://github.com/podcast-geeker/podcast-geeker/issues
+[license-shield]: https://img.shields.io/github/license/podcast-geeker/podcast-geeker.svg?style=for-the-badge
+[license-url]: https://github.com/podcast-geeker/podcast-geeker/blob/main/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/lfnovo
+[linkedin-url]: https://linkedin.com/in/podcast-geeker
 [product-screenshot]: images/screenshot.png
 [Next.js]: https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white
 [Next-url]: https://nextjs.org/

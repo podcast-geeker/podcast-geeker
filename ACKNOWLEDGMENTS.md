@@ -7,8 +7,8 @@ Podcast Geeker stands on the shoulders of exceptional open-source projects and r
 ## Core Foundation
 
 ### Open Notebook
-**Project**: [lfnovo/open-notebook](https://github.com/lfnovo/open-notebook)  
-**Author**: [@lfnovo](https://github.com/lfnovo)  
+**Project**: [podcast-geeker/podcast-geeker](https://github.com/podcast-geeker/podcast-geeker)  
+**Author**: [@podcast-geeker](https://github.com/podcast-geeker)  
 **License**: MIT
 
 Podcast Geeker is built upon the solid foundation of Open Notebook, which provides:
@@ -54,8 +54,8 @@ Integrated as an optional enhancement layer that gracefully falls back when unav
 ## AI Infrastructure
 
 ### Esperanto
-**Project**: [lfnovo/esperanto](https://github.com/lfnovo/esperanto)  
-**Author**: [@lfnovo](https://github.com/lfnovo)  
+**Project**: [podcast-geeker/esperanto](https://github.com/podcast-geeker/esperanto)  
+**Author**: [@podcast-geeker](https://github.com/podcast-geeker)  
 **License**: MIT
 
 Unified interface to 16+ AI providers:
@@ -105,12 +105,12 @@ All Podcast Geeker workflows (Ask, Chat, Source Processing, Transformations, Pod
   - ACID transactions
 
 ### Content Processing
-- **[content-core](https://github.com/lfnovo/content-core)** - Multi-format content extraction (MIT License)
+- **[content-core](https://github.com/podcast-geeker/content-core)** - Multi-format content extraction (MIT License)
 - **[PyMuPDF](https://pymupdf.readthedocs.io/)** - PDF processing (AGPL License)
 - **[BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup/)** - HTML parsing (MIT License)
 
 ### Podcast Generation
-- **[podcast-creator](https://github.com/lfnovo/podcast-creator)** - Multi-speaker podcast generation (MIT License)
+- **[podcast-creator](https://github.com/podcast-geeker/podcast-creator)** - Multi-speaker podcast generation (MIT License)
 - **OpenAI TTS** / **ElevenLabs** / **Google TTS** - Text-to-speech services
 
 ---
