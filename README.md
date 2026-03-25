@@ -18,11 +18,8 @@
   <h3 align="center">Podcast Geeker</h3>
 
   <p align="center">
-    An open source, privacy-focused Podcast Geeker!
+    An open source, privacy-focused AI research assistant & podcast studio
     <br /><strong></strong>
-    <br />
-    <a href="https://github.com/podcast-geeker/podcast-geeker"></a>
-    <br />
     <br />
     <a href="docs/0-START-HERE/index.md">📚 Get Started</a>
     ·
@@ -38,7 +35,7 @@
 
 
 ## A private, multi-model, 100% local, full-featured alternative to Notebook LM
-## Enhanced with Advanced Agentic RAG Capabilities
+## Now with Multi-Agent Agentic Podcast Generation
 
 
 In a world dominated by Artificial Intelligence, having the ability to think 🧠 and acquire new knowledge 💡, is a skill that should not be a privilege for a few, nor restricted to a single provider.
@@ -47,7 +44,7 @@ In a world dominated by Artificial Intelligence, having the ability to think �
 - 🔒 **Control your data** - Keep your research private and secure
 - 🤖 **Choose your AI models** - Support for 16+ providers including OpenAI, Anthropic, Ollama, LM Studio, and more
 - 📚 **Organize multi-modal content** - PDFs, videos, audio, web pages, and more
-- 🎙️ **Generate professional podcasts** - Advanced multi-speaker podcast generation
+- 🎙️ **Generate agentic podcasts** - Multi-agent Host ⇌ Expert dialogue with quality review
 - 🔍 **Search intelligently** - Advanced Agentic RAG with hierarchical indexing, query rewriting, and self-correction
 - 💬 **Chat with context** - AI conversations powered by your research with conversation memory
 - 🧠 **Smarter retrieval** - Parent/Child chunking, query analysis, and automatic relevance evaluation
@@ -64,7 +61,7 @@ In a world dominated by Artificial Intelligence, having the ability to think �
 - 💰 **Cost Control**: Choose cheaper AI providers or run locally with Ollama
 - 🧠 **Smarter Search**: Advanced Agentic RAG with hierarchical indexing and query understanding
 - 🔍 **Better Accuracy**: Self-correction mechanisms ensure relevant results
-- 🎙️ **Better Podcasts**: Full script control and multi-speaker flexibility vs limited 2-speaker deep-dive format
+- 🎙️ **Agentic Podcasts**: Each speaker is an independent Agent — consistent character, per-turn quality review, no single-prompt shortcuts
 - 🔧 **Unlimited Customization**: Modify, extend, and integrate as needed
 - 🌐 **No Vendor Lock-in**: Switch providers, deploy anywhere, own your data
 
@@ -175,10 +172,44 @@ Done! You're ready to create your first notebook.
 - **🎯 Multi-Notebook Organization**: Manage multiple research projects seamlessly
 - **📚 Universal Content Support**: PDFs, videos, audio, web pages, Office docs, and more
 - **🤖 Multi-Model AI Support**: 16+ providers including OpenAI, Anthropic, Ollama, Google, LM Studio, and more
-- **🎙️ Professional Podcast Generation**: Advanced multi-speaker podcasts with Episode Profiles
+- **🎙️ Agentic Podcast Generation**: Multi-agent Host ⇌ Expert dialogue loop with LangGraph orchestration and quality review
 - **🔍 Advanced Agentic RAG**: Intelligent search with hierarchical indexing, query rewriting, and self-correction
 - **💬 Context-Aware Chat**: AI conversations powered by your research materials with conversation memory
 - **📝 AI-Assisted Notes**: Generate insights or write notes manually
+
+### 🎙️ Multi-Agent Podcast System
+
+The podcast pipeline is powered by a **LangGraph multi-agent dialogue loop**, replacing the traditional single-prompt transcript generation:
+
+```
+outline  →  [Host ⇌ Expert loop]  →  TTS → combine_audio
+```
+
+| Node | Role |
+|------|------|
+| `generate_outline` | Produces segment structure from source material |
+| `host_turn` | Host Agent speaks one line — intro, question, or follow-up |
+| `expert_turn` | Expert Agent responds with domain insight and examples |
+| `should_continue` | Routes: more turns needed → `host_turn`; done → `quality_review` |
+| `quality_review` | Reviewer Agent scores relevance, fluency, depth (0–1); pass or retry |
+| `generate_audio` | Multi-voice TTS (OpenAI `tts-1-hd` / MiniMax `speech-01-hd`) |
+| `combine_audio` | Merges segments into final MP3 |
+
+**Benefits over single-prompt generation:**
+
+| Dimension | Before | After |
+|-----------|--------|-------|
+| Role consistency | One LLM plays all roles, characters bleed | Each Agent plays one role with a focused prompt |
+| Process control | Off-topic dialogue requires full regeneration | Per-turn review: only failing turns are retried |
+| Extensibility | Adding a new speaker requires rewriting the master prompt | Add one new node |
+
+**Speed estimates:**
+
+| Scenario | Estimated time |
+|----------|---------------|
+| Local model (Ollama 7B) | 10–20 min |
+| API model (GPT-4o-mini / Gemini Flash) | 1–2 min |
+| API + segment parallelism | < 1 min |
 
 ### Advanced RAG Features
 - **🧠 Hierarchical Indexing**: Parent/Child chunking for better context and precision
@@ -189,6 +220,7 @@ Done! You're ready to create your first notebook.
 
 ### Additional Features
 - **⚡ Reasoning Model Support**: Full support for thinking models like DeepSeek-R1 and Qwen3
+- **🌊 Waveform Audio Player**: Interactive wavesurfer.js player with seek, timestamps, and dark/light theme
 - **🔧 Content Transformations**: Powerful customizable actions to summarize and extract insights
 - **🌐 Comprehensive REST API**: Full programmatic access for custom integrations [![API Docs](https://img.shields.io/badge/API-Documentation-blue?style=flat-square)](http://localhost:5055/docs)
 - **🔐 Optional Password Protection**: Secure public deployments with authentication
@@ -215,6 +247,7 @@ Done! You're ready to create your first notebook.
 
 ### Advanced Topics
 - **[🎙️ Podcast Generation](docs/2-CORE-CONCEPTS/podcasts.md)** - Create professional podcasts
+- **[🤖 Multi-Agent Podcast System](docs/multi-agent-podcast-dialogue-system.md)** - Architecture & implementation plan
 - **[🔧 Content Transformations](docs/2-CORE-CONCEPTS/transformations.md)** - Customize content processing
 - **[🤖 AI Models](docs/4-AI-PROVIDERS/index.md)** - AI model configuration
 - **[🔌 MCP Integration](docs/5-CONFIGURATION/mcp-integration.md)** - Connect with Claude Desktop, VS Code and other MCP clients
@@ -238,20 +271,25 @@ Done! You're ready to create your first notebook.
 - **Enhanced Citations**: Improved layout and finer control for source citations with parent/child context
 - **Multiple Chat Sessions**: Manage different conversations within notebooks
 
+### In Progress 🚧
+- **Multi-Agent Podcast Dialogue**: LangGraph Host ⇌ Expert loop replacing single-prompt transcript generation
+- **Quality Review Agent**: Per-segment scoring and automatic retry for consistent podcast quality
+- **Waveform Audio Player**: Interactive wavesurfer.js player in `EpisodeCard` with seek, timestamps, and theme support
+- **High-Quality TTS**: OpenAI `tts-1-hd` (English) and MiniMax `speech-01-hd` (Chinese) via `openai-compatible` provider
+
 ### Upcoming Features
+- **Segment Parallelism**: Concurrent segment generation for sub-minute podcast production
 - **RAG Evaluation Framework**: Comprehensive benchmarking for retrieval quality
 - **Hybrid Search**: Combine vector search with BM25 keyword matching
 - **Cross-Encoder Reranking**: Improve result ranking with neural rerankers
 - **Graph-Based RAG**: Leverage SurrealDB's graph capabilities for relationship-aware retrieval
 - **Live Front-End Updates**: Real-time UI updates for smoother experience
-- **Async Processing**: Faster UI through asynchronous content processing
 - **Cross-Notebook Sources**: Reuse research materials across projects
 - **Bookmark Integration**: Connect with your favorite bookmarking apps
 
 See the [open issues](https://github.com/podcast-geeker/podcast-geeker/issues) for a full list of proposed features and known issues.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 
@@ -267,7 +305,7 @@ Podcast Geeker is MIT licensed. See the [LICENSE](LICENSE) file for details.
 Podcast Geeker is built upon and inspired by excellent open-source projects. See our complete [ACKNOWLEDGMENTS.md](ACKNOWLEDGMENTS.md) for detailed attributions.
 
 ### Core Project
-This project is a fork and enhancement of **[Open Notebook](https://github.com/podcast-geeker/podcast-geeker)** by [@podcast-geeker](https://github.com/podcast-geeker). We're grateful for the solid foundation and architecture that made these enhancements possible.
+This project is a fork and enhancement of Open Notebook. We're grateful for the solid foundation and architecture that made these enhancements possible.
 
 ### RAG Enhancement Technologies
 Our advanced RAG capabilities are inspired by and adapted from:
@@ -286,7 +324,7 @@ Our advanced RAG capabilities are inspired by and adapted from:
 All third-party licenses are preserved and respected. See [ACKNOWLEDGMENTS.md](ACKNOWLEDGMENTS.md) for complete details and individual project repositories for their full license terms.
 
 ### Academic Context
-This project is part of **CDS547 - Large Language Models** course at the **Lingnan University** (Winter Term 2, 2024/2025), exploring state-of-the-art RAG techniques in a real-world application.
+This project is part of **CDS547 - Large Language Models** course at the **Lingnan University** (Winter Term 2, 2024/2025), exploring state-of-the-art RAG techniques and multi-agent LLM orchestration in a real-world application.
 
 ---
 
