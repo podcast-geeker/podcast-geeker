@@ -11,6 +11,7 @@ import { sourcesApi } from '@/lib/api/sources'
 import { notesApi } from '@/lib/api/notes'
 import { BuildContextRequest, NoteResponse, NotebookResponse, SourceListResponse } from '@/lib/types/api'
 import type { QueryClient } from '@tanstack/react-query'
+import type { GenerationMode } from '@/lib/types/podcasts'
 import { PodcastGenerationRequest } from '@/lib/types/podcasts'
 import { QUERY_KEYS } from '@/lib/api/query-client'
 import { useToast } from '@/lib/hooks/use-toast'
@@ -405,6 +406,7 @@ export function GeneratePodcastDialog({ open, onOpenChange }: GeneratePodcastDia
   const [episodeName, setEpisodeName] = useState('')
   const [instructions, setInstructions] = useState('')
 
+  const [generationMode, setGenerationMode] = useState<GenerationMode>('legacy')
   const [isBuildingContext, setIsBuildingContext] = useState(false)
   const [tokenCount, setTokenCount] = useState<number>(0)
   const [charCount, setCharCount] = useState<number>(0)
@@ -544,6 +546,7 @@ export function GeneratePodcastDialog({ open, onOpenChange }: GeneratePodcastDia
     setEpisodeProfileId('')
     setEpisodeName('')
     setInstructions('')
+    setGenerationMode('legacy')
     setTokenCount(0)
     setCharCount(0)
   }, [])
@@ -817,6 +820,7 @@ export function GeneratePodcastDialog({ open, onOpenChange }: GeneratePodcastDia
         episode_name: episodeName.trim(),
         content,
         briefing_suffix: instructions.trim() ? instructions.trim() : undefined,
+        generation_mode: generationMode,
       }
 
       await generatePodcast.mutateAsync(payload)
@@ -844,6 +848,7 @@ export function GeneratePodcastDialog({ open, onOpenChange }: GeneratePodcastDia
   }, [
     buildContentFromSelections,
     episodeName,
+    generationMode,
     generatePodcast,
     instructions,
     onOpenChange,
@@ -955,6 +960,39 @@ export function GeneratePodcastDialog({ open, onOpenChange }: GeneratePodcastDia
                       placeholder={t.podcasts.episodeNamePlaceholder}
                       autoComplete="off"
                     />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>{t.podcasts.generationMode}</Label>
+                    <div className="flex rounded-md border overflow-hidden">
+                      <button
+                        type="button"
+                        className={`flex-1 px-3 py-1.5 text-xs font-medium transition-colors ${
+                          generationMode === 'legacy'
+                            ? 'bg-primary text-primary-foreground'
+                            : 'bg-muted/50 text-muted-foreground hover:bg-muted'
+                        }`}
+                        onClick={() => setGenerationMode('legacy')}
+                      >
+                        {t.podcasts.generationModeLegacy}
+                      </button>
+                      <button
+                        type="button"
+                        className={`flex-1 px-3 py-1.5 text-xs font-medium transition-colors ${
+                          generationMode === 'multi_agent'
+                            ? 'bg-primary text-primary-foreground'
+                            : 'bg-muted/50 text-muted-foreground hover:bg-muted'
+                        }`}
+                        onClick={() => setGenerationMode('multi_agent')}
+                      >
+                        {t.podcasts.generationModeMultiAgent}
+                      </button>
+                    </div>
+                    {generationMode === 'multi_agent' && (
+                      <p className="text-xs text-amber-600 dark:text-amber-400">
+                        {t.podcasts.generationModeMultiAgentHint}
+                      </p>
+                    )}
                   </div>
 
                    <div className="space-y-2">

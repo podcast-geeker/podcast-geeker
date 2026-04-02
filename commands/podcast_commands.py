@@ -13,7 +13,6 @@ from podcast_geeker.config import DATA_FOLDER
 from podcast_geeker.database.repository import ensure_record_id, repo_query
 from podcast_geeker.podcasts.models import EpisodeProfile, PodcastEpisode, SpeakerProfile
 
-
 def _load_podcast_creator():
     """
     Import podcast_creator lazily so worker startup doesn't eagerly load
@@ -116,6 +115,7 @@ class PodcastGenerationInput(CommandInput):
     episode_name: str
     content: str
     briefing_suffix: Optional[str] = None
+    generation_mode: str = "legacy"
 
 
 class PodcastGenerationOutput(CommandOutput):
@@ -257,8 +257,17 @@ async def generate_podcast_command(
 
         logger.info(f"Created output directory: {output_dir}")
 
-        # 6. Generate podcast using podcast-creator
-        logger.info("Starting podcast generation with podcast-creator...")
+        # 6. Generate podcast
+        mode = input_data.generation_mode or "legacy"
+        if mode == "multi_agent":
+            logger.warning(
+                "multi_agent mode requested but not yet implemented — "
+                "falling back to legacy pipeline"
+            )
+
+        logger.info(
+            f"Starting podcast generation (mode={mode}) with podcast-creator..."
+        )
 
         result = await create_podcast(
             content=input_data.content,

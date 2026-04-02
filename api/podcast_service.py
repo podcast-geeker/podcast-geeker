@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Literal, Optional
 
 from fastapi import HTTPException
 from loguru import logger
@@ -18,6 +18,7 @@ class PodcastGenerationRequest(BaseModel):
     content: Optional[str] = None
     notebook_id: Optional[str] = None
     briefing_suffix: Optional[str] = None
+    generation_mode: Literal["legacy", "multi_agent"] = "legacy"
 
 
 class PodcastGenerationResponse(BaseModel):
@@ -41,6 +42,7 @@ class PodcastService:
         notebook_id: Optional[str] = None,
         content: Optional[str] = None,
         briefing_suffix: Optional[str] = None,
+        generation_mode: str = "legacy",
     ) -> str:
         """Submit a podcast generation job for background processing"""
         try:
@@ -82,6 +84,7 @@ class PodcastService:
                 "episode_name": episode_name,
                 "content": str(content),
                 "briefing_suffix": briefing_suffix,
+                "generation_mode": generation_mode,
             }
 
             # Ensure command modules are imported before submitting
