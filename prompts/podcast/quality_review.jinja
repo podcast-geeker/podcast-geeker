@@ -1,0 +1,15 @@
+Review the following podcast dialogue segment, provide a score and feedback.
+
+Topic: {{ current_segment }}
+Dialogue:
+{% for turn in segment_transcript %}
+{{ turn.speaker }}: {{ turn.dialogue }}
+{% endfor %}
+
+Scoring criteria:
+- Relevance (0-3): Does the dialogue stay focused on the topic?
+- Flow (0-3): Is the conversation natural without awkward transitions?
+- Depth (0-4): Does it contain substantive content avoiding superficiality?
+
+Return JSON:
+{"score": 0.0~1.0, "feedback": "...", "pass": true/false}
