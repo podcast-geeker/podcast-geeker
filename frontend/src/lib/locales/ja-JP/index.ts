@@ -513,7 +513,10 @@ export const jaJP = {
     generationMode: "生成モード",
     generationModeLegacy: "レガシー Agent",
     generationModeMultiAgent: "マルチ Agent",
-    generationModeMultiAgentHint: "マルチ Agent モードはプレビュー中です — 現在はレガシーパイプラインで実行されます。",
+    generationModeMultiAgentHint: "エピソード向けにアウトライン、対話、補助エージェントを編成します。",
+    evaluationAgent: "評価エージェント",
+    evaluationAgentHint:
+      "有効にすると、アウトラインとトランスクリプトの品質を確認する段階を実行します。",
     additionalInstructions: "追加の指示",
     instructionsPlaceholder: "エピソードブリーフィングに追加するアドバイス...",
     generating: "生成中...",

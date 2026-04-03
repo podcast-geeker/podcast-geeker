@@ -513,7 +513,11 @@ export const frFR = {
     generationMode: "Mode de génération",
     generationModeLegacy: "Agent Legacy",
     generationModeMultiAgent: "Multi-Agent",
-    generationModeMultiAgentHint: "Le mode Multi-Agent est en aperçu — il exécute actuellement le pipeline legacy.",
+    generationModeMultiAgentHint:
+      "Orchestre le plan, le dialogue et les agents auxiliaires pour l'épisode.",
+    evaluationAgent: "Agent d'évaluation",
+    evaluationAgentHint:
+      "Si activé, une passe dédiée vérifie la qualité du plan et de la transcription.",
     additionalInstructions: "Instructions supplémentaires",
     instructionsPlaceholder: "Tout conseil supplémentaire à ajouter au briefing de l'épisode...",
     generating: "Génération...",

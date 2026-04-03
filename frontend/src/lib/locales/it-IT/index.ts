@@ -513,7 +513,10 @@ export const itIT = {
     generationMode: "Modalità di generazione",
     generationModeLegacy: "Agent Legacy",
     generationModeMultiAgent: "Multi-Agent",
-    generationModeMultiAgentHint: "La modalità Multi-Agent è in anteprima — attualmente esegue la pipeline legacy.",
+    generationModeMultiAgentHint: "Orchestra outline, dialogo e agenti di supporto per l'episodio.",
+    evaluationAgent: "Agente di valutazione",
+    evaluationAgentHint:
+      "Se attivata, esegue un passaggio dedicato per rivedere outline e trascrizione.",
     additionalInstructions: "Istruzioni aggiuntive",
     instructionsPlaceholder: "Eventuali consigli supplementari da aggiungere al briefing dell'episodio...",
     generating: "Generazione...",

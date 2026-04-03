@@ -61,6 +61,7 @@ export interface PodcastGenerationRequest {
   notebook_id?: string
   briefing_suffix?: string | null
   generation_mode?: GenerationMode
+  skip_evaluation?: boolean
 }
 
 export interface PodcastGenerationResponse {

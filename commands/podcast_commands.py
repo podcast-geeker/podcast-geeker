@@ -1,7 +1,7 @@
 import os
 import time
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 from urllib.parse import urlparse
 
 from loguru import logger
@@ -24,6 +24,19 @@ def _load_podcast_creator():
         logger.error(f"Failed to import podcast_creator: {e}")
         raise ValueError("podcast_creator library not available") from e
     return configure, create_podcast
+
+
+def _normalize_podcast_pipeline_result(result: Optional[dict[str, Any]]) -> Optional[dict[str, Any]]:
+    """Align multi-agent graph output with podcast-creator result keys used downstream."""
+    if not result:
+        return result
+    out = dict(result)
+    if out.get("final_output_file_path") is None:
+        for key in ("audio_file_path", "final_audio_path"):
+            if out.get(key) is not None:
+                out["final_output_file_path"] = out[key]
+                break
+    return out
 
 
 def full_model_dump(model):
@@ -116,6 +129,7 @@ class PodcastGenerationInput(CommandInput):
     content: str
     briefing_suffix: Optional[str] = None
     generation_mode: str = "legacy"
+    skip_evaluation: bool = False
 
 
 class PodcastGenerationOutput(CommandOutput):
@@ -215,21 +229,44 @@ async def generate_podcast_command(
         if input_data.briefing_suffix:
             briefing += f"\n\nAdditional instructions: {input_data.briefing_suffix}"
 
-        # Create the a record for the episose and associate with the ongoing command
-        episode = PodcastEpisode(
-            name=input_data.episode_name,
-            episode_profile=full_model_dump(episode_profile.model_dump()),
-            speaker_profile=full_model_dump(speaker_profile.model_dump()),
-            command=ensure_record_id(input_data.execution_context.command_id)
+        # Create or recover the episode record associated with the ongoing command.
+        # Checking by command_id first ensures retried commands reuse the existing
+        # record rather than creating a duplicate DB entry for the same run.
+        episode = None
+        command_id = (
+            ensure_record_id(input_data.execution_context.command_id)
             if input_data.execution_context
-            else None,
-            briefing=briefing,
-            content=input_data.content,
-            audio_file=None,
-            transcript=None,
-            outline=None,
+            else None
         )
-        await episode.save()
+        if command_id:
+            existing = await repo_query(
+                "SELECT * FROM episode WHERE command = $cmd LIMIT 1",
+                {"cmd": command_id},
+            )
+            if existing:
+                try:
+                    episode = PodcastEpisode(**existing[0])
+                    logger.info(
+                        f"Resuming existing episode '{episode.name}' "
+                        f"for command {command_id}"
+                    )
+                except Exception as e:
+                    logger.warning(f"Could not reuse existing episode record: {e}")
+                    episode = None
+
+        if episode is None:
+            episode = PodcastEpisode(
+                name=input_data.episode_name,
+                episode_profile=full_model_dump(episode_profile.model_dump()),
+                speaker_profile=full_model_dump(speaker_profile.model_dump()),
+                command=command_id,
+                briefing=briefing,
+                content=input_data.content,
+                audio_file=None,
+                transcript=None,
+                outline=None,
+            )
+            await episode.save()
 
         configure("speakers_config", {"profiles": speaker_profiles_dict})
         configure("episode_config", {"profiles": episode_profiles_dict})
@@ -258,25 +295,70 @@ async def generate_podcast_command(
         logger.info(f"Created output directory: {output_dir}")
 
         # 6. Generate podcast
-        mode = input_data.generation_mode or "legacy"
+        mode = (input_data.generation_mode or "legacy").strip()
         if mode == "multi_agent":
-            logger.warning(
-                "multi_agent mode requested but not yet implemented — "
-                "falling back to legacy pipeline"
+            from podcast_geeker.graphs.podcast import graph as podcast_graph
+
+            logger.info(
+                f"Starting podcast generation (mode={mode}) with multi-agent graph..."
             )
+            normalized_tts_provider = _normalize_provider_for_podcast_creator(
+                speaker_profile.tts_provider
+            )
+            speakers_for_graph = []
+            for speaker in full_model_dump(speaker_profile.speakers):
+                normalized_speaker = dict(speaker)
+                normalized_speaker["voice_id"] = _normalize_voice_id_for_provider_model(
+                    normalized_speaker.get("voice_id"),
+                    normalized_tts_provider,
+                    speaker_profile.tts_model,
+                )
+                speakers_for_graph.append(normalized_speaker)
 
-        logger.info(
-            f"Starting podcast generation (mode={mode}) with podcast-creator..."
-        )
-
-        result = await create_podcast(
-            content=input_data.content,
-            briefing=briefing,
-            episode_name=input_data.episode_name,
-            output_dir=str(output_dir),
-            speaker_config=speaker_profile.name,
-            episode_profile=episode_profile.name,
-        )
+            graph_input = {
+                "content": input_data.content,
+                "briefing": briefing,
+                "speakers": speakers_for_graph,
+                "episode_name": input_data.episode_name,
+                "output_dir": str(output_dir),
+                "num_segments": episode_profile.num_segments,
+                "skip_evaluation": input_data.skip_evaluation,
+            }
+            num_seg = episode_profile.num_segments or 6
+            graph_config = {
+                "recursion_limit": 25 * num_seg + 20,
+                "configurable": {
+                    "outline_provider": _normalize_provider_for_podcast_creator(
+                        episode_profile.outline_provider
+                    ),
+                    "outline_model": episode_profile.outline_model,
+                    "transcript_provider": _normalize_provider_for_podcast_creator(
+                        episode_profile.transcript_provider
+                    ),
+                    "transcript_model": episode_profile.transcript_model,
+                    "tts_provider": _normalize_provider_for_podcast_creator(
+                        speaker_profile.tts_provider
+                    ),
+                    "tts_model": speaker_profile.tts_model,
+                    "skip_evaluation": input_data.skip_evaluation,
+                }
+            }
+            raw = await podcast_graph.ainvoke(graph_input, config=graph_config)
+            result = _normalize_podcast_pipeline_result(
+                raw if isinstance(raw, dict) else None
+            )
+        else:
+            logger.info(
+                f"Starting podcast generation (mode={mode}) with podcast-creator..."
+            )
+            result = await create_podcast(
+                content=input_data.content,
+                briefing=briefing,
+                episode_name=input_data.episode_name,
+                output_dir=str(output_dir),
+                speaker_config=speaker_profile.name,
+                episode_profile=episode_profile.name,
+            )
 
         episode.audio_file = (
             str(result.get("final_output_file_path")) if result else None

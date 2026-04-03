@@ -1,5 +1,6 @@
+import json
 from pathlib import Path
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 from urllib.parse import unquote, urlparse
 
 from fastapi import APIRouter, HTTPException
@@ -66,6 +67,67 @@ def _resolve_audio_path(audio_file: str) -> Path:
     return resolved_path
 
 
+def _episode_disk_dir(episode_name: str) -> Path:
+    return Path(DATA_FOLDER).resolve() / "podcasts" / "episodes" / episode_name
+
+
+def _try_load_json(path: Path) -> Optional[Dict[str, Any]]:
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+
+
+async def _backfill_episode_from_disk(episode) -> bool:
+    """Populate missing audio/transcript/outline from disk files.
+
+    Returns True if any field was recovered and the record was saved.
+    """
+    disk_dir = _episode_disk_dir(episode.name)
+    if not disk_dir.is_dir():
+        return False
+
+    changed = False
+
+    if not episode.audio_file:
+        audio_dir = disk_dir / "audio"
+        if audio_dir.is_dir():
+            mp3s = list(audio_dir.glob("*.mp3"))
+            if mp3s:
+                episode.audio_file = str(mp3s[0])
+                changed = True
+
+    if not episode.transcript or episode.transcript == {}:
+        transcript_path = disk_dir / "transcript.json"
+        if transcript_path.exists():
+            raw = _try_load_json(transcript_path)
+            if raw is not None:
+                if isinstance(raw, list):
+                    episode.transcript = {"transcript": raw}
+                elif isinstance(raw, dict) and "transcript" in raw:
+                    episode.transcript = raw
+                else:
+                    episode.transcript = {"transcript": raw}
+                changed = True
+
+    if not episode.outline or episode.outline == {}:
+        outline_path = disk_dir / "outline.json"
+        if outline_path.exists():
+            raw = _try_load_json(outline_path)
+            if raw is not None:
+                episode.outline = raw
+                changed = True
+
+    if changed:
+        try:
+            await episode.save()
+            logger.info(f"Backfilled episode '{episode.name}' from disk files")
+        except Exception as e:
+            logger.warning(f"Failed to persist backfilled episode data: {e}")
+
+    return changed
+
+
 @router.post("/podcasts/generate", response_model=PodcastGenerationResponse)
 async def generate_podcast(request: PodcastGenerationRequest):
     """
@@ -81,6 +143,7 @@ async def generate_podcast(request: PodcastGenerationRequest):
             content=request.content,
             briefing_suffix=request.briefing_suffix,
             generation_mode=request.generation_mode,
+            skip_evaluation=request.skip_evaluation,
         )
 
         return PodcastGenerationResponse(
@@ -120,6 +183,10 @@ async def list_podcast_episodes():
 
         response_episodes = []
         for episode in episodes:
+            # Try to recover missing data from disk before filtering
+            if not episode.audio_file or not episode.transcript or episode.transcript == {} or not episode.outline or episode.outline == {}:
+                await _backfill_episode_from_disk(episode)
+
             # Skip incomplete episodes without command or audio
             if not episode.command and not episode.audio_file:
                 continue
@@ -172,6 +239,9 @@ async def get_podcast_episode(episode_id: str):
     try:
         episode = await PodcastService.get_episode(episode_id)
 
+        if not episode.audio_file or not episode.transcript or episode.transcript == {} or not episode.outline or episode.outline == {}:
+            await _backfill_episode_from_disk(episode)
+
         # Get job status if available
         job_status = None
         if episode.command:
@@ -218,6 +288,9 @@ async def stream_podcast_episode_audio(episode_id: str):
     except Exception as e:
         logger.error(f"Error fetching podcast episode for audio: {str(e)}")
         raise HTTPException(status_code=404, detail="Episode not found")
+
+    if not episode.audio_file:
+        await _backfill_episode_from_disk(episode)
 
     if not episode.audio_file:
         raise HTTPException(status_code=404, detail="Episode has no audio file")
