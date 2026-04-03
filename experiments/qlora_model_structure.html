@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>QLoRA Model Structure</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap');
+
+  :root {
+    --bg: #0d0f14;
+    --panel: #13161e;
+    --border: #1e2330;
+    --frozen: #1a2540;
+    --frozen-text: #4a7cc7;
+    --frozen-border: #2a4070;
+    --trainable: #1a3028;
+    --trainable-text: #3ecf8e;
+    --trainable-border: #2a6048;
+    --arrow: #4a5568;
+    --label: #8892a4;
+    --white: #e8eaf0;
+    --accent: #f6c90e;
+    --accent2: #e05c5c;
+    --dim: #4a5568;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--white);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 60px;
+  }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    margin-bottom: 4px;
+    text-align: center;
+  }
+
+  .subtitle {
+    font-size: 12px;
+    color: var(--label);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 36px;
+    text-align: center;
+  }
+
+  .diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    max-width: 780px;
+  }
+
+  /* ── Arrow ── */
+  .arrow {
+    width: 2px;
+    height: 24px;
+    background: linear-gradient(to bottom, var(--arrow), var(--arrow));
+    position: relative;
+    flex-shrink: 0;
+  }
+  .arrow::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid var(--arrow);
+  }
+
+  /* ── Generic box ── */
+  .box {
+    border-radius: 10px;
+    padding: 12px 20px;
+    border: 1.5px solid;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .box.frozen {
+    background: var(--frozen);
+    border-color: var(--frozen-border);
+  }
+  .box.trainable {
+    background: var(--trainable);
+    border-color: var(--trainable-border);
+  }
+  .box.neutral {
+    background: var(--panel);
+    border-color: var(--border);
+  }
+  .box.io {
+    background: #1a1620;
+    border-color: #352545;
+    justify-content: center;
+  }
+
+  .box-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .box.frozen .box-title   { color: var(--frozen-text); }
+  .box.trainable .box-title { color: var(--trainable-text); }
+  .box.neutral .box-title  { color: var(--white); }
+  .box.io .box-title       { color: #b09fcc; font-size: 14px; }
+
+  .box-meta {
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--label);
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+  }
+  .tag.frozen {
+    background: #0e1c34;
+    color: var(--frozen-text);
+    border: 1px solid var(--frozen-border);
+  }
+  .tag.trainable {
+    background: #0e2218;
+    color: var(--trainable-text);
+    border: 1px solid var(--trainable-border);
+  }
+
+  /* ── Transformer block ── */
+  .block-wrapper {
+    width: 100%;
+    border: 1.5px solid #252b3a;
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .block-header {
+    background: #161923;
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #252b3a;
+  }
+  .block-header span {
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--label);
+  }
+  .block-header .repeat {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+
+  .block-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    background: #0f1219;
+  }
+
+  /* ── Sub-block (attention / MLP) ── */
+  .sub-block {
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #1e2530;
+  }
+  .sub-header {
+    padding: 6px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .sub-header.attn { background: #111827; color: #5b8cde; }
+  .sub-header.mlp  { background: #111827; color: #9d75d6; }
+
+  .sub-body {
+    padding: 10px 14px;
+    display: flex;
+    gap: 10px;
+    background: #0c0f18;
+  }
+
+  .module-col {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+  }
+  .module-col .col-label {
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--dim);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .module-pill {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.03em;
+  }
+  .module-pill.frozen {
+    background: #0e1c34;
+    color: #4a7cc7;
+    border: 1px solid #1e3560;
+  }
+  .module-pill.trainable {
+    background: #0a2018;
+    color: #3ecf8e;
+    border: 1px solid #1a5035;
+  }
+
+  .plus-sign {
+    font-size: 18px;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    padding-top: 18px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* ── LoRA detail ── */
+  .lora-detail {
+    width: 100%;
+    max-width: 780px;
+    margin-top: 36px;
+    border: 1.5px solid var(--trainable-border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .lora-header {
+    background: #0e2218;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--trainable-text);
+    letter-spacing: 0.04em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .lora-body {
+    background: #090d12;
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .lora-math {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .lora-eq {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: #0f1520;
+    border: 1px solid #1e2a40;
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: #c8d0e0;
+    line-height: 1.8;
+  }
+  .lora-eq .highlight { color: var(--trainable-text); font-weight: 700; }
+  .lora-eq .frozen-h  { color: var(--frozen-text); font-weight: 700; }
+  .lora-eq .accent-h  { color: var(--accent); font-weight: 700; }
+
+  .param-table {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .param-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .param-row.h { background: #0f1520; color: var(--dim); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+  .param-row.d { background: #0c1018; color: var(--label); border: 1px solid #1a2030; }
+  .param-row.d .val { color: var(--white); }
+  .param-row.total { background: #0e2218; color: var(--trainable-text); font-weight: 700; border: 1px solid var(--trainable-border); }
+
+  /* ── Legend ── */
+  .legend {
+    display: flex;
+    gap: 24px;
+    margin-top: 28px;
+    align-items: center;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--label);
+  }
+  .legend-dot {
+    width: 12px; height: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>QLoRA Model Structure</h1>
+<div class="subtitle">base: unsloth/Llama-3.2-1B-Instruct · r=16 · alpha=16 · 7 target modules</div>
+
+<div class="diagram">
+
+  <!-- Input -->
+  <div class="box io" style="width:260px;">
+    <span class="box-title">Input Tokens</span>
+  </div>
+  <div class="arrow"></div>
+
+  <!-- Embedding -->
+  <div class="box frozen">
+    <div>
+      <div class="box-title">Embedding Layer</div>
+      <div style="font-size:11px;color:var(--label);margin-top:3px;font-family:'JetBrains Mono',monospace;">vocab_size=128256 · hidden=2048</div>
+    </div>
+    <div style="display:flex;gap:6px;align-items:center;">
+      <span class="tag frozen">4-bit</span>
+      <span class="tag frozen">FROZEN</span>
+    </div>
+  </div>
+  <div class="arrow"></div>
+
+  <!-- Transformer Block repeated ×16 -->
+  <div class="block-wrapper">
+    <div class="block-header">
+      <span>Transformer Block</span>
+      <span class="repeat">× 16 layers</span>
+    </div>
+    <div class="block-body">
+
+      <!-- Self-Attention -->
+      <div class="sub-block" style="width:100%;">
+        <div class="sub-header attn">Self-Attention</div>
+        <div class="sub-body">
+          <div class="module-col">
+            <div class="col-label">Frozen weights (4-bit)</div>
+            <div class="module-pill frozen">q_proj  (2048→2048)</div>
+            <div class="module-pill frozen">k_proj  (2048→512)</div>
+            <div class="module-pill frozen">v_proj  (2048→512)</div>
+            <div class="module-pill frozen">o_proj  (2048→2048)</div>
+          </div>
+          <div class="plus-sign">+</div>
+          <div class="module-col">
+            <div class="col-label">LoRA adapters (trainable)</div>
+            <div class="module-pill trainable">A (2048→16) · B (16→2048)</div>
+            <div class="module-pill trainable">A (2048→16) · B (16→512)</div>
+            <div class="module-pill trainable">A (2048→16) · B (16→512)</div>
+            <div class="module-pill trainable">A (2048→16) · B (16→2048)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arrow" style="height:16px;"></div>
+
+      <!-- MLP -->
+      <div class="sub-block" style="width:100%;">
+        <div class="sub-header mlp">Feed-Forward (MLP)</div>
+        <div class="sub-body">
+          <div class="module-col">
+            <div class="col-label">Frozen weights (4-bit)</div>
+            <div class="module-pill frozen">gate_proj (2048→8192)</div>
+            <div class="module-pill frozen">up_proj   (2048→8192)</div>
+            <div class="module-pill frozen">down_proj (8192→2048)</div>
+          </div>
+          <div class="plus-sign">+</div>
+          <div class="module-col">
+            <div class="col-label">LoRA adapters (trainable)</div>
+            <div class="module-pill trainable">A (2048→16) · B (16→8192)</div>
+            <div class="module-pill trainable">A (2048→16) · B (16→8192)</div>
+            <div class="module-pill trainable">A (8192→16) · B (16→2048)</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="arrow"></div>
+
+  <!-- LM Head -->
+  <div class="box frozen">
+    <div>
+      <div class="box-title">LM Head (output projection)</div>
+      <div style="font-size:11px;color:var(--label);margin-top:3px;font-family:'JetBrains Mono',monospace;">hidden=2048 → vocab=128256</div>
+    </div>
+    <div style="display:flex;gap:6px;align-items:center;">
+      <span class="tag frozen">4-bit</span>
+      <span class="tag frozen">FROZEN</span>
+    </div>
+  </div>
+  <div class="arrow"></div>
+
+  <!-- Output -->
+  <div class="box io" style="width:260px;">
+    <span class="box-title">Output Tokens</span>
+  </div>
+
+</div><!-- /diagram -->
+
+<!-- LoRA math detail -->
+<div class="lora-detail">
+  <div class="lora-header">
+    LoRA Injection Detail — per layer
+    <span style="font-size:11px;font-weight:400;color:#5fa87a;font-family:'JetBrains Mono',monospace;">rank r=16 · alpha=16 · scale=1.0</span>
+  </div>
+  <div class="lora-body">
+    <div class="lora-math">
+      <div class="lora-eq">
+        Forward pass:<br>
+        <span class="frozen-h">W</span> · x  +  (<span class="highlight">B · A</span>) · x · <span class="accent-h">(α/r)</span><br><br>
+        <span style="color:var(--dim);">=  frozen output  +  LoRA delta</span>
+      </div>
+      <div class="lora-eq">
+        Saved adapter file:<br>
+        <span class="highlight">adapter_model.safetensors</span><br>
+        <span style="color:var(--dim);">contains only A, B matrices</span><br>
+        <span style="color:var(--dim);">base model stays unchanged</span>
+      </div>
+    </div>
+    <div class="param-table">
+      <div class="param-row h"><span>Parameter</span><span>Value</span></div>
+      <div class="param-row d"><span>Base model</span><span class="val">Llama-3.2-1B</span></div>
+      <div class="param-row d"><span>Total params</span><span class="val">1.24 B</span></div>
+      <div class="param-row d"><span>Quantization</span><span class="val">4-bit (NF4)</span></div>
+      <div class="param-row d"><span>LoRA rank r</span><span class="val">16</span></div>
+      <div class="param-row d"><span>lora_alpha</span><span class="val">16</span></div>
+      <div class="param-row d"><span>Target modules</span><span class="val">7 types × 16 layers</span></div>
+      <div class="param-row d"><span>Trainable params</span><span class="val">~3 M</span></div>
+      <div class="param-row total"><span>Trainable %</span><span>~0.24 %</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Legend -->
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#1a2540;border:1.5px solid #2a4070;"></div>
+    Frozen (4-bit quantized, not updated)
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#1a3028;border:1.5px solid #2a6048;"></div>
+    Trainable (LoRA A/B matrices)
+  </div>
+</div>
+
+</body>
+</html>
