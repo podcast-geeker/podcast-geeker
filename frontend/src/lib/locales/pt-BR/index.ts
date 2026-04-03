@@ -513,7 +513,10 @@ export const ptBR = {
     generationMode: "Modo de geração",
     generationModeLegacy: "Agent Legado",
     generationModeMultiAgent: "Multi-Agent",
-    generationModeMultiAgentHint: "O modo Multi-Agent está em preview — atualmente executa o pipeline legado.",
+    generationModeMultiAgentHint: "Orquestra roteiro, diálogo e agentes de apoio para o episódio.",
+    evaluationAgent: "Agente de avaliação",
+    evaluationAgentHint:
+      "Quando ativado, executa uma etapa dedicada para revisar o roteiro e a transcrição.",
     additionalInstructions: "Instruções adicionais",
     instructionsPlaceholder: "Qualquer conselho suplementar para adicionar ao briefing do episódio...",
     generating: "Gerando...",

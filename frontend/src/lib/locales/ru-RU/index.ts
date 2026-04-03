@@ -513,7 +513,10 @@ export const ruRU = {
     generationMode: "Режим генерации",
     generationModeLegacy: "Legacy Agent",
     generationModeMultiAgent: "Мульти-Agent",
-    generationModeMultiAgentHint: "Режим Мульти-Agent в предпросмотре — пока используется legacy-конвейер.",
+    generationModeMultiAgentHint: "Оркестрирует план, диалог и вспомогательных агентов для выпуска.",
+    evaluationAgent: "Агент оценки",
+    evaluationAgentHint:
+      "При включении выполняется отдельный проход для проверки качества плана и транскрипта.",
     additionalInstructions: "Дополнительные инструкции",
     instructionsPlaceholder: "Любые дополнительные указания для брифинга эпизода...",
     generating: "Генерация...",

@@ -31,6 +31,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Label } from '@/components/ui/label'
+import { Switch } from '@/components/ui/switch'
 import { Separator } from '@/components/ui/separator'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { PodcastContextGraph } from '@/components/podcasts/PodcastContextGraph'
@@ -407,6 +408,7 @@ export function GeneratePodcastDialog({ open, onOpenChange }: GeneratePodcastDia
   const [instructions, setInstructions] = useState('')
 
   const [generationMode, setGenerationMode] = useState<GenerationMode>('legacy')
+  const [useEvaluationAgent, setUseEvaluationAgent] = useState(true)
   const [isBuildingContext, setIsBuildingContext] = useState(false)
   const [tokenCount, setTokenCount] = useState<number>(0)
   const [charCount, setCharCount] = useState<number>(0)
@@ -547,6 +549,7 @@ export function GeneratePodcastDialog({ open, onOpenChange }: GeneratePodcastDia
     setEpisodeName('')
     setInstructions('')
     setGenerationMode('legacy')
+    setUseEvaluationAgent(true)
     setTokenCount(0)
     setCharCount(0)
   }, [])
@@ -821,6 +824,9 @@ export function GeneratePodcastDialog({ open, onOpenChange }: GeneratePodcastDia
         content,
         briefing_suffix: instructions.trim() ? instructions.trim() : undefined,
         generation_mode: generationMode,
+        ...(generationMode === 'multi_agent'
+          ? { skip_evaluation: !useEvaluationAgent }
+          : {}),
       }
 
       await generatePodcast.mutateAsync(payload)
@@ -837,9 +843,11 @@ export function GeneratePodcastDialog({ open, onOpenChange }: GeneratePodcastDia
       }, 500)
     } catch (error) {
       console.error('Failed to generate podcast', error)
+      const apiDetail =
+        (error as { response?: { data?: { detail?: string } } })?.response?.data?.detail
       toast({
         title: t.podcasts.generationFailed,
-        description: error instanceof Error ? error.message : t.common.refreshPage,
+        description: apiDetail ?? (error instanceof Error ? error.message : t.common.refreshPage),
         variant: 'destructive',
       })
     } finally {
@@ -849,6 +857,7 @@ export function GeneratePodcastDialog({ open, onOpenChange }: GeneratePodcastDia
     buildContentFromSelections,
     episodeName,
     generationMode,
+    useEvaluationAgent,
     generatePodcast,
     instructions,
     onOpenChange,
@@ -859,6 +868,13 @@ export function GeneratePodcastDialog({ open, onOpenChange }: GeneratePodcastDia
   ])
 
   const isSubmitting = generatePodcast.isPending || isBuildingContext
+  const allowNestedSelectInteraction = useCallback((target: EventTarget | null) => {
+    const element = target as HTMLElement | null
+    return Boolean(
+      element?.closest('[data-slot="select-content"]') ||
+      element?.closest('[data-slot="select-trigger"]')
+    )
+  }, [])
 
   return (
     <Dialog open={open} onOpenChange={(value) => {
@@ -868,8 +884,13 @@ export function GeneratePodcastDialog({ open, onOpenChange }: GeneratePodcastDia
       }
     }}>
       <DialogContent
-        className="w-[80vw] max-w-[1080px] max-h-[90vh] overflow-hidden"
-        onInteractOutside={(event) => event.preventDefault()}
+        className="w-[80vw] max-w-[1080px] max-h-[90vh] overflow-y-auto overflow-x-hidden"
+        onInteractOutside={(event) => {
+          if (allowNestedSelectInteraction(event.target)) {
+            return
+          }
+          event.preventDefault()
+        }}
       >
         <DialogHeader>
           <DialogTitle>{t.podcasts.generateEpisode}</DialogTitle>
@@ -989,9 +1010,30 @@ export function GeneratePodcastDialog({ open, onOpenChange }: GeneratePodcastDia
                       </button>
                     </div>
                     {generationMode === 'multi_agent' && (
-                      <p className="text-xs text-amber-600 dark:text-amber-400">
-                        {t.podcasts.generationModeMultiAgentHint}
-                      </p>
+                      <>
+                        <p className="text-xs text-muted-foreground">
+                          {t.podcasts.generationModeMultiAgentHint}
+                        </p>
+                        <div className="flex items-center justify-between gap-3 rounded-md border bg-muted/30 px-3 py-2">
+                          <div className="min-w-0 space-y-0.5">
+                            <Label
+                              htmlFor="evaluation_agent"
+                              className="text-sm font-medium leading-none"
+                            >
+                              {t.podcasts.evaluationAgent}
+                            </Label>
+                            <p className="text-xs text-muted-foreground">
+                              {t.podcasts.evaluationAgentHint}
+                            </p>
+                          </div>
+                          <Switch
+                            id="evaluation_agent"
+                            checked={useEvaluationAgent}
+                            onCheckedChange={setUseEvaluationAgent}
+                            aria-label={t.podcasts.evaluationAgent}
+                          />
+                        </div>
+                      </>
                     )}
                   </div>
 
