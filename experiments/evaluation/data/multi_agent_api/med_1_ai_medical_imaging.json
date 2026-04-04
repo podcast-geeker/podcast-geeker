@@ -1,0 +1,58 @@
+{
+  "config": "B",
+  "topic_id": "med_1_ai_medical_imaging",
+  "topic": "AI-Assisted Medical Imaging",
+  "domain": "medicine",
+  "generated_at": "2026-04-04T02:30:45.292781+00:00",
+  "model": "glm-5-turbo",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "Welcome to the show. Today we're diving into AI-assisted medical imaging — a field that's transforming how doctors read X-rays and scans. I'm thrilled to have you here to help us understand what's really happening behind the scenes."
+    },
+    {
+      "speaker": "expert",
+      "text": "Thanks for having me. Think about it this way: a single hospital generates tens of thousands of images daily, and radiologists face fatigue and perceptual error. That's why systems like CheXNet were groundbreaking — it matched board-certified radiologists at detecting pneumonia on chest X-rays using over a hundred thousand training images."
+    },
+    {
+      "speaker": "host",
+      "text": "That's incredible — over a hundred thousand images! So how does a system like CheXNet actually \"learn\" to spot pneumonia? What's happening inside these neural networks when they look at"
+    },
+    {
+      "speaker": "expert",
+      "text": "CheXNet uses a DenseNet architecture where each layer connects to every other layer, creating a web of feature reuse. It's like assembling a diagnosis from puzzle pieces — early layers detect edges, deeper layers combine those into textures and shapes, eventually recognizing the cloudy opacities that signal pneumonia."
+    },
+    {
+      "speaker": "host",
+      "text": "That puzzle analogy really helps! But I've also heard about something called vision transformers entering the space. How do those differ from this convolutional approach, and why might"
+    },
+    {
+      "speaker": "expert",
+      "text": "CNNs scan locally like reading with a magnifying glass, building up from edges to shapes. Vision transformers chop the image into patches and process them all at once through self-attention — so from the very first layer, they can see the whole picture. That's crucial for something like assessing cardiomegaly, where you need to compare heart size to total thoracic width across the entire radiograph."
+    },
+    {
+      "speaker": "host",
+      "text": "So with these hybrid architectures combining both approaches, how do we actually measure if they're working well enough for real patients? What metrics tell us an AI system is truly ready for clinical use?"
+    },
+    {
+      "speaker": "expert",
+      "text": "We rely on two competing metrics: sensitivity catches true abnormalities, while specificity avoids false alarms. They're in tension — like a metal detector you crank up to never miss a weapon, but then it beeps at every belt buckle. We visualize that trade-off using ROC curves."
+    },
+    {
+      "speaker": "host",
+      "text": "I love that metal detector analogy — it really captures the real-world stakes. As we wrap up, what gives you the most hope about where AI-assisted imaging is headed in the next five to ten years?"
+    },
+    {
+      "speaker": "expert",
+      "text": "What gives me hope is that AI won't replace radiologists — it'll serve as a tireless second set of eyes. When a single hospital generates tens of thousands of images daily, having a system that never fatigues and maintains consistent attention could catch the abnormalities that slip through at 3 AM."
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 58.37,
+    "input_tokens": 10135,
+    "output_tokens": 1881,
+    "total_tokens": 12016,
+    "estimated_cost_usd": 0.008411,
+    "peak_gpu_memory_gb": null
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "config": "C",
+  "topic_id": "med_1_ai_medical_imaging",
+  "topic": "AI-Assisted Medical Imaging",
+  "domain": "medicine",
+  "generated_at": "2026-04-04T03:30:43.589467+00:00",
+  "model": "QLoRA-Llama-3.2-1B",
+  "turns": [
+    {
+      "speaker": "Host",
+      "text": "So, we are seeing a trend where AI-assisted medical imaging is becoming increasingly useful for routine diagnostics, but it is still used by humans for more complex tasks."
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 1.74,
+    "input_tokens": 860,
+    "output_tokens": 52,
+    "total_tokens": 912,
+    "estimated_cost_usd": 0.0,
+    "peak_gpu_memory_gb": 2.303
+  }
+}

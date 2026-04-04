@@ -1,0 +1,58 @@
+{
+  "config": "B",
+  "topic_id": "tech_2_qlora_finetuning",
+  "topic": "QLoRA Efficient Fine-tuning",
+  "domain": "technology",
+  "generated_at": "2026-04-04T02:26:05.657205+00:00",
+  "model": "glm-5-turbo",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "Welcome to the show! Today we're diving into QLoRA — a technique that's making fine-tuning massive language models possible for those of us without access to data center GPUs. Could you start by explaining why this problem matters so much right now?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Sure. Fine-tuning is how we adapt general models to specific domains, but the math has become brutal. A 65-billion parameter model needs roughly 130 gigabytes just to store weights, and over 780 gigabytes when you add gradients and optimizer states. That locks out anyone without a data center GPU cluster."
+    },
+    {
+      "speaker": "host",
+      "text": "That's an enormous barrier. So how does QLoRA actually get around this? I'd love to understand the building blocks, starting with LoRA itself."
+    },
+    {
+      "speaker": "expert",
+      "text": "LoRA's key insight is that weight updates live in a low-rank subspace. Instead of updating a massive matrix, you freeze it and train two tiny matrices—say rank 16. For a billion-parameter model, you might only train a few million parameters, then merge them back for zero inference cost."
+    },
+    {
+      "speaker": "host",
+      "text": "That's elegant — but wait, those frozen base weights still eat up 130 gigabytes on their own, right? So where does QLoRA actually cut that down? Is that where the quantization magic comes in?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Exactly. QLoRA introduces 4-bit NormalFloat quantization, which is specifically designed for how neural network weights actually distribute. Instead of equally spaced bins, NF4 places its sixteen values based on the normal distribution's quant"
+    },
+    {
+      "speaker": "host",
+      "text": "So the bins are optimized for where weights actually cluster—near zero. That's clever. And I caught a mention of double quantization in my notes—what's that piece doing?"
+    },
+    {
+      "speaker": "expert",
+      "text": ""
+    },
+    {
+      "speaker": "host",
+      "text": "So double quantization compresses those quantization constants themselves—brilliant layering. Before we wrap up, can you summarize what QLoRA's breakthrough really means for someone who wants to fine-tune on a single consumer GPU?"
+    },
+    {
+      "speaker": "expert",
+      "text": "It means taking a 780-gigabyte problem and fitting it on a $500 GPU. QLoRA's three innovations—NF4 quantization, double quantization, and LoRA adapters—compress that 65-billion-parameter model from 130 gigabytes down to roughly 40, finally putting fine-tuning in the hands of independent researchers and small teams."
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 38.43,
+    "input_tokens": 10827,
+    "output_tokens": 1936,
+    "total_tokens": 12763,
+    "estimated_cost_usd": 0.008934,
+    "peak_gpu_memory_gb": null
+  }
+}

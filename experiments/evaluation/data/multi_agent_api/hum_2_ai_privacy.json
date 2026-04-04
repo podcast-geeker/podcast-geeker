@@ -1,0 +1,58 @@
+{
+  "config": "B",
+  "topic_id": "hum_2_ai_privacy",
+  "topic": "AI Privacy and Data Protection",
+  "domain": "humanities",
+  "generated_at": "2026-04-04T02:28:33.017269+00:00",
+  "model": "glm-5-turbo",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "Welcome to the show. Today we're diving into AI privacy — a tension between machine learning's hunger for data and our right to control personal information. To kick us off, what's the core privacy challenge that concerns you most?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Training data memorization. These models don't just learn patterns—they can regurgitate specific personal details verbatim. A 2021 study showed GPT-2 could be coaxed into outputting real names, phone numbers, and addresses from its training data. That's not statistics; that's a privacy breach baked into the model itself."
+    },
+    {
+      "speaker": "host",
+      "text": "That's chilling — the idea that personal data is somehow embedded in the model's very fabric. So if someone realizes their information is in there, can they actually get it removed?"
+    },
+    {
+      "speaker": "expert",
+      "text": ""
+    },
+    {
+      "speaker": "host",
+      "text": "That sounds like a legal right running straight into a technical wall. How does something like Europe's \"right to be forgotten\" actually work when you can't just surgically remove one person's data from a neural network?"
+    },
+    {
+      "speaker": "expert",
+      "text": "It doesn't work well. Neural networks encode information in a distributed, entangled way—think of it like trying to un-bake a cake to remove one specific egg. The data is woven throughout millions of parameters, making true deletion practically impossible without retraining the entire model from scratch."
+    },
+    {
+      "speaker": "host",
+      "text": "So if neither legal rights nor technical fixes can easily extract personal data from these models"
+    },
+    {
+      "speaker": "expert",
+      "text": ""
+    },
+    {
+      "speaker": "host",
+      "text": "So if neither legal rights nor technical fixes can easily extract personal data from these models, what does a realistic path forward look like? Where should we be focusing our hope?"
+    },
+    {
+      "speaker": "expert",
+      "text": ""
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 60.69,
+    "input_tokens": 9446,
+    "output_tokens": 2065,
+    "total_tokens": 11511,
+    "estimated_cost_usd": 0.008058,
+    "peak_gpu_memory_gb": null
+  }
+}

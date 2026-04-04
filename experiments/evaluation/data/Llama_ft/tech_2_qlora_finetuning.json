@@ -1,0 +1,22 @@
+{
+  "config": "C",
+  "topic_id": "tech_2_qlora_finetuning",
+  "topic": "QLoRA Efficient Fine-tuning",
+  "domain": "technology",
+  "generated_at": "2026-04-04T03:30:30.897190+00:00",
+  "model": "QLoRA-Llama-3.2-1B",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "Today we discuss QLoRA Efficient Fine-tuning. The key innovation is NF4 NormalFloat quantization, which improves data type for normally distributed data. It preserves information about the original weight distribution where it matters most."
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 1.5,
+    "input_tokens": 948,
+    "output_tokens": 45,
+    "total_tokens": 993,
+    "estimated_cost_usd": 0.0,
+    "peak_gpu_memory_gb": 2.31
+  }
+}

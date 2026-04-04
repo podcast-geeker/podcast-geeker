@@ -1,0 +1,22 @@
+{
+  "config": "C",
+  "topic_id": "hum_1_ai_bias_fairness",
+  "topic": "AI Bias and Fairness",
+  "domain": "humanities",
+  "generated_at": "2026-04-04T03:30:34.523361+00:00",
+  "model": "QLoRA-Llama-3.2-1B",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "{ \"turns\": 10 }"
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 0.39,
+    "input_tokens": 868,
+    "output_tokens": 9,
+    "total_tokens": 877,
+    "estimated_cost_usd": 0.0,
+    "peak_gpu_memory_gb": 2.303
+  }
+}
