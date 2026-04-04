@@ -1,0 +1,60 @@
+{
+  "config": "B_review",
+  "topic_id": "med_2_clinical_trials",
+  "topic": "Clinical Trial Design",
+  "domain": "medicine",
+  "generated_at": "2026-04-04T02:38:43.239918+00:00",
+  "model": "glm-5-turbo",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "Welcome to the show! Today we're diving into clinical trial design — the architecture behind how we know if a treatment actually works. I'm thrilled to have you here to help us understand what makes a great trial."
+    },
+    {
+      "speaker": "expert",
+      "text": "Thanks for having me. Think of a clinical trial like a carefully engineered building—if the foundation is flawed, the whole structure collapses. The randomized controlled trial is that gold standard foundation, using randomization to balance both known and unknown variables so we can confidently attribute outcomes to the treatment itself."
+    },
+    {
+      "speaker": "host",
+      "text": "That makes so much sense—randomization is really the secret sauce. But once you've randomized patients, what are they being compared against? I know placebos come up a lot, but is it always that simple?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Not always—it depends on ethics and context. A placebo isolates the pure pharmacological effect, but sometimes we use an active comparator, like comparing a new cancer drug directly to the current standard of care. You can't ethically give a cancer patient a sugar pill when proven treatments exist."
+    },
+    {
+      "speaker": "host",
+      "text": "So the control group choice really hinges on ethics. That brings up another crucial question—once you've got your groups sorted, what exactly are you measuring? How do researchers decide which outcomes actually matter?"
+    },
+    {
+      "speaker": "expert",
+      "text": "That's the pivotal decision—the primary endpoint. In oncology, it's overall survival because nothing is more clinically meaningful than living longer. You pick one outcome the trial is statistically powered to detect, then layer on secondary measures like quality of life to build a complete picture."
+    },
+    {
+      "speaker": "host",
+      "text": "I love that analogy of layering measures. But I've heard researchers sometimes use surrogate endpoints—like a lab marker instead"
+    },
+    {
+      "speaker": "expert",
+      "text": "Exactly—like using hemoglobin A1c reduction in diabetes instead of waiting years to see if patients actually develop fewer complications. Surrogates accelerate development, but you need that validated relationship between the marker and the real clinical outcome, otherwise you risk approving a drug that changes a number but doesn't actually help patients."
+    },
+    {
+      "speaker": "host",
+      "text": "That's such an important caution—changing a number isn't the same as changing a life. As we wrap up, what would you say is the single most important thing for listeners to understand about why clinical trial design matters?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Without rigorous design, we're just guessing. A poorly designed trial can't tell us if a patient got better because of the drug or just the natural course of their disease. The architecture—randomization, blinding, proper endpoints—is what transforms anecdotes into evidence we can actually trust to treat patients safely."
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 50.25,
+    "input_tokens": 10476,
+    "output_tokens": 2137,
+    "total_tokens": 12613,
+    "estimated_cost_usd": 0.008829,
+    "peak_gpu_memory_gb": null,
+    "review_score": 0.5,
+    "review_attempts": 1
+  }
+}

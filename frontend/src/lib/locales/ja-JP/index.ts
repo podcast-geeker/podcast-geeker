@@ -510,6 +510,13 @@ export const jaJP = {
     episodeProfilePlaceholder: "エピソードプロファイルを選択",
     episodeName: "エピソード名",
     episodeNamePlaceholder: "例：AIと仕事の未来",
+    generationMode: "生成モード",
+    generationModeLegacy: "レガシー Agent",
+    generationModeMultiAgent: "マルチ Agent",
+    generationModeMultiAgentHint: "エピソード向けにアウトライン、対話、補助エージェントを編成します。",
+    evaluationAgent: "評価エージェント",
+    evaluationAgentHint:
+      "有効にすると、アウトラインとトランスクリプトの品質を確認する段階を実行します。",
     additionalInstructions: "追加の指示",
     instructionsPlaceholder: "エピソードブリーフィングに追加するアドバイス...",
     generating: "生成中...",

@@ -510,6 +510,13 @@ export const enUS = {
     episodeProfilePlaceholder: "Select an episode profile",
     episodeName: "Episode name",
     episodeNamePlaceholder: "e.g., AI and the Future of Work",
+    generationMode: "Generation mode",
+    generationModeLegacy: "Legacy Agent",
+    generationModeMultiAgent: "Multi-Agent",
+    generationModeMultiAgentHint: "Orchestrates outline, dialogue, and supporting agents for the episode.",
+    evaluationAgent: "Evaluation agent",
+    evaluationAgentHint:
+      "When enabled, runs a dedicated pass to review outline and transcript quality.",
     additionalInstructions: "Additional instructions",
     instructionsPlaceholder: "Any supplementary advice to append to the episode briefing...",
     generating: "Generating...",

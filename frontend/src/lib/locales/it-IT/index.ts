@@ -510,6 +510,13 @@ export const itIT = {
     episodeProfilePlaceholder: "Seleziona un profilo episodio",
     episodeName: "Nome episodio",
     episodeNamePlaceholder: "es., IA e il futuro del Lavoro",
+    generationMode: "Modalità di generazione",
+    generationModeLegacy: "Agent Legacy",
+    generationModeMultiAgent: "Multi-Agent",
+    generationModeMultiAgentHint: "Orchestra outline, dialogo e agenti di supporto per l'episodio.",
+    evaluationAgent: "Agente di valutazione",
+    evaluationAgentHint:
+      "Se attivata, esegue un passaggio dedicato per rivedere outline e trascrizione.",
     additionalInstructions: "Istruzioni aggiuntive",
     instructionsPlaceholder: "Eventuali consigli supplementari da aggiungere al briefing dell'episodio...",
     generating: "Generazione...",

@@ -1,0 +1,58 @@
+{
+  "config": "B",
+  "topic_id": "med_2_clinical_trials",
+  "topic": "Clinical Trial Design",
+  "domain": "medicine",
+  "generated_at": "2026-04-04T02:31:28.276201+00:00",
+  "model": "glm-5-turbo",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "Welcome to the show! Today we're diving into clinical trial design — the backbone of evidence-based medicine. I'd love to start with the basics: why is the randomized controlled trial considered the gold standard?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Randomization eliminates bias by distributing both known and unknown confounders equally between groups. For example, stratified randomization ensures balance across critical prognostic factors like disease stage. This lets us confidently attribute any outcome difference to the intervention itself, not to patient characteristics."
+    },
+    {
+      "speaker": "host",
+      "text": ""
+    },
+    {
+      "speaker": "expert",
+      "text": ""
+    },
+    {
+      "speaker": "host",
+      "text": "That makes so much sense. So once you've got your groups properly randomized, how do you decide what you're actually measuring? Talk to me about endpoint selection — what makes a good primary endpoint?"
+    },
+    {
+      "speaker": "expert",
+      "text": "A good primary endpoint must be clinically meaningful, reliably measurable, and directly relevant to your therapeutic claim. For example, in oncology, overall survival is the gold standard endpoint — it's unambiguous, patients care about it, and it directly answers whether a treatment extends life."
+    },
+    {
+      "speaker": "host",
+      "text": "I love that example. But I've also heard about surrogate endpoints being used to speed up drug development. Can you explain what those are and when it makes sense to use them instead of a direct clinical outcome?"
+    },
+    {
+      "speaker": "expert",
+      "text": "A surrogate endpoint is a lab measurement or physical sign that substitutes for a true clinical outcome. For example, in diabetes, we might use hemoglobin A1c reduction instead of waiting years to see if patients develop fewer complications. But this only works when that surrogate has been validated to actually predict the clinical outcome we care about."
+    },
+    {
+      "speaker": "host",
+      "text": "That validation piece seems so critical. As we wrap up, what would you say is the most common misconception people have about how clinical trials actually work?"
+    },
+    {
+      "speaker": "expert",
+      "text": ""
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 42.98,
+    "input_tokens": 9191,
+    "output_tokens": 1815,
+    "total_tokens": 11006,
+    "estimated_cost_usd": 0.007704,
+    "peak_gpu_memory_gb": null
+  }
+}

@@ -510,6 +510,13 @@ export const ruRU = {
     episodeProfilePlaceholder: "Выберите профиль эпизода",
     episodeName: "Название эпизода",
     episodeNamePlaceholder: "напр., ИИ и будущее работы",
+    generationMode: "Режим генерации",
+    generationModeLegacy: "Legacy Agent",
+    generationModeMultiAgent: "Мульти-Agent",
+    generationModeMultiAgentHint: "Оркестрирует план, диалог и вспомогательных агентов для выпуска.",
+    evaluationAgent: "Агент оценки",
+    evaluationAgentHint:
+      "При включении выполняется отдельный проход для проверки качества плана и транскрипта.",
     additionalInstructions: "Дополнительные инструкции",
     instructionsPlaceholder: "Любые дополнительные указания для брифинга эпизода...",
     generating: "Генерация...",

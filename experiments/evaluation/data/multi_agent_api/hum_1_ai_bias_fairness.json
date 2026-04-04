@@ -1,0 +1,58 @@
+{
+  "config": "B",
+  "topic_id": "hum_1_ai_bias_fairness",
+  "topic": "AI Bias and Fairness",
+  "domain": "humanities",
+  "generated_at": "2026-04-04T02:27:32.328598+00:00",
+  "model": "glm-5-turbo",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "Welcome to the show. Today we're diving into algorithmic bias — how AI systems can inadvertently perpetuate discrimination in hiring, criminal justice, and beyond. To help us understand this, what exactly causes these biases to emerge in the first place?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Bias typically enters through the data itself. There are several pathways, but the most insidious is historical bias—when a system learns from past inequities as if they were objective truth. Amazon's hiring tool is a perfect example: trained on a decade of male-dominated hiring data, it learned to penalize resumes containing the word \"women's."
+    },
+    {
+      "speaker": "host",
+      "text": "That's such a clear example. So beyond historical bias, are there other ways bias sneaks into these systems — like if the data itself is incomplete or doesn't represent everyone equally?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Exactly—that's representation bias, and facial recognition illustrates it starkly. Joy Buolamwini and Timnit Gebru found commercial systems had error rates of nearly thirty-five percent for darker-skinned women compared to under one percent for lighter-skinned men, simply because the training datasets severely underrepresented them."
+    },
+    {
+      "speaker": "host",
+      "text": "So we have historical bias and representation bias — but you mentioned there are more pathways. What about when the data itself seems complete, but the way we're measuring things is fundamentally flawed?"
+    },
+    {
+      "speaker": "expert",
+      "text": "That's measurement bias—when your data point is a flawed proxy for what you're actually trying to"
+    },
+    {
+      "speaker": "host",
+      "text": "Oh, that's a really important distinction. Can you give us a real-world example of where that proxy problem has caused harm — like in the criminal justice system, maybe?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Absolutely. Take recidivism prediction algorithms that use arrest records as a proxy for criminal behavior. That conflates policing patterns with actual crime rates—communities subject to more aggressive policing appear to have higher crime, creating a feedback loop that systematically disadvantages them."
+    },
+    {
+      "speaker": "host",
+      "text": "That feedback loop is really chilling. As we wrap up, what's the one thing you wish more people understood about algorithmic bias — that it's not just a technical problem to solve, but fundamentally a human one?"
+    },
+    {
+      "speaker": "expert",
+      "text": ""
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 37.89,
+    "input_tokens": 10018,
+    "output_tokens": 1848,
+    "total_tokens": 11866,
+    "estimated_cost_usd": 0.008306,
+    "peak_gpu_memory_gb": null
+  }
+}

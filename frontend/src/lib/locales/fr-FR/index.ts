@@ -510,6 +510,14 @@ export const frFR = {
     episodeProfilePlaceholder: "Sélectionnez un profil d'épisode",
     episodeName: "Nom de l'épisode",
     episodeNamePlaceholder: "ex: L'IA et le futur du travail",
+    generationMode: "Mode de génération",
+    generationModeLegacy: "Agent Legacy",
+    generationModeMultiAgent: "Multi-Agent",
+    generationModeMultiAgentHint:
+      "Orchestre le plan, le dialogue et les agents auxiliaires pour l'épisode.",
+    evaluationAgent: "Agent d'évaluation",
+    evaluationAgentHint:
+      "Si activé, une passe dédiée vérifie la qualité du plan et de la transcription.",
     additionalInstructions: "Instructions supplémentaires",
     instructionsPlaceholder: "Tout conseil supplémentaire à ajouter au briefing de l'épisode...",
     generating: "Génération...",
