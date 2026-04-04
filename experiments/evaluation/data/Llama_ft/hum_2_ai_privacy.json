@@ -1,0 +1,22 @@
+{
+  "config": "C",
+  "topic_id": "hum_2_ai_privacy",
+  "topic": "AI Privacy and Data Protection",
+  "domain": "humanities",
+  "generated_at": "2026-04-04T03:30:35.448408+00:00",
+  "model": "QLoRA-Llama-3.2-1B",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "Today, the question is how AI protects users' data from misuse. Is it a technical challenge, or a societal one?"
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 0.92,
+    "input_tokens": 852,
+    "output_tokens": 26,
+    "total_tokens": 878,
+    "estimated_cost_usd": 0.0,
+    "peak_gpu_memory_gb": 2.302
+  }
+}

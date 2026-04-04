@@ -1,0 +1,60 @@
+{
+  "config": "B_review",
+  "topic_id": "hum_2_ai_privacy",
+  "topic": "AI Privacy and Data Protection",
+  "domain": "humanities",
+  "generated_at": "2026-04-04T02:36:25.855260+00:00",
+  "model": "glm-5-turbo",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "Welcome to the show. Today we're diving into AI privacy — a tension most of us feel but can't quite articulate. These systems hunger for our data, but what are we actually giving up? Can you help us understand what's at stake?"
+    },
+    {
+      "speaker": "expert",
+      "text": "What's at stake is that these models don't just learn patterns—they memorize. A 2021 study showed GPT-2 could be coaxed into regurgitating real people's names, phone numbers, and addresses straight from its training data. Your personal information could be sleeping inside a model, waiting for the right prompt to wake it up."
+    },
+    {
+      "speaker": "host",
+      "text": "That's unsettling — the idea that our information is just dormant in there. So how do these extraction attacks actually work? Is it really as simple as asking the right question?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Not quite a simple question, but close. Attackers use carefully designed prompting strategies—essentially probing the model in specific ways to coax out memorized content. The alarming part is that data can be extracted even if it appeared only a few times in the original training set."
+    },
+    {
+      "speaker": "host",
+      "text": "So memorization is one threat, but you've mentioned other attack types too—like"
+    },
+    {
+      "speaker": "expert",
+      "text": "Model inversion attacks, where attackers reconstruct what someone looks like just from a model's confidence scores. Researchers demonstrated this with facial recognition—recreating recognizable images of people's faces without ever seeing the photos, just by querying the model's outputs."
+    },
+    {
+      "speaker": "host",
+      "text": "That's chilling—reconstructing someone's face from just confidence scores. So between memorization, extraction attacks, and model inversion, what defenses actually exist? Can we build AI systems that don't compromise our privacy at their core?"
+    },
+    {
+      "speaker": "expert",
+      "text": ""
+    },
+    {
+      "speaker": "host",
+      "text": "It sounds like we need a fundamental shift in how we approach AI design. Before we wrap up, what gives you the most hope that we can actually build privacy-respecting AI systems at scale?"
+    },
+    {
+      "speaker": "expert",
+      "text": "What gives me hope is that GDPR has forced the issue—provisions like data minimization and the right to erasure are making \"collect everything\" approaches legally untenable. That regulatory"
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 48.22,
+    "input_tokens": 10308,
+    "output_tokens": 2155,
+    "total_tokens": 12463,
+    "estimated_cost_usd": 0.008724,
+    "peak_gpu_memory_gb": null,
+    "review_score": 0.5,
+    "review_attempts": 1
+  }
+}

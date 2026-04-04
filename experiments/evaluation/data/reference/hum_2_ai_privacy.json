@@ -1,0 +1,22 @@
+{
+  "config": "ref",
+  "topic_id": "hum_2_ai_privacy",
+  "topic": "AI Privacy and Data Protection",
+  "domain": "humanities",
+  "generated_at": "2026-04-04T02:42:46.365503+00:00",
+  "model": "glm-5-turbo",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": ""
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 40.02,
+    "input_tokens": 1149,
+    "output_tokens": 2500,
+    "total_tokens": 3649,
+    "estimated_cost_usd": 0.002554,
+    "peak_gpu_memory_gb": null
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "config": "B_review",
+  "topic_id": "med_3_ai_drug_discovery",
+  "topic": "AI in Drug Discovery",
+  "domain": "medicine",
+  "generated_at": "2026-04-04T02:40:02.589176+00:00",
+  "model": "glm-5-turbo",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "Welcome to the show. Today we're diving into a fascinating frontier — how artificial intelligence is transforming drug discovery. I've read that bringing a single new drug to market can take fifteen years and over two billion dollars. So let me start with the big picture: are we actually seeing AI change those"
+    },
+    {
+      "speaker": "expert",
+      "text": "Yes, but we're still early. The most tangible impact right now is at the front end — virtual screening. For example, AI models can now navigate libraries like Enamine's 37 billion compound space using graph neural networks, finding viable candidates in weeks that would have taken years to screen physically."
+    },
+    {
+      "speaker": "host",
+      "text": "That's incredible — thirty-seven billion compounds is almost incomprehensible. So once AI identifies these promising candidates from that vast chemical space, what happens next? I'm guessing finding a molecule that binds is just the first hurdle?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Exactly. Binding is necessary but not sufficient. The next hurdle is ADMET — will the drug actually reach its target safely in a living body? AI models using graph neural networks now predict properties like hepatotoxicity risk or membrane permeability early, filtering out failures before expensive animal testing begins."
+    },
+    {
+      "speaker": "host",
+      "text": "So these ADMET predictions act like an early warning system — that makes so much sense. But how reliable are they really? I'd imagine a false sense of confidence before clinical trials could be dangerously expensive."
+    },
+    {
+      "speaker": "expert",
+      "text": ""
+    },
+    {
+      "speaker": "host",
+      "text": ""
+    },
+    {
+      "speaker": "expert",
+      "text": ""
+    },
+    {
+      "speaker": "host",
+      "text": "This has been such an eye-opening conversation. Before we wrap up, what gives you the most hope about where AI-driven drug discovery is"
+    },
+    {
+      "speaker": "expert",
+      "text": ""
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 79.35,
+    "input_tokens": 10018,
+    "output_tokens": 2396,
+    "total_tokens": 12414,
+    "estimated_cost_usd": 0.00869,
+    "peak_gpu_memory_gb": null,
+    "review_score": 0.5,
+    "review_attempts": 1
+  }
+}

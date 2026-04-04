@@ -1,0 +1,60 @@
+{
+  "config": "B_review",
+  "topic_id": "hum_1_ai_bias_fairness",
+  "topic": "AI Bias and Fairness",
+  "domain": "humanities",
+  "generated_at": "2026-04-04T02:35:37.637387+00:00",
+  "model": "glm-5-turbo",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "Welcome to the show. Today we're diving into something that affects all of us—algorithmic bias. These systems are making life-altering decisions, but are they doing it fairly? Let's start with the basics—what exactly is algorithmic bias, and why should everyday people care?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Algorithmic bias is when AI systems systematically produce unfair outcomes—like Amazon's hiring tool that learned to penalize resumes containing the word \"women's.\" People should care because these systems now gatekeep jobs, loans, and freedom, often amplifying the very discrimination we've spent decades fighting."
+    },
+    {
+      "speaker": "host",
+      "text": "That Amazon example is chilling. So where does this bias actually come from—is it baked into the data, the algorithm itself, or both?"
+    },
+    {
+      "speaker": "expert",
+      "text": "It's overwhelmingly in the data. The algorithm just learns patterns from what you feed it. Take facial recognition—datasets historically overrepresented lighter-skinned individuals, so systems had error rates of 34.7% for darker-skinned women versus under 1% for lighter-skinned men. The math wasn't racist; the data was incomplete."
+    },
+    {
+      "speaker": "host",
+      "text": "So it's basically garbage in, garbage out—but what about when the data accurately reflects reality,"
+    },
+    {
+      "speaker": "expert",
+      "text": "That's exactly the trap of historical bias. If a company's past hiring favored men, feeding that \"accurate\" data to an AI doesn't make it objective—it just automates discrimination. The system confuses \"what we did\" with \"what we should do,\" replicating old inequities at machine scale."
+    },
+    {
+      "speaker": "host",
+      "text": ""
+    },
+    {
+      "speaker": "expert",
+      "text": ""
+    },
+    {
+      "speaker": "host",
+      "text": "So if the data carries our past mistakes forward, the real work isn't just technical—it's interrogating what we're asking these systems to optimize for in"
+    },
+    {
+      "speaker": "expert",
+      "text": "the first place. Consider using arrest records to predict recidivism—that seems logical, but you're not actually measuring criminal behavior, you're measuring policing patterns. Communities with aggressive policing get more arrests, so the system penalizes them for geography, not conduct."
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 68.51,
+    "input_tokens": 10350,
+    "output_tokens": 2275,
+    "total_tokens": 12625,
+    "estimated_cost_usd": 0.008837,
+    "peak_gpu_memory_gb": null,
+    "review_score": 0.5,
+    "review_attempts": 1
+  }
+}
