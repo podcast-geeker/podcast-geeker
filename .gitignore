@@ -143,3 +143,11 @@ specs/
 
 *.local.yml
 **/*.local.md
+
+# Large experiment artifacts (attach to GitHub Releases; see experiments/readme.md)
+experiments/podcast-expert-lora*.zip
+experiments/experiment_local_results.zip
+experiments/evaluation_architecture.jpg
+experiments/evaluation/data/experiment_local_results.zip
+experiments/evaluation/data/Llama_experiment_local_results.zip
+experiments/evaluation/data/api_3configs.zip

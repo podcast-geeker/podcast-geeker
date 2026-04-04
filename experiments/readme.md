@@ -1,3 +1,26 @@
+## 大型檔案（GitHub Releases）
+
+下列檔案**不納入 Git**，請在 [Releases](https://github.com/podcast-geeker/podcast-geeker/releases) 下載對應資產後放到專案路徑（或自行解壓）：
+
+| 資產建議檔名 | 放到 |
+|--------------|------|
+| `podcast-expert-lora.zip`（或本機曾命名為 `podcast-expert-lora (1).zip`） | 解壓到 `experiments/podcast-expert-lora/`，或依 notebook 說明放在 Colab 工作目錄 |
+| `experiment_local_results.zip` | 解壓到 `experiments/evaluation/data/` |
+| `Llama_experiment_local_results.zip` | 解壓到 `experiments/evaluation/data/` |
+| `api_3configs.zip` | 解壓到 `experiments/evaluation/data/` |
+| `evaluation_architecture.jpg` | `experiments/evaluation_architecture.jpg` |
+
+維護者發佈新版本時：在 GitHub 上 **Create a new release**，將上述檔案以 **Release assets** 上傳（可與應用程式版本 tag 分開，例如 `experiments-assets-v1`）。
+
+使用 `curl` 下載範例（將 `TAG` 與 `ASSET` 換成實際 release 與檔名）：
+
+```bash
+curl -fL -o experiments/podcast-expert-lora.zip \
+  "https://github.com/podcast-geeker/podcast-geeker/releases/download/TAG/ASSET"
+```
+
+---
+
 執行流程
 本地（需設定環境變數）：
 
