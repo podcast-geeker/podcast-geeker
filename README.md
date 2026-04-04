@@ -220,14 +220,12 @@ outline  →  [Host ⇌ Expert loop]  →  TTS → combine_audio
 
 ### Additional Features
 - **⚡ Reasoning Model Support**: Full support for thinking models like DeepSeek-R1 and Qwen3
-- **🌊 Waveform Audio Player**: Interactive wavesurfer.js player with seek, timestamps, and dark/light theme
+- **🌊 Waveform Audio Player** *(planned)*: Interactive wavesurfer.js player with seek, timestamps, and dark/light theme
 - **🔧 Content Transformations**: Powerful customizable actions to summarize and extract insights
 - **🌐 Comprehensive REST API**: Full programmatic access for custom integrations [![API Docs](https://img.shields.io/badge/API-Documentation-blue?style=flat-square)](http://localhost:5055/docs)
 - **🔐 Optional Password Protection**: Secure public deployments with authentication
 - **📊 Fine-Grained Context Control**: Choose exactly what to share with AI models
 - **📎 Citations**: Get answers with proper source citations and context
-
-)
 
 ## 📚 Documentation
 
@@ -247,7 +245,8 @@ outline  →  [Host ⇌ Expert loop]  →  TTS → combine_audio
 
 ### Advanced Topics
 - **[🎙️ Podcast Generation](docs/2-CORE-CONCEPTS/podcasts.md)** - Create professional podcasts
-- **[🤖 Multi-Agent Podcast System](docs/multi-agent-podcast-dialogue-system.md)** - Architecture & implementation plan
+- **[🤖 Multi-Agent Podcast System](docs/multi-agent-podcast-dialogue-system.md)** - Architecture & design of the LangGraph dialogue loop
+- **[🔬 Experiments & Evaluation](experiments/readme.md)** - Multi-config experiment pipeline and evaluation framework
 - **[🔧 Content Transformations](docs/2-CORE-CONCEPTS/transformations.md)** - Customize content processing
 - **[🤖 AI Models](docs/4-AI-PROVIDERS/index.md)** - AI model configuration
 - **[🔌 MCP Integration](docs/5-CONFIGURATION/mcp-integration.md)** - Connect with Claude Desktop, VS Code and other MCP clients
@@ -257,9 +256,42 @@ outline  →  [Host ⇌ Expert loop]  →  TTS → combine_audio
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## 🔬 Experiments & Evaluation
+
+The `experiments/` directory contains a comprehensive evaluation framework for the multi-agent podcast system:
+
+**6 Experiment Configurations:**
+
+| Config | Description |
+|--------|-------------|
+| **Baseline (A)** | Single-prompt transcript generation (original `podcast-creator` approach) |
+| **Multi-Agent (B)** | Multi-agent Host ⇌ Expert dialogue loop without quality review |
+| **Multi-Agent + Review (B_review)** | Full pipeline with quality review agent |
+| **Reference** | High-quality reference dialogues for metric comparison |
+| **Llama Base** | Llama base model inference |
+| **Llama Fine-tuned** | QLoRA fine-tuned Llama model |
+
+**9 Test Topics** spanning three domains:
+- **Tech**: Transformer Attention, QLoRA Fine-tuning, Multi-Agent Systems
+- **Humanities**: AI Bias & Fairness, AI Privacy, AI Safety & Alignment
+- **Medical**: AI Medical Imaging, Clinical Trials, AI Drug Discovery
+
+**Evaluation Metrics:**
+- Automatic metrics: BERTScore, ROUGE-L, Distinct-1/2, Perplexity
+- LLM-as-Judge: Role Consistency, Naturalness, Informativeness, Topic Relevance, Engagement
+
+See [experiments/readme.md](experiments/readme.md) for execution instructions and [the Colab notebook](experiments/eval_colab_notebook.ipynb) for GPU-accelerated evaluation.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## 🗺️ Roadmap
 
 ### Recently Completed ✅
+- **Multi-Agent Podcast Dialogue**: LangGraph Host ⇌ Expert loop with per-turn generation, replacing single-prompt transcript
+- **Quality Review Agent**: Per-segment scoring (relevance, fluency, depth) and automatic retry for consistent podcast quality
+- **High-Quality TTS**: OpenAI `tts-1-hd` (English) and MiniMax `speech-01-hd` (Chinese) via `openai-compatible` provider
+- **Multi-Config Experiment System**: Evaluation pipeline with 6 configurations (Baseline, Multi-Agent, Multi-Agent+Review, Reference, Llama Base, Llama Fine-tuned) across 9 test topics
+- **QLoRA Fine-tuning Pipeline**: LoRA adapter training for podcast dialogue generation with Colab Pro notebook
 - **Advanced Agentic RAG**: Hierarchical indexing, query rewriting, self-correction, conversation memory
 - **Multi-Modal Support**: Optional RAG-Anything integration for images, tables, and equations
 - **Intelligent Query Processing**: Automatic clarification and reformulation of ambiguous queries
@@ -272,14 +304,11 @@ outline  →  [Host ⇌ Expert loop]  →  TTS → combine_audio
 - **Multiple Chat Sessions**: Manage different conversations within notebooks
 
 ### In Progress 🚧
-- **Multi-Agent Podcast Dialogue**: LangGraph Host ⇌ Expert loop replacing single-prompt transcript generation
-- **Quality Review Agent**: Per-segment scoring and automatic retry for consistent podcast quality
 - **Waveform Audio Player**: Interactive wavesurfer.js player in `EpisodeCard` with seek, timestamps, and theme support
-- **High-Quality TTS**: OpenAI `tts-1-hd` (English) and MiniMax `speech-01-hd` (Chinese) via `openai-compatible` provider
+- **Evaluation Results Analysis**: Automated metrics (BERTScore, ROUGE, Distinct-N, Perplexity) and LLM-as-Judge visualization
 
 ### Upcoming Features
 - **Segment Parallelism**: Concurrent segment generation for sub-minute podcast production
-- **RAG Evaluation Framework**: Comprehensive benchmarking for retrieval quality
 - **Hybrid Search**: Combine vector search with BM25 keyword matching
 - **Cross-Encoder Reranking**: Improve result ranking with neural rerankers
 - **Graph-Based RAG**: Leverage SurrealDB's graph capabilities for relationship-aware retrieval
@@ -324,7 +353,7 @@ Our advanced RAG capabilities are inspired by and adapted from:
 All third-party licenses are preserved and respected. See [ACKNOWLEDGMENTS.md](ACKNOWLEDGMENTS.md) for complete details and individual project repositories for their full license terms.
 
 ### Academic Context
-This project is part of **CDS547 - Large Language Models** course at the **Lingnan University** (Winter Term 2, 2024/2025), exploring state-of-the-art RAG techniques and multi-agent LLM orchestration in a real-world application.
+This project originated as part of **CDS547 - Large Language Models** at **Lingnan University** (2024/2025), exploring state-of-the-art RAG techniques and multi-agent LLM orchestration in a real-world application.
 
 ---
 
