@@ -143,3 +143,6 @@ specs/
 
 *.local.yml
 **/*.local.md
+
+experiments/evaluation/data/
+experiments/podcast-expert-lora (1).zip
