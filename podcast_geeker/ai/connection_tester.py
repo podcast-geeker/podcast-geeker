@@ -406,11 +406,17 @@ async def test_individual_model(model) -> Tuple[bool, str]:
         elif model.type == "text_to_speech":
             # Kokoro/Speaches uses af_bella, af_sarah, etc. - not OpenAI's alloy
             model_name_lower = (model.name or "").lower()
+            provider_lower = (model.provider or "").lower()
             if "kokoro" in model_name_lower or "speaches" in model_name_lower:
                 voice = KOKORO_VOICE
             else:
-                # For ElevenLabs, look up first available voice (API uses voice_id, not name)
-                voice = DEFAULT_TEST_VOICES.get(model.provider)
+                # For OpenAI-compatible TTS, prefer provider-reported voices.
+                # Many endpoints (e.g., glm-tts) don't support OpenAI's "alloy".
+                if provider_lower == "openai_compatible":
+                    voice = None
+                else:
+                    # For ElevenLabs, look up first available voice (API uses voice_id, not name)
+                    voice = DEFAULT_TEST_VOICES.get(model.provider)
                 if not voice and hasattr(esp_model, "available_voices"):
                     try:
                         voices = esp_model.available_voices

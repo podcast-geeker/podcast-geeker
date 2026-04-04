@@ -1,0 +1,60 @@
+{
+  "config": "B_review",
+  "topic_id": "tech_3_multi_agent",
+  "topic": "LLM Multi-Agent Architecture",
+  "domain": "technology",
+  "generated_at": "2026-04-04T02:34:29.122252+00:00",
+  "model": "glm-5-turbo",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "Welcome to the show! Today we're diving into LLM multi-agent systems — where multiple AI agents collaborate like a team. To start us off, what exactly makes this approach more powerful than just using a single language model?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Think of a single LLM like a solo consultant—great at answering questions, but struggles when a task requires juggling web searches, code execution, and report writing across dozens of steps. Multi-agent systems let you assign each capability to a specialist, avoiding context overload and error accumulation."
+    },
+    {
+      "speaker": "host",
+      "text": "So if you're building that team of specialists, how do they actually coordinate? Is there a hierarchy, or is it more of a flat collaboration where agents figure it out among themselves?"
+    },
+    {
+      "speaker": "expert",
+      "text": "It's primarily hierarchical. You have a supervisor agent that acts like a project manager—it decomposes your request into subtasks and delegates them. For example, a research supervisor might route literature search to one worker, data analysis to another, and report writing to a third, then synthesizes their outputs."
+    },
+    {
+      "speaker": "host",
+      "text": "That makes sense for straightforward delegation, but what about really complex projects? Can you add more layers to that hierarchy, like having middle managers between the supervisor and the workers?"
+    },
+    {
+      "speaker": "expert",
+      "text": ""
+    },
+    {
+      "speaker": "host",
+      "text": "That's fascinating—so you could have a project manager delegating to an architect, who then coordinates frontend and backend developers. But doesn't adding all those layers introduce new challenges, like communication bottlenecks or things getting lost in translation between agents?"
+    },
+    {
+      "speaker": "expert",
+      "text": ""
+    },
+    {
+      "speaker": "host",
+      "text": "So given all these trade-offs between flat and hierarchical approaches, what's your practical advice for someone building their first multi-agent system today—where should they start?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Start with a single agent using function calling—master that ReAct loop before adding complexity. Only introduce a supervisor when you genuinely hit context limits or need parallel execution. Don't build a hierarchy for tasks that one agent with good tools can handle."
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 43.11,
+    "input_tokens": 10223,
+    "output_tokens": 2153,
+    "total_tokens": 12376,
+    "estimated_cost_usd": 0.008663,
+    "peak_gpu_memory_gb": null,
+    "review_score": 0.5,
+    "review_attempts": 1
+  }
+}

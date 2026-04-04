@@ -1,0 +1,58 @@
+{
+  "config": "B",
+  "topic_id": "med_3_ai_drug_discovery",
+  "topic": "AI in Drug Discovery",
+  "domain": "medicine",
+  "generated_at": "2026-04-04T02:32:24.978116+00:00",
+  "model": "glm-5-turbo",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "Welcome to the show. Today we're exploring how artificial intelligence is transforming drug discovery — a field where developing a single approved drug can take fifteen years and over two billion dollars. So, how exactly is AI changing this landscape?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Think of AI as giving researchers a mathematical flashlight in a dark room of 37 billion molecules. Instead of physically testing compounds, graph neural networks can efficiently navigate massive chemical libraries like the Enamine REAL Space to identify promising drug candidates in days rather than decades."
+    },
+    {
+      "speaker": "host",
+      "text": ""
+    },
+    {
+      "speaker": "expert",
+      "text": ""
+    },
+    {
+      "speaker": "host",
+      "text": "That's fascinating — but finding a molecule that binds is only part of the challenge. What happens after you identify these candidates? How does AI help predict whether they'll actually be safe and effective in the human body?"
+    },
+    {
+      "speaker": "expert",
+      "text": "This is where ADMET prediction"
+    },
+    {
+      "speaker": "host",
+      "text": "Wait, before you dive deeper — for listeners who aren't drug developers, can you explain what ADMET actually stands for and why it's been such a stubborn bottleneck in getting drugs to patients?"
+    },
+    {
+      "speaker": "expert",
+      "text": "ADMET stands for Absorption, Distribution, Metabolism, Excretion, and Toxicity. It answers a simple question: will this pill actually work in a human body? Historically, we tested this using animal models and lab assays that are expensive, slow, and imperfectly predictive of human biology — which is why so many promising candidates fail late in development."
+    },
+    {
+      "speaker": "host",
+      "text": "So machine learning can now predict these properties much earlier in the process. Given everything we've discussed today, how do you see AI reshaping the future timeline for bringing new medicines to patients?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Consider the math: screening thirty-seven billion compounds physically is impossible, but graph neural networks can navigate that chemical space computationally in days. By catching ADMET failures before a molecule ever enters a lab, we're not just shaving years off that ten-to-fifteen-year timeline—we're fundamentally changing what's discoverable."
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 56.7,
+    "input_tokens": 9100,
+    "output_tokens": 1881,
+    "total_tokens": 10981,
+    "estimated_cost_usd": 0.007687,
+    "peak_gpu_memory_gb": null
+  }
+}

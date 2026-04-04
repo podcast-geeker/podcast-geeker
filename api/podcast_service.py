@@ -1,10 +1,11 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Literal, Optional
 
 from fastapi import HTTPException
 from loguru import logger
 from pydantic import BaseModel
 from surreal_commands import get_command_status, submit_command
 
+from podcast_geeker.database.repository import repo_query
 from podcast_geeker.domain.notebook import Notebook
 from podcast_geeker.podcasts.models import EpisodeProfile, PodcastEpisode, SpeakerProfile
 
@@ -18,6 +19,8 @@ class PodcastGenerationRequest(BaseModel):
     content: Optional[str] = None
     notebook_id: Optional[str] = None
     briefing_suffix: Optional[str] = None
+    generation_mode: Literal["legacy", "multi_agent"] = "legacy"
+    skip_evaluation: bool = False
 
 
 class PodcastGenerationResponse(BaseModel):
@@ -41,6 +44,8 @@ class PodcastService:
         notebook_id: Optional[str] = None,
         content: Optional[str] = None,
         briefing_suffix: Optional[str] = None,
+        generation_mode: str = "legacy",
+        skip_evaluation: bool = False,
     ) -> str:
         """Submit a podcast generation job for background processing"""
         try:
@@ -75,6 +80,36 @@ class PodcastService:
                     "Content is required - provide either content or notebook_id"
                 )
 
+            # Reject if an active (or completed) episode with the same name already
+            # exists. This prevents accidental duplicate submissions that would
+            # create two DB records pointing at the same on-disk directory.
+            existing_episodes = await repo_query(
+                "SELECT id, command FROM episode WHERE name = $name LIMIT 1",
+                {"name": episode_name},
+            )
+            if existing_episodes:
+                existing = existing_episodes[0]
+                # Allow re-submission only if the previous job permanently failed.
+                existing_status: str | None = None
+                if existing.get("command"):
+                    try:
+                        from surreal_commands import get_command_status
+
+                        status_obj = await get_command_status(str(existing["command"]))
+                        existing_status = status_obj.status if status_obj else None
+                    except Exception:
+                        existing_status = None
+
+                if existing_status not in ("failed", "cancelled"):
+                    raise HTTPException(
+                        status_code=400,
+                        detail=(
+                            f"An episode named '{episode_name}' already exists "
+                            f"(status: {existing_status or 'completed'}). "
+                            "Delete it first or choose a different episode name."
+                        ),
+                    )
+
             # Prepare command arguments
             command_args = {
                 "episode_profile": episode_profile_name,
@@ -82,6 +117,8 @@ class PodcastService:
                 "episode_name": episode_name,
                 "content": str(content),
                 "briefing_suffix": briefing_suffix,
+                "generation_mode": generation_mode,
+                "skip_evaluation": skip_evaluation,
             }
 
             # Ensure command modules are imported before submitting

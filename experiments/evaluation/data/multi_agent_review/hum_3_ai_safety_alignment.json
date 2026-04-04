@@ -1,0 +1,60 @@
+{
+  "config": "B_review",
+  "topic_id": "hum_3_ai_safety_alignment",
+  "topic": "AI Safety and Alignment",
+  "domain": "humanities",
+  "generated_at": "2026-04-04T02:37:15.093201+00:00",
+  "model": "glm-5-turbo",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "Welcome to the show. Today we're diving into AI safety and alignment — the challenge of making sure these incredibly powerful systems actually do what we want and share our values. Can you help us understand why this matters so much right now?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Alignment used to be a philosophical thought experiment about superintelligent agents with misspecified goals. Now it's immediate and practical—models serving hundreds of millions can generate harmful content, reinforce biases, or follow malicious instructions. These aren't hypothetical risks; they're failure modes we're already seeing."
+    },
+    {
+      "speaker": "host",
+      "text": "So we're dealing with real harms right now. How are researchers actually tackling this? I've heard terms like RLHF thrown around — can you walk us through what that even means?"
+    },
+    {
+      "speaker": "expert",
+      "text": "RLHF works in three steps: first, fine-tune the model on good examples; second, have humans compare pairs of outputs to train a reward model that scores responses; third, optimize the model to maximize those scores. Think of it like training a dog—show it what good behavior looks like, then reward what you prefer."
+    },
+    {
+      "speaker": "host",
+      "text": "That dog training analogy really helps! But I imagine it's not that simple in practice — what are the real limitations or failure modes of this approach?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Three big problems: it's expensive, human preferences are noisy and culturally variable—so the reward signal is an imperfect proxy—and reward hacking, where the model learns to game the scoring system without genuinely satisfying preferences. Think of a student optimizing for rubric points instead of actual learning."
+    },
+    {
+      "speaker": "host",
+      "text": "So if RLHF has these fundamental limitations, are there alternative approaches that try to solve alignment differently — perhaps without relying so heavily on human annotators?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Yes, Anthropic's Constitutional AI replaces human annotators with explicit principles. The model generates a response, critiques it against its constitution—like a student grading their own essay using a rubric—then revises. This self-supervised critique-revision cycle is more scalable and transparent than RLHF."
+    },
+    {
+      "speaker": "host",
+      "text": "That self-grading approach is fascinating. As we wrap up, what gives you the most hope—and what keeps you up at night—about where AI alignment is headed?"
+    },
+    {
+      "speaker": "expert",
+      "text": ""
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 49.24,
+    "input_tokens": 10666,
+    "output_tokens": 2014,
+    "total_tokens": 12680,
+    "estimated_cost_usd": 0.008876,
+    "peak_gpu_memory_gb": null,
+    "review_score": 0.5,
+    "review_attempts": 1
+  }
+}

@@ -51,6 +51,8 @@ export interface PodcastEpisode {
   job_status?: EpisodeStatus | null
 }
 
+export type GenerationMode = 'legacy' | 'multi_agent'
+
 export interface PodcastGenerationRequest {
   episode_profile: string
   speaker_profile: string
@@ -58,6 +60,8 @@ export interface PodcastGenerationRequest {
   content?: string
   notebook_id?: string
   briefing_suffix?: string | null
+  generation_mode?: GenerationMode
+  skip_evaluation?: boolean
 }
 
 export interface PodcastGenerationResponse {

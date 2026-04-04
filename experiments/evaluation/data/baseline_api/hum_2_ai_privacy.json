@@ -1,0 +1,22 @@
+{
+  "config": "A",
+  "topic_id": "hum_2_ai_privacy",
+  "topic": "AI Privacy and Data Protection",
+  "domain": "humanities",
+  "generated_at": "2026-04-04T02:22:49.623971+00:00",
+  "model": "glm-5-turbo",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "[\n  {\n    \"speaker\": \"host\",\n    \"text\": \"Welcome to the show. Today we're diving into AI privacy, specifically the huge tension between machine learning's need for massive datasets and our right to control personal information. Why is this such a defining challenge right now?\"\n  },\n  {\n    \"speaker\": \"expert"
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 24.65,
+    "input_tokens": 1124,
+    "output_tokens": 2000,
+    "total_tokens": 3124,
+    "estimated_cost_usd": 0.002187,
+    "peak_gpu_memory_gb": null
+  }
+}

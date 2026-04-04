@@ -1,0 +1,22 @@
+{
+  "config": "A",
+  "topic_id": "med_1_ai_medical_imaging",
+  "topic": "AI-Assisted Medical Imaging",
+  "domain": "medicine",
+  "generated_at": "2026-04-04T02:23:41.300259+00:00",
+  "model": "glm-5-turbo",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "[\n  {\n    \"speaker\": \"host\",\n    \"text\": \"A single hospital can produce tens of thousands of medical images every single day, so how exactly is AI stepping in to help radiologists manage that overwhelming volume?\"\n  },\n  {\n    \"speaker\": \"expert\",\n    \"text\": \"Deep learning models, particularly convolutional neural networks, are being used to automate the detection of abnormalities like pneumonia on chest X-rays, which helps reduce human fatigue and perceptual errors.\"\n  },\n  {\n    \"speaker\": \"host\",\n    \"text\": \"I remember hearing about a major breakthrough at Stanford called CheXNet, so what made that specific system so groundbreaking?\"\n  },\n  {\n    \"speaker\": \"expert\",\n    \"text\": \"CheXNet used a DenseNet architecture to achieve radiologist-level performance in detecting pneumonia on chest X-rays, proving that deep learning could match or even exceed the sensitivity of board-certified radiologists for specific findings.\"\n  },\n  {\n    \"speaker\": \"host\",\n    \"text\": \"But the technology doesn't stop there, right, because I know vision transformers are now becoming a big deal in this field?\"\n  },\n  {\n    \"speaker\": \"expert\",\n    \"text\": \"Exactly, unlike CNNs that rely on local operations, vision transformers divide images into patches and use self-attention to capture global context right away, which is incredibly useful for assessing diffuse findings like heart size across a full radiograph.\"\n  },\n  {\n    \"speaker\": \"host\",\n    \"text\": \"When we're talking about comparing these AI systems to human doctors, how do we actually measure their success without just relying on headlines?\"\n  },\n  {\n    \"speaker\": \"expert\",\n    \"text\": \"We use metrics like sensitivity and specificity, often visualized with a receiver operating characteristic curve, but we have to remember that radiologists use patient history and clinical context that AI models evaluated in isolation usually lack.\"\n  },\n  {\n    \"speaker\": \"host\",\n    \"text\": \"That clinical integration brings up a scary question: what happens when the AI makes a mistake and misses a diagnosis?\"\n  },\n  {\n    \"speaker\": \"expert\",\n    \"text\": \""
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 25.65,
+    "input_tokens": 1133,
+    "output_tokens": 2000,
+    "total_tokens": 3133,
+    "estimated_cost_usd": 0.002193,
+    "peak_gpu_memory_gb": null
+  }
+}

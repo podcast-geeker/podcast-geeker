@@ -1,0 +1,58 @@
+{
+  "config": "B",
+  "topic_id": "tech_3_multi_agent",
+  "topic": "LLM Multi-Agent Architecture",
+  "domain": "technology",
+  "generated_at": "2026-04-04T02:26:54.435320+00:00",
+  "model": "glm-5-turbo",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "Welcome to the show! Today we're diving into LLM multi-agent architectures—systems where multiple AI agents collaborate on complex tasks. I'd love to start with the basics: what exactly makes this different from just asking a single AI to do something?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Think of it like a single contractor versus an entire firm. One agent with tools can search the web and crunch numbers, but a multi-agent system can have a supervisor delegate literature search to one worker, data analysis to another, and report writing to a third—parallelizing work that would overwhelm a single context window."
+    },
+    {
+      "speaker": "host",
+      "text": "That contractor analogy really clicks. So when that supervisor is delegating tasks, how do the agents actually talk to each other—is it all natural language"
+    },
+    {
+      "speaker": "expert",
+      "text": ""
+    },
+    {
+      "speaker": "host",
+      "text": ""
+    },
+    {
+      "speaker": "expert",
+      "text": "Yes, primarily. That's the breakthrough—language models can coordinate through natural language, but it's not *only* chat. They also use structured function calling, like when OpenAI outputs a formal JSON tool invocation that the host system executes and feeds back. It's natural language plus structured APIs working together."
+    },
+    {
+      "speaker": "host",
+      "text": "That's fascinating—natural language as the coordination"
+    },
+    {
+      "speaker": "expert",
+      "text": "Exactly, and that's what separates this from decades of traditional multi-agent research. Those older systems required rigid communication protocols. Now, an architect agent can just \"tell\" a frontend developer agent what to build in plain English, and the developer understands context and nuances without any formal schema."
+    },
+    {
+      "speaker": "host",
+      "text": "That's a perfect point to wrap on—the flexibility of plain language coordination is what makes this all feel so revolutionary. Before we close, what's the one key takeaway you want listeners to remember about multi-agent systems?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Think of it like a real company: a single intern with tools can do simple tasks, but complex projects need a supervisor delegating to specialists—a researcher, an analyst, a writer—working in parallel. That's the shift: from one capable agent to coordinated teams that outperform any individual."
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 48.78,
+    "input_tokens": 9377,
+    "output_tokens": 1894,
+    "total_tokens": 11271,
+    "estimated_cost_usd": 0.00789,
+    "peak_gpu_memory_gb": null
+  }
+}

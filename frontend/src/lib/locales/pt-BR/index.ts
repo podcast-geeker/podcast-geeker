@@ -510,6 +510,13 @@ export const ptBR = {
     episodeProfilePlaceholder: "Selecione um perfil de episódio",
     episodeName: "Nome do episódio",
     episodeNamePlaceholder: "ex., IA e o Futuro do Trabalho",
+    generationMode: "Modo de geração",
+    generationModeLegacy: "Agent Legado",
+    generationModeMultiAgent: "Multi-Agent",
+    generationModeMultiAgentHint: "Orquestra roteiro, diálogo e agentes de apoio para o episódio.",
+    evaluationAgent: "Agente de avaliação",
+    evaluationAgentHint:
+      "Quando ativado, executa uma etapa dedicada para revisar o roteiro e a transcrição.",
     additionalInstructions: "Instruções adicionais",
     instructionsPlaceholder: "Qualquer conselho suplementar para adicionar ao briefing do episódio...",
     generating: "Gerando...",

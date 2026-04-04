@@ -1,0 +1,22 @@
+{
+  "config": "A",
+  "topic_id": "tech_1_transformer_attention",
+  "topic": "Transformer Attention Mechanism",
+  "domain": "technology",
+  "generated_at": "2026-04-04T02:20:53.302957+00:00",
+  "model": "glm-5-turbo",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "[\n  {\n    \"speaker\": \"host\",\n    \"text\": \"Before the 2017 paper 'Attention Is All You Need,' sequence modeling was dominated by RNNs like LSTMs. What was the fundamental problem with those older models that the Transformer solved?\"\n  },\n  {\n    \"speaker\": \"expert\",\n    \"text\": \"Recurrent models processed tokens sequentially, which severely limited training parallelism and made capturing long-range dependencies difficult. The Transformer completely discarded recurrence, using a self-attention mechanism to model relationships between all positions in a sequence simultaneously.\"\n  },\n  {\n    \"speaker\": \"host\",\n    \"text\": \"That's fascinating, but how does this self-attention mechanism actually figure out which words should connect?\"\n  },\n  {\n    \"speaker\": \"expert\",\n    \"text\": \"It works by projecting input embeddings into three vector spaces called queries, keys, and values. A token's query represents what it's looking for, the key represents what it offers, and the value is the actual content that gets passed forward based on those matches.\"\n  },\n  {"
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 72.67,
+    "input_tokens": 1214,
+    "output_tokens": 2000,
+    "total_tokens": 3214,
+    "estimated_cost_usd": 0.00225,
+    "peak_gpu_memory_gb": null
+  }
+}
