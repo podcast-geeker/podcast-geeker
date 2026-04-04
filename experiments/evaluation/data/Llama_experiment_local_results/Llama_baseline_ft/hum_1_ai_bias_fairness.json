@@ -1,0 +1,66 @@
+{
+  "config": "C",
+  "topic_id": "hum_1_ai_bias_fairness",
+  "topic": "AI Bias and Fairness",
+  "domain": "humanities",
+  "generated_at": "2026-04-04T12:48:10.906863+00:00",
+  "model": "QLoRA-Llama-3.1-8B-Instruct",
+  "turns": [
+    {
+      "speaker": "host",
+      "text": "Welcome to our podcast, where we explore the intersection of technology and society. Today, we're discussing algorithmic bias in artificial intelligence. Joining me is Dr. Rachel Kim, a leading expert in AI fairness. Dr. Kim, thanks for being here."
+    },
+    {
+      "speaker": "expert",
+      "text": "Thanks for having me. Algorithmic bias has become a pressing concern in AI research and development, as it can perpetuate and even amplify existing societal inequalities."
+    },
+    {
+      "speaker": "host",
+      "text": "Let's dive right in. Can you explain what algorithmic bias is, and how it arises in AI systems?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Algorithmic bias refers to systematic and repeatable errors in a computer system that create unfair outcomes, often reflecting and amplifying existing societal inequities. Bias can originate from multiple sources, including historical bias, representation bias, measurement bias, and aggregation bias."
+    },
+    {
+      "speaker": "host",
+      "text": "That's fascinating. I'd like to explore each of those categories further. Can you give an example of historical bias in AI?"
+    },
+    {
+      "speaker": "expert",
+      "text": "A classic example is Amazon's hiring tool, which was found to systematically penalize candidates whose resumes contained the word 'women's,' such as graduates of women's colleges. The system had been trained on a decade of hiring data reflecting the technology industry's gender imbalance."
+    },
+    {
+      "speaker": "host",
+      "text": "Wow, that's striking. How about representation bias? Can you explain that concept and give an example?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Representation bias occurs when certain demographic groups are underrepresented or absent from the training data, causing the model to perform poorly for those populations. A notable example is facial recognition systems, which have historically overrepresented lighter-skinned individuals, leading to dramatically higher error rates for darker-skinned faces."
+    },
+    {
+      "speaker": "host",
+      "text": "That's disturbing. What about measurement bias? How does that arise, and what are the consequences?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Measurement bias emerges when features or labels are imperfect proxies for the construct they intend to capture. Using arrest records as a proxy for criminal behavior, for instance, conflates policing patterns with actual crime rates, systematically disadvantaging communities subject to more aggressive policing."
+    },
+    {
+      "speaker": "host",
+      "text": "Finally, can you talk about aggregation bias? How does it affect AI systems, and what can be done to mitigate it?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Aggregation bias arises when a single model is applied to groups with fundamentally different characteristics, failing to account for meaningful variation across subpopulations. To mitigate aggregation bias, researchers are exploring techniques such as subgroup fairness and local explainability, which can help identify and address disparities in AI outcomes."
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 39.13,
+    "input_tokens": 842,
+    "output_tokens": 607,
+    "total_tokens": 1449,
+    "estimated_cost_usd": 0.0,
+    "peak_gpu_memory_gb": 6.385
+  }
+}
