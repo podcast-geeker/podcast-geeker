@@ -32,6 +32,7 @@ import {
 } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { WaveformPlayer } from '@/components/player/WaveformPlayer'
 import { useTranslation } from '@/lib/hooks/use-translation'
 import { TranslationKeys } from '@/lib/locales'
 
@@ -250,7 +251,13 @@ export function EpisodeCard({ episode, onDelete, deleting }: EpisodeCardProps) {
                 </DialogHeader>
                 <div className="space-y-4 overflow-hidden">
                   {audioSrc ? (
-                    <audio controls preload="none" src={audioSrc} className="w-full" />
+                    <WaveformPlayer
+                      audioSrc={audioSrc}
+                      title={episode.name}
+                      showTitle={false}
+                      variant="compact"
+                      className="w-full"
+                    />
                   ) : audioError ? (
                     <p className="text-sm text-destructive">{audioError}</p>
                   ) : null}
@@ -397,7 +404,12 @@ export function EpisodeCard({ episode, onDelete, deleting }: EpisodeCardProps) {
         </div>
 
         {audioSrc ? (
-          <audio controls preload="none" src={audioSrc} className="w-full" />
+          <WaveformPlayer
+            audioSrc={audioSrc}
+            title={episode.name}
+            showTitle={false}
+            className="w-full"
+          />
         ) : audioError ? (
           <p className="text-sm text-destructive">{audioError}</p>
         ) : null}

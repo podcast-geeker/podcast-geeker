@@ -78,6 +78,19 @@ def _try_load_json(path: Path) -> Optional[Dict[str, Any]]:
         return None
 
 
+def _pick_episode_mp3_on_disk(disk_dir: Path) -> Optional[Path]:
+    """Prefer data/podcasts/episodes/<name>/audio/*.mp3, else *.mp3 in episode folder."""
+    audio_dir = disk_dir / "audio"
+    if audio_dir.is_dir():
+        mp3s = sorted(audio_dir.glob("*.mp3"))
+        if mp3s:
+            return mp3s[0]
+    mp3s = sorted(disk_dir.glob("*.mp3"))
+    if mp3s:
+        return mp3s[0]
+    return None
+
+
 async def _backfill_episode_from_disk(episode) -> bool:
     """Populate missing audio/transcript/outline from disk files.
 
@@ -89,13 +102,18 @@ async def _backfill_episode_from_disk(episode) -> bool:
 
     changed = False
 
-    if not episode.audio_file:
-        audio_dir = disk_dir / "audio"
-        if audio_dir.is_dir():
-            mp3s = list(audio_dir.glob("*.mp3"))
-            if mp3s:
-                episode.audio_file = str(mp3s[0])
-                changed = True
+    needs_audio = True
+    if episode.audio_file:
+        try:
+            needs_audio = not _resolve_audio_path(episode.audio_file).exists()
+        except Exception:
+            needs_audio = True
+
+    if needs_audio:
+        picked = _pick_episode_mp3_on_disk(disk_dir)
+        if picked:
+            episode.audio_file = str(picked.resolve())
+            changed = True
 
     if not episode.transcript or episode.transcript == {}:
         transcript_path = disk_dir / "transcript.json"
