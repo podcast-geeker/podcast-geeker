@@ -143,6 +143,7 @@ specs/
 
 *.local.yml
 **/*.local.md
+**/*.local.mkdocs
 
 # Large experiment artifacts (attach to GitHub Releases; see experiments/readme.md)
 experiments/podcast-expert-lora*.zip
