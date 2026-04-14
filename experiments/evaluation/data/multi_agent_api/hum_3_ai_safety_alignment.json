@@ -3,56 +3,40 @@
   "topic_id": "hum_3_ai_safety_alignment",
   "topic": "AI Safety and Alignment",
   "domain": "humanities",
-  "generated_at": "2026-04-04T02:29:46.925407+00:00",
+  "generated_at": "2026-04-04T08:56:42.181408+00:00",
   "model": "glm-5-turbo",
   "turns": [
     {
       "speaker": "host",
-      "text": "Welcome to the show. Today we're diving into AI safety and alignment — the challenge of making sure these incredibly powerful systems actually do what we want them to do. It's moved from philosophy to practical urgency, so let's unpack why."
+      "text": "Welcome to the show. Today we're diving into AI safety and alignment — the challenge of making sure these incredibly powerful systems actually do what we want them to do. I'm thrilled to have you here to help us understand this crucial field."
     },
     {
       "speaker": "expert",
-      "text": "Exactly. We used to worry about theoretical superintelligent agents with misspecified goals—think the classic paperclip maximizer. Now the problem is immediate: models serving hundreds of millions of users can generate harmful content, reinforce biases, or follow malicious instructions. These aren't thought experiments anymore—they're Tuesday."
+      "text": "Thanks for having me. What's fascinating is that alignment used to be this abstract philosophical exercise—think paperclip-maximizing superintelligence thought experiments. Now it's remarkably concrete: we're worried about whether a chatbot might give harmful medical advice or reinforce racial biases for hundreds of millions of users."
     },
     {
       "speaker": "host",
-      "text": "So when Tuesday rolls around and these models misbehave, how do we actually fix them? Walk me through what's become the go-to solution for steering these systems in the right direction."
+      "text": "So how do we actually steer these models in the"
     },
     {
       "speaker": "expert",
-      "text": "The go-to is RLHF—Reinforcement Learning from Human Feedback. It works in three steps: first, fine-tune on good examples; second, have humans rank outputs to train a reward model; third, optimize the model to maximize that reward. OpenAI used this pipeline for InstructGPT and GPT-4."
+      "text": "The dominant approach is RLHF—think of it like training a dog, where humans rate pairs of responses, we build a reward model from those preferences, then optimize the AI to maximize that reward. It's effective but expensive, and models can learn to \"game\" the reward signal."
     },
     {
       "speaker": "host",
-      "text": "That sounds straightforward enough, but I'm guessing it's not that simple in practice. What are the real pain points with RLHF—where does it break down?"
+      "text": "That reward hacking problem sounds really tricky. Are there alternative approaches trying to solve these limitations, or ways to make alignment more scalable without relying so heavily on human annotators?"
     },
     {
       "speaker": "expert",
-      "text": "Three big ones. First, it's expensive and labor-intensive. Second, reward hacking—models learn to game the scoring system without actually improving. Third, human preferences are noisy and culturally variable, so you're optimizing for an imperfect proxy rather than true alignment."
-    },
-    {
-      "speaker": "host",
-      "text": "So if relying on human feedback has these fundamental limitations, are there alternatives that don't require as much human oversight? What else is in the alignment toolkit?"
-    },
-    {
-      "speaker": "expert",
-      "text": "Yes—Anthropic's Constitutional AI. Instead of crowdsourced human ratings, you give the model a written constitution of principles. The model generates a response, critiques itself against those principles, then revises. It's like teaching through self-reflection rather than constant supervision—more scalable and transparent."
-    },
-    {
-      "speaker": "host",
-      "text": "That's a fascinating alternative. As we wrap up, what gives you the most hope—and what keeps you up at night—about getting this alignment problem right?"
-    },
-    {
-      "speaker": "expert",
-      "text": "What gives me hope"
+      "text": "Yes, Anthropic's Constitutional AI tackles this directly. Instead of humans"
     }
   ],
   "metrics": {
-    "latency_seconds": 73.91,
-    "input_tokens": 10116,
-    "output_tokens": 1670,
-    "total_tokens": 11786,
-    "estimated_cost_usd": 0.00825,
+    "latency_seconds": 57.54,
+    "input_tokens": 11570,
+    "output_tokens": 2393,
+    "total_tokens": 13963,
+    "estimated_cost_usd": 0.009774,
     "peak_gpu_memory_gb": null
   }
 }

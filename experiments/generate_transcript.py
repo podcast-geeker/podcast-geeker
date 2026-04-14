@@ -255,7 +255,7 @@ def generate_baseline(client: OpenAI, topic: dict, source_text: str) -> dict:
             },
         ],
         temperature=0.7,
-        max_tokens=2000,
+        max_tokens=20000,
     )
 
     latency = time.time() - t0
@@ -307,7 +307,7 @@ def _run_multi_agent_dialogue(
                 },
             ],
             temperature=0.7,
-            max_tokens=200,
+            max_tokens=2000,
         )
         host_line = host_resp.choices[0].message.content.strip().strip('"').strip("'")
         total_input += host_resp.usage.prompt_tokens
@@ -329,7 +329,7 @@ def _run_multi_agent_dialogue(
                 },
             ],
             temperature=0.7,
-            max_tokens=250,
+            max_tokens=2500,
         )
         expert_line = (
             expert_resp.choices[0].message.content.strip().strip('"').strip("'")
@@ -422,7 +422,7 @@ def generate_multi_agent_with_review(
                 },
             ],
             temperature=0.3,
-            max_tokens=300,
+            max_tokens=3000,
         )
         total_input += review_resp.usage.prompt_tokens
         total_output += review_resp.usage.completion_tokens
@@ -478,7 +478,7 @@ def generate_reference(client: OpenAI, topic: dict, source_text: str) -> dict:
             },
         ],
         temperature=0.7,
-        max_tokens=2500,
+        max_tokens=25000,
     )
 
     latency = time.time() - t0

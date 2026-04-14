@@ -1,0 +1,552 @@
+{
+    "baseline_api": {
+        "metrics": {
+            "avg_latency_seconds": 33.107777777777784,
+            "avg_estimated_cost_usd": 0.002369888888888889
+        },
+        "topics": {
+            "hum_1_ai_bias_fairness": {
+                "rouge_l": 0.32142856661831676,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 3,
+                    "informativeness": 4,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "hum_2_ai_privacy": {
+                "rouge_l": 0.3580645114620188,
+                "llm_evaluation": {
+                    "role_consistency": 2,
+                    "naturalness": 4,
+                    "informativeness": 4,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "hum_3_ai_safety_alignment": {
+                "rouge_l": 0.3282051233425963,
+                "llm_evaluation": {
+                    "role_consistency": 4,
+                    "naturalness": 3,
+                    "informativeness": 4,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "med_1_ai_medical_imaging": {
+                "rouge_l": 0.24925815535643536,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 4,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "med_2_clinical_trials": {
+                "rouge_l": 0.27878787417649226,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 2
+                }
+            },
+            "med_3_ai_drug_discovery": {
+                "rouge_l": 0.319999995492497,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 3,
+                    "informativeness": 4,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "tech_1_transformer_attention": {
+                "rouge_l": 0.35207100104478134,
+                "llm_evaluation": {
+                    "role_consistency": 5,
+                    "naturalness": 4,
+                    "informativeness": 4,
+                    "topic_relevance": 5,
+                    "engagement": 4
+                }
+            },
+            "tech_2_qlora_finetuning": {
+                "rouge_l": 0.3942133768620283,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 4,
+                    "informativeness": 5,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "tech_3_multi_agent": {
+                "rouge_l": 0.27687295926296307,
+                "llm_evaluation": {
+                    "role_consistency": 4,
+                    "naturalness": 3,
+                    "informativeness": 4,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            }
+        },
+        "avg_distinct_1": 0.025076728785112135,
+        "avg_distinct_2": 0.20707594601146606,
+        "avg_rouge_l": 0.3198779515131254,
+        "avg_perplexity": 40.75691689385308,
+        "avg_bertscore": 0.8524568676948547,
+        "llm_evaluation": {
+            "role_consistency": 3.375,
+            "naturalness": 3.5,
+            "informativeness": 4.0,
+            "topic_relevance": 5.0,
+            "engagement": 3.125
+        }
+    },
+    "multi_agent_api": {
+        "metrics": {
+            "avg_latency_seconds": 48.63777777777778,
+            "avg_estimated_cost_usd": 0.009109222222222222
+        },
+        "topics": {
+            "hum_1_ai_bias_fairness": {
+                "rouge_l": 0.3079526179744103,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 2,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "hum_2_ai_privacy": {
+                "rouge_l": 0.33488371614927,
+                "llm_evaluation": {
+                    "role_consistency": 4,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 4
+                }
+            },
+            "hum_3_ai_safety_alignment": {
+                "rouge_l": 0.2365145186824435,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 2,
+                    "informativeness": 2,
+                    "topic_relevance": 4,
+                    "engagement": 2
+                }
+            },
+            "med_1_ai_medical_imaging": {
+                "rouge_l": 0.2620904788477443,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 4,
+                    "engagement": 3
+                }
+            },
+            "med_2_clinical_trials": {
+                "rouge_l": 0.27719820695680764,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 2,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "med_3_ai_drug_discovery": {
+                "rouge_l": 0.32369941723934154,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 4,
+                    "engagement": 3
+                }
+            },
+            "tech_1_transformer_attention": {
+                "rouge_l": 0.21323529009083048,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 3,
+                    "informativeness": 2,
+                    "topic_relevance": 4,
+                    "engagement": 2
+                }
+            },
+            "tech_2_qlora_finetuning": {
+                "rouge_l": 0.33571428098373723,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 4,
+                    "engagement": 3
+                }
+            },
+            "tech_3_multi_agent": {
+                "rouge_l": 0.3066666618000556,
+                "llm_evaluation": {
+                    "role_consistency": 4,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            }
+        },
+        "avg_distinct_1": 0.02926575148755992,
+        "avg_distinct_2": 0.23573067457566899,
+        "avg_rouge_l": 0.2886616876360712,
+        "avg_perplexity": 47.65361065334744,
+        "avg_bertscore": 0.8522312641143799,
+        "llm_evaluation": {
+            "role_consistency": 3.0,
+            "naturalness": 2.0,
+            "informativeness": 3.0,
+            "topic_relevance": 5.0,
+            "engagement": 3.0
+        }
+    },
+    "multi_agent_review": {
+        "metrics": {
+            "avg_latency_seconds": 54.23777777777778,
+            "avg_estimated_cost_usd": 0.010431444444444445
+        },
+        "topics": {
+            "hum_1_ai_bias_fairness": {
+                "rouge_l": 0.28524589685267404,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 3,
+                    "informativeness": 4,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "hum_2_ai_privacy": {
+                "rouge_l": 0.28272250874153676,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 3,
+                    "informativeness": 2,
+                    "topic_relevance": 4,
+                    "engagement": 2
+                }
+            },
+            "hum_3_ai_safety_alignment": {
+                "rouge_l": 0.32605041527496653,
+                "llm_evaluation": {
+                    "role_consistency": 4,
+                    "naturalness": 4,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 4
+                }
+            },
+            "med_1_ai_medical_imaging": {
+                "rouge_l": 0.2839313524826897,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "med_2_clinical_trials": {
+                "rouge_l": 0.2811501553507743,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 4,
+                    "engagement": 3
+                }
+            },
+            "med_3_ai_drug_discovery": {
+                "rouge_l": 0.2558139493645214,
+                "llm_evaluation": {
+                    "role_consistency": 2,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "tech_1_transformer_attention": {
+                "rouge_l": 0.23865545768937227,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 2,
+                    "informativeness": 3,
+                    "topic_relevance": 4,
+                    "engagement": 3
+                }
+            },
+            "tech_2_qlora_finetuning": {
+                "rouge_l": 0.30370369908950623,
+                "llm_evaluation": {
+                    "role_consistency": 4,
+                    "naturalness": 4,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "tech_3_multi_agent": {
+                "rouge_l": 0.2746478825858585,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 4,
+                    "engagement": 3
+                }
+            }
+        },
+        "avg_distinct_1": 0.029200515309385444,
+        "avg_distinct_2": 0.24045535374908486,
+        "avg_rouge_l": 0.2813245908257666,
+        "avg_perplexity": 45.929709328545464,
+        "avg_bertscore": 0.8526619672775269,
+        "llm_evaluation": {
+            "role_consistency": 3.125,
+            "naturalness": 3.125,
+            "informativeness": 3.0,
+            "topic_relevance": 4.625,
+            "engagement": 3.0
+        }
+    },
+    "Llama_baseline_base": {
+        "metrics": {
+            "avg_latency_seconds": 25.19,
+            "avg_estimated_cost_usd": 0.0
+        },
+        "topics": {
+            "hum_1_ai_bias_fairness": {
+                "rouge_l": 0.25120772464006685,
+                "llm_evaluation": {
+                    "role_consistency": 4,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "hum_2_ai_privacy": {
+                "rouge_l": 0.2054794476179866,
+                "llm_evaluation": {
+                    "role_consistency": 4,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "hum_3_ai_safety_alignment": {
+                "rouge_l": 0.2253521078774674,
+                "llm_evaluation": {
+                    "role_consistency": 4,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "med_1_ai_medical_imaging": {
+                "rouge_l": 0.19568822096009736,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 3,
+                    "informativeness": 2,
+                    "topic_relevance": 5,
+                    "engagement": 2
+                }
+            },
+            "med_2_clinical_trials": {
+                "rouge_l": 0.19395866013107851,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 4,
+                    "engagement": 2
+                }
+            },
+            "med_3_ai_drug_discovery": {
+                "rouge_l": 0.2352941130620222,
+                "llm_evaluation": {
+                    "role_consistency": 4,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "tech_1_transformer_attention": {
+                "rouge_l": 0.256077791152358,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 2,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 2
+                }
+            },
+            "tech_2_qlora_finetuning": {
+                "rouge_l": 0.24380951930340147,
+                "llm_evaluation": {
+                    "role_consistency": 4,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "tech_3_multi_agent": {
+                "rouge_l": 0.23639774407203382,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 4,
+                    "engagement": 2
+                }
+            }
+        },
+        "avg_distinct_1": 0.02345335069879219,
+        "avg_distinct_2": 0.20131841005988402,
+        "avg_rouge_l": 0.22702948097961245,
+        "avg_perplexity": 18.777789645724827,
+        "avg_bertscore": 0.8412544131278992,
+        "llm_evaluation": {
+            "role_consistency": 3.5714285714285716,
+            "naturalness": 3.0,
+            "informativeness": 2.857142857142857,
+            "topic_relevance": 4.714285714285714,
+            "engagement": 2.5714285714285716
+        }
+    },
+    "Llama_baseline_ft": {
+        "metrics": {
+            "avg_latency_seconds": 33.626666666666665,
+            "avg_estimated_cost_usd": 0.0
+        },
+        "topics": {
+            "hum_1_ai_bias_fairness": {
+                "rouge_l": 0.22148759854020914,
+                "llm_evaluation": {
+                    "role_consistency": 4,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "hum_2_ai_privacy": {
+                "rouge_l": 0.19322033450158013,
+                "llm_evaluation": {
+                    "role_consistency": 4,
+                    "naturalness": 3,
+                    "informativeness": 2,
+                    "topic_relevance": 5,
+                    "engagement": 2
+                }
+            },
+            "hum_3_ai_safety_alignment": {
+                "rouge_l": 0.2197392877295411,
+                "llm_evaluation": {
+                    "role_consistency": 4,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "med_1_ai_medical_imaging": {
+                "rouge_l": 0.16757740934900692,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 2,
+                    "informativeness": 2,
+                    "topic_relevance": 4,
+                    "engagement": 2
+                }
+            },
+            "med_2_clinical_trials": {
+                "rouge_l": 0.21917807818282048,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 2,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 2
+                }
+            },
+            "med_3_ai_drug_discovery": {
+                "rouge_l": 0.24464831351041352,
+                "llm_evaluation": {
+                    "role_consistency": 4,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 2
+                }
+            },
+            "tech_1_transformer_attention": {
+                "rouge_l": 0.20869564783449537,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 2
+                }
+            },
+            "tech_2_qlora_finetuning": {
+                "rouge_l": 0.24163568313145203,
+                "llm_evaluation": {
+                    "role_consistency": 4,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 3
+                }
+            },
+            "tech_3_multi_agent": {
+                "rouge_l": 0.23465703504900368,
+                "llm_evaluation": {
+                    "role_consistency": 3,
+                    "naturalness": 3,
+                    "informativeness": 3,
+                    "topic_relevance": 5,
+                    "engagement": 2
+                }
+            }
+        },
+        "avg_distinct_1": 0.02677605569774344,
+        "avg_distinct_2": 0.21459690360514344,
+        "avg_rouge_l": 0.21675993198094692,
+        "avg_perplexity": 19.18991258409288,
+        "avg_bertscore": 0.842399537563324,
+        "llm_evaluation": {
+            "role_consistency": 3.8333333333333335,
+            "naturalness": 3.0,
+            "informativeness": 2.8333333333333335,
+            "topic_relevance": 5.0,
+            "engagement": 2.5
+        }
+    }
+}

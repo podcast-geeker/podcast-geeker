@@ -3,20 +3,56 @@
   "topic_id": "med_1_ai_medical_imaging",
   "topic": "AI-Assisted Medical Imaging",
   "domain": "medicine",
-  "generated_at": "2026-04-04T02:23:41.300259+00:00",
+  "generated_at": "2026-04-04T10:21:50.230723+00:00",
   "model": "glm-5-turbo",
   "turns": [
     {
       "speaker": "host",
-      "text": "[\n  {\n    \"speaker\": \"host\",\n    \"text\": \"A single hospital can produce tens of thousands of medical images every single day, so how exactly is AI stepping in to help radiologists manage that overwhelming volume?\"\n  },\n  {\n    \"speaker\": \"expert\",\n    \"text\": \"Deep learning models, particularly convolutional neural networks, are being used to automate the detection of abnormalities like pneumonia on chest X-rays, which helps reduce human fatigue and perceptual errors.\"\n  },\n  {\n    \"speaker\": \"host\",\n    \"text\": \"I remember hearing about a major breakthrough at Stanford called CheXNet, so what made that specific system so groundbreaking?\"\n  },\n  {\n    \"speaker\": \"expert\",\n    \"text\": \"CheXNet used a DenseNet architecture to achieve radiologist-level performance in detecting pneumonia on chest X-rays, proving that deep learning could match or even exceed the sensitivity of board-certified radiologists for specific findings.\"\n  },\n  {\n    \"speaker\": \"host\",\n    \"text\": \"But the technology doesn't stop there, right, because I know vision transformers are now becoming a big deal in this field?\"\n  },\n  {\n    \"speaker\": \"expert\",\n    \"text\": \"Exactly, unlike CNNs that rely on local operations, vision transformers divide images into patches and use self-attention to capture global context right away, which is incredibly useful for assessing diffuse findings like heart size across a full radiograph.\"\n  },\n  {\n    \"speaker\": \"host\",\n    \"text\": \"When we're talking about comparing these AI systems to human doctors, how do we actually measure their success without just relying on headlines?\"\n  },\n  {\n    \"speaker\": \"expert\",\n    \"text\": \"We use metrics like sensitivity and specificity, often visualized with a receiver operating characteristic curve, but we have to remember that radiologists use patient history and clinical context that AI models evaluated in isolation usually lack.\"\n  },\n  {\n    \"speaker\": \"host\",\n    \"text\": \"That clinical integration brings up a scary question: what happens when the AI makes a mistake and misses a diagnosis?\"\n  },\n  {\n    \"speaker\": \"expert\",\n    \"text\": \""
+      "text": "Welcome to the show. Today we're diving into AI-assisted medical imaging, a field dealing with an absolutely massive amount of data. Just how much image data are we talking about in a typical hospital setting?"
+    },
+    {
+      "speaker": "expert",
+      "text": "It's staggering—a single hospital can produce tens of thousands of radiographs, CT scans, and MRIs every single day. Interpreting all of that is incredibly cognitively demanding and subject to human fatigue and perceptual error. That's exactly why AI has emerged as such a transformative tool to help clinicians."
+    },
+    {
+      "speaker": "host",
+      "text": "So, how did the technology actually get to the point where it could reliably spot these abnormalities? I know convolutional neural networks have been a big part of this."
+    },
+    {
+      "speaker": "expert",
+      "text": "Convolutional neural networks, or CNNs, have been the backbone of this field since the mid-2010s. Architectures like ResNet and DenseNet allowed us to train very deep models without losing performance, which led to breakthroughs like Stanford's CheXNet. That system actually achieved radiologist-level performance in detecting pneumonia on chest X-rays using over a hundred thousand images."
+    },
+    {
+      "speaker": "host",
+      "text": "That's impressive, but I've also been hearing a lot about vision transformers lately. How do they differ from those traditional CNNs?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Unlike CNNs that build up spatial understanding locally, vision transformers divide an image into patches and process them using self-attention. This means they capture global context from the very beginning, which is crucial for things like assessing heart size relative to the whole chest. Hybrid models combining both approaches are now actually outperforming purely convolutional baselines."
+    },
+    {
+      "speaker": "host",
+      "text": "When we say these models outperform humans, how are we actually measuring that success? And do they really beat radiologists in the real world?"
+    },
+    {
+      "speaker": "expert",
+      "text": "We rely on metrics like sensitivity and specificity, which measure the trade-off between catching true abnormalities and avoiding false alarms. While studies show AI can match or exceed radiologists in controlled settings, real-world practice is more nuanced. Radiologists use patient history and prior exams that AI usually lacks, though AI still greatly improves efficiency in high-volume screenings."
+    },
+    {
+      "speaker": "host",
+      "text": "That makes sense, but what happens when the AI makes a mistake, specifically a false negative? Who takes the blame if a diagnosis is missed?"
+    },
+    {
+      "speaker": "expert",
+      "text": "False negatives are a critical concern because missed diagnoses can lead to severe patient outcomes and delayed treatment. Right now, the legal liability among the AI developer, the hospital, and the doctor remains largely unsettled. Furthermore, these risks are compounded by bias, since training datasets frequently underrepresent minority and elderly populations."
     }
   ],
   "metrics": {
-    "latency_seconds": 25.65,
+    "latency_seconds": 29.83,
     "input_tokens": 1133,
-    "output_tokens": 2000,
-    "total_tokens": 3133,
-    "estimated_cost_usd": 0.002193,
+    "output_tokens": 2619,
+    "total_tokens": 3752,
+    "estimated_cost_usd": 0.002626,
     "peak_gpu_memory_gb": null
   }
 }
