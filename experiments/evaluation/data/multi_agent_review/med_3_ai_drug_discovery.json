@@ -3,56 +3,40 @@
   "topic_id": "med_3_ai_drug_discovery",
   "topic": "AI in Drug Discovery",
   "domain": "medicine",
-  "generated_at": "2026-04-04T02:40:02.589176+00:00",
+  "generated_at": "2026-04-04T09:57:12.754254+00:00",
   "model": "glm-5-turbo",
   "turns": [
     {
       "speaker": "host",
-      "text": "Welcome to the show. Today we're diving into a fascinating frontier — how artificial intelligence is transforming drug discovery. I've read that bringing a single new drug to market can take fifteen years and over two billion dollars. So let me start with the big picture: are we actually seeing AI change those"
+      "text": "Welcome to the show. Today we're diving into how AI is transforming drug discovery — a field where a single approved drug can take fifteen years and over two billion dollars to develop. So, where exactly is AI making the biggest difference right now?"
     },
     {
       "speaker": "expert",
-      "text": "Yes, but we're still early. The most tangible impact right now is at the front end — virtual screening. For example, AI models can now navigate libraries like Enamine's 37 billion compound space using graph neural networks, finding viable candidates in weeks that would have taken years to screen physically."
+      "text": "AI's biggest impact is in virtual screening. Instead of physically testing millions of compounds, researchers can now computationally search libraries like Enamine REAL Space — over thirty-seven billion molecules — using graph neural networks to find promising drug candidates in days rather than decades."
     },
     {
       "speaker": "host",
-      "text": "That's incredible — thirty-seven billion compounds is almost incomprehensible. So once AI identifies these promising candidates from that vast chemical space, what happens next? I'm guessing finding a molecule that binds is just the first hurdle?"
+      "text": "That's incredible — thirty-seven billion molecules! But finding a compound that binds is just the first hurdle, right? What happens when you need to figure out if it'll actually be safe to put in a human body?"
     },
     {
       "speaker": "expert",
-      "text": "Exactly. Binding is necessary but not sufficient. The next hurdle is ADMET — will the drug actually reach its target safely in a living body? AI models using graph neural networks now predict properties like hepatotoxicity risk or membrane permeability early, filtering out failures before expensive animal testing begins."
+      "text": "That's exactly where ADMET prediction comes in — Absorption, Distribution, Metabolism, Excretion, and Toxicity. Instead of relying solely on costly animal models, graph neural networks can now rapidly screen for red flags like hepatotoxicity risk or cytochrome"
     },
     {
       "speaker": "host",
-      "text": "So these ADMET predictions act like an early warning system — that makes so much sense. But how reliable are they really? I'd imagine a false sense of confidence before clinical trials could be dangerously expensive."
+      "text": "P450 inhibition, right? So these models can flag potential problems early, but I'm guessing they're not perfect yet — how much do we still need to rely on traditional lab testing to confirm what the AI predicts?"
     },
     {
       "speaker": "expert",
-      "text": ""
-    },
-    {
-      "speaker": "host",
-      "text": ""
-    },
-    {
-      "speaker": "expert",
-      "text": ""
-    },
-    {
-      "speaker": "host",
-      "text": "This has been such an eye-opening conversation. Before we wrap up, what gives you the most hope about where AI-driven drug discovery is"
-    },
-    {
-      "speaker": "expert",
-      "text": ""
+      "text": "We absolutely still need lab testing — AI can't replace it entirely. Think of ML models as a highly efficient pre-filter: they rapidly eliminate compounds likely to fail on properties like membrane permeability or plasma protein binding, so we only spend resources on the most promising candidates in animal models and assays."
     }
   ],
   "metrics": {
-    "latency_seconds": 79.35,
-    "input_tokens": 10018,
-    "output_tokens": 2396,
-    "total_tokens": 12414,
-    "estimated_cost_usd": 0.00869,
+    "latency_seconds": 87.51,
+    "input_tokens": 13612,
+    "output_tokens": 2912,
+    "total_tokens": 16524,
+    "estimated_cost_usd": 0.011567,
     "peak_gpu_memory_gb": null,
     "review_score": 0.5,
     "review_attempts": 1

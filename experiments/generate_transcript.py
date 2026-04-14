@@ -208,14 +208,54 @@ def _compute_cost(input_tokens: int, output_tokens: int) -> float:
     )
 
 
+_MAX_EMPTY_RETRIES = 2
+
+
+def _clean_line(raw: str) -> str:
+    """Strip whitespace, surrounding quotes, and leaked role prefixes."""
+    line = (raw or "").strip().strip('"').strip("'")
+    line = re.sub(r"^(Host|Expert)\s*:\s*", "", line, flags=re.IGNORECASE)
+    return line.strip()
+
+
+def _generate_line(
+    client: OpenAI,
+    messages: list[dict],
+    max_tokens: int,
+) -> tuple[str, int, int]:
+    """Call the LLM with retry on empty responses. Returns (text, in_tok, out_tok)."""
+    total_inp, total_out = 0, 0
+    max_attempts = _MAX_EMPTY_RETRIES + 1
+    for attempt in range(max_attempts):
+        try:
+            resp = client.chat.completions.create(
+                model=LLM_MODEL,
+                messages=messages,
+                temperature=min(0.7 + attempt * 0.05, 0.95),
+                max_tokens=max_tokens,
+            )
+        except Exception as exc:
+            print(f"  [WARN] API error on attempt {attempt + 1}/{max_attempts}: {exc}")
+            continue
+        total_inp += resp.usage.prompt_tokens
+        total_out += resp.usage.completion_tokens
+        line = _clean_line(resp.choices[0].message.content)
+        if line:
+            return line, total_inp, total_out
+        print(f"  [WARN] Empty response (attempt {attempt + 1}/{max_attempts}), retrying...")
+    return "", total_inp, total_out
+
+
 def _format_recent(turns: list[dict]) -> str:
     if not turns:
         return "(conversation start)"
     lines = []
     for t in turns[-6:]:
+        if not t.get("text"):
+            continue
         label = "Host" if t["speaker"] == "host" else "Expert"
         lines.append(f"{label}: {t['text']}")
-    return "\n".join(lines)
+    return "\n".join(lines) if lines else "(conversation start)"
 
 
 def _build_result(
@@ -255,7 +295,7 @@ def generate_baseline(client: OpenAI, topic: dict, source_text: str) -> dict:
             },
         ],
         temperature=0.7,
-        max_tokens=2000,
+        max_tokens=4096,
     )
 
     latency = time.time() - t0
@@ -292,50 +332,49 @@ def _run_multi_agent_dialogue(
     total_output = 0
 
     for turn_num in range(1, 6):
-        host_resp = client.chat.completions.create(
-            model=LLM_MODEL,
-            messages=[
-                {"role": "system", "content": HOST_SYSTEM},
-                {
-                    "role": "user",
-                    "content": HOST_USER.format(
-                        topic=topic["topic"],
-                        source_excerpt=source_excerpt,
-                        recent_turns=_format_recent(turns),
-                        turn_num=turn_num,
-                    ),
-                },
-            ],
-            temperature=0.7,
-            max_tokens=200,
-        )
-        host_line = host_resp.choices[0].message.content.strip().strip('"').strip("'")
-        total_input += host_resp.usage.prompt_tokens
-        total_output += host_resp.usage.completion_tokens
+        host_messages = [
+            {"role": "system", "content": HOST_SYSTEM},
+            {
+                "role": "user",
+                "content": HOST_USER.format(
+                    topic=topic["topic"],
+                    source_excerpt=source_excerpt,
+                    recent_turns=_format_recent(turns),
+                    turn_num=turn_num,
+                ),
+            },
+        ]
+        host_line, inp, out = _generate_line(client, host_messages, max_tokens=200)
+        total_input += inp
+        total_output += out
+
+        if not host_line:
+            print(f"  [WARN] Skipping turn {turn_num}: host empty after retries")
+            continue
+
         turns.append({"speaker": "host", "text": host_line})
 
-        expert_resp = client.chat.completions.create(
-            model=LLM_MODEL,
-            messages=[
-                {"role": "system", "content": EXPERT_SYSTEM},
-                {
-                    "role": "user",
-                    "content": EXPERT_USER.format(
-                        topic=topic["topic"],
-                        source_excerpt=source_excerpt,
-                        recent_turns=_format_recent(turns),
-                        host_last_line=host_line,
-                    ),
-                },
-            ],
-            temperature=0.7,
-            max_tokens=250,
-        )
-        expert_line = (
-            expert_resp.choices[0].message.content.strip().strip('"').strip("'")
-        )
-        total_input += expert_resp.usage.prompt_tokens
-        total_output += expert_resp.usage.completion_tokens
+        expert_messages = [
+            {"role": "system", "content": EXPERT_SYSTEM},
+            {
+                "role": "user",
+                "content": EXPERT_USER.format(
+                    topic=topic["topic"],
+                    source_excerpt=source_excerpt,
+                    recent_turns=_format_recent(turns),
+                    host_last_line=host_line,
+                ),
+            },
+        ]
+        expert_line, inp, out = _generate_line(client, expert_messages, max_tokens=250)
+        total_input += inp
+        total_output += out
+
+        if not expert_line:
+            print(f"  [WARN] Skipping turn {turn_num}: expert empty after retries")
+            turns.pop()  # remove orphaned host turn to keep pairs consistent
+            continue
+
         turns.append({"speaker": "expert", "text": expert_line})
 
     return turns, total_input, total_output
@@ -478,7 +517,7 @@ def generate_reference(client: OpenAI, topic: dict, source_text: str) -> dict:
             },
         ],
         temperature=0.7,
-        max_tokens=2500,
+        max_tokens=4096,
     )
 
     latency = time.time() - t0
